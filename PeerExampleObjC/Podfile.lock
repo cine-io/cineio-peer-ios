@@ -1,0 +1,33 @@
+PODS:
+  - BlocksKit/DynamicDelegate (2.2.5)
+  - Emitter (0.0.8):
+    - BlocksKit/DynamicDelegate
+  - libextobjc/EXTScope (0.4):
+    - libextobjc/RuntimeExtensions
+  - libextobjc/RuntimeExtensions (0.4)
+  - libjingle_peerconnection (7136.2.0)
+  - NSTimer-Blocks (0.0.1)
+  - Primus (0.0.4):
+    - Emitter
+    - libextobjc/EXTScope
+    - NSTimer-Blocks
+    - Reachability
+  - Reachability (3.1.1)
+  - SocketRocket (0.3.1-beta2)
+
+DEPENDENCIES:
+  - libjingle_peerconnection
+  - Primus
+  - SocketRocket
+
+SPEC CHECKSUMS:
+  BlocksKit: 4439e7f30a9f90743462ca63545a15c1f4304cef
+  Emitter: 87e6d4003c6e321f4c415bd803a8a0deafd752f4
+  libextobjc: ba42e4111f433273a886cd54f0ddaddb7f62f82f
+  libjingle_peerconnection: e52e1c4854ef6a6ac2c0f7c3d13c2913ec09c0cc
+  NSTimer-Blocks: 0a653b84ab33068a085f5c03c82c18be1f61eba9
+  Primus: 07f68999f581134f5763ca8380f1b9548907f4ce
+  Reachability: 8e9635e3cb4f98e7f825e51147f677ecc694d0e7
+  SocketRocket: 79a68ae186063c65e1fe6f638b1ae2927aa5f304
+
+COCOAPODS: 0.33.1
