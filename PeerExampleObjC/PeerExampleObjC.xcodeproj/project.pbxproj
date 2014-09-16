@@ -14,7 +14,8 @@
 		003092C519C12A680042DAEE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 003092C419C12A680042DAEE /* Images.xcassets */; };
 		003092D119C12A680042DAEE /* PeerExampleObjCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 003092D019C12A680042DAEE /* PeerExampleObjCTests.m */; };
 		003092DC19C12A990042DAEE /* CineSignalingClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 003092DB19C12A990042DAEE /* CineSignalingClient.m */; };
-		003092DF19C3F7320042DAEE /* CinePeerConnectionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 003092DE19C3F7320042DAEE /* CinePeerConnectionDelegate.m */; };
+		003092E219C409070042DAEE /* CinePeerUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 003092E119C409070042DAEE /* CinePeerUtil.m */; };
+		003092E719C410100042DAEE /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 003092E619C410100042DAEE /* README.md */; };
 		0CE6CA6B70D94804845E5ECE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80537E8ADEDE4322B3E07771 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -43,8 +44,9 @@
 		003092D019C12A680042DAEE /* PeerExampleObjCTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeerExampleObjCTests.m; sourceTree = "<group>"; };
 		003092DA19C12A990042DAEE /* CineSignalingClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CineSignalingClient.h; sourceTree = "<group>"; };
 		003092DB19C12A990042DAEE /* CineSignalingClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CineSignalingClient.m; sourceTree = "<group>"; };
-		003092DD19C3F7320042DAEE /* CinePeerConnectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinePeerConnectionDelegate.h; sourceTree = "<group>"; };
-		003092DE19C3F7320042DAEE /* CinePeerConnectionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CinePeerConnectionDelegate.m; sourceTree = "<group>"; };
+		003092E019C409070042DAEE /* CinePeerUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinePeerUtil.h; sourceTree = "<group>"; };
+		003092E119C409070042DAEE /* CinePeerUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CinePeerUtil.m; sourceTree = "<group>"; };
+		003092E619C410100042DAEE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		80537E8ADEDE4322B3E07771 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE70199C13FA41E0826CA968 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -71,6 +73,7 @@
 		003092AB19C12A680042DAEE = {
 			isa = PBXGroup;
 			children = (
+				003092E619C410100042DAEE /* README.md */,
 				003092B619C12A680042DAEE /* PeerExampleObjC */,
 				003092CD19C12A680042DAEE /* PeerExampleObjCTests */,
 				003092B519C12A680042DAEE /* Products */,
@@ -93,8 +96,8 @@
 			children = (
 				003092BB19C12A680042DAEE /* AppDelegate.h */,
 				003092BC19C12A680042DAEE /* AppDelegate.m */,
-				003092DD19C3F7320042DAEE /* CinePeerConnectionDelegate.h */,
-				003092DE19C3F7320042DAEE /* CinePeerConnectionDelegate.m */,
+				003092E019C409070042DAEE /* CinePeerUtil.h */,
+				003092E119C409070042DAEE /* CinePeerUtil.m */,
 				003092DA19C12A990042DAEE /* CineSignalingClient.h */,
 				003092DB19C12A990042DAEE /* CineSignalingClient.m */,
 				003092BE19C12A680042DAEE /* ViewController.h */,
@@ -277,8 +280,9 @@
 				003092DC19C12A990042DAEE /* CineSignalingClient.m in Sources */,
 				003092C019C12A680042DAEE /* ViewController.m in Sources */,
 				003092BD19C12A680042DAEE /* AppDelegate.m in Sources */,
+				003092E719C410100042DAEE /* README.md in Sources */,
 				003092BA19C12A680042DAEE /* main.m in Sources */,
-				003092DF19C3F7320042DAEE /* CinePeerConnectionDelegate.m in Sources */,
+				003092E219C409070042DAEE /* CinePeerUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,5 +1,5 @@
 //
-//  CinePeerConnection.h
+//  CinePeerUtil.h
 //  PeerExampleObjC
 //
 //  Created by Jeffrey Wescott on 9/12/14.
@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RTCPeerConnectionDelegate.h"
 
-@interface CinePeerConnectionDelegate : NSObject<RTCPeerConnectionDelegate>
+@interface CinePeerUtil : NSObject
+
++ (NSString*)preferISAC:(NSString*)origSDP;
 
 @end
