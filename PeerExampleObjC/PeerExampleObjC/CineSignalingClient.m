@@ -33,7 +33,7 @@
 @property (nonatomic, strong) NSMutableArray *iceServers;
 @property (nonatomic, assign) BOOL initiator;
 @property (nonatomic, strong) NSString *remoteSparkId;
-@property (nonatomic, strong) RTCMediaConstraints *constraints;
+@property (nonatomic, strong) NSMutableArray* queuedRemoteCandidates;
 @property (nonatomic, strong) RTCSessionDescription *localSDP;
 @property (nonatomic, strong) RTCMediaStream *localMediaStream;
 @property (nonatomic, strong) RTCPeerConnection *peerConnection;
@@ -99,7 +99,7 @@
 
 - (void)createLocalMediaStream
 {
-    self.localMediaStream = [self.peerConnectionFactory mediaStreamWithLabel:@"CINESTREAM"];
+    self.localMediaStream = [self.peerConnectionFactory mediaStreamWithLabel:@"ARDAMS"];
     
 #if !TARGET_IPHONE_SIMULATOR && TARGET_OS_IPHONE
     RTCVideoTrack* localVideoTrack;
@@ -117,8 +117,8 @@
     [RTCVideoCapturer capturerWithDeviceName:cameraID];
     self.videoSource = [self.peerConnectionFactory
                         videoSourceWithCapturer:capturer
-                        constraints:self.client.videoConstraints];
-    localVideoTrack = [self.peerConnectionFactory videoTrackWithID:@"CINESTREAMv0"
+                        constraints:[self constraintsForMedia]];
+    localVideoTrack = [self.peerConnectionFactory videoTrackWithID:@"ARDAMSv0"
                                                             source:self.videoSource];
     if (localVideoTrack) {
         [lms addVideoTrack:localVideoTrack];
@@ -127,37 +127,56 @@
            didReceiveLocalVideoTrack:localVideoTrack];
 #endif
     
-    [self.localMediaStream addAudioTrack:[self.peerConnectionFactory audioTrackWithID:@"CINESTREAMa0"]];
+    [self.localMediaStream addAudioTrack:[self.peerConnectionFactory audioTrackWithID:@"ARDAMSa0"]];
 }
+
+- (RTCMediaConstraints*)constraintsForPeer
+{
+    NSArray *mandatoryConstraints = @[
+                                      [[RTCPair alloc] initWithKey:@"OfferToReceiveAudio"
+                                                             value:@"true"],
+                                      [[RTCPair alloc] initWithKey:@"OfferToReceiveVideo"
+                                                             value:@"true"]
+                                      ];
+    NSArray *optionalConstraints = @[
+                                     [[RTCPair alloc] initWithKey:@"internalSctpDataChannels"
+                                                            value:@"true"],
+                                     [[RTCPair alloc] initWithKey:@"DtlsSrtpKeyAgreement"
+                                                            value:@"true"]
+                                     ];
+    
+    return [[RTCMediaConstraints alloc] initWithMandatoryConstraints:mandatoryConstraints
+                                                 optionalConstraints:optionalConstraints];
+}
+
+
+- (RTCMediaConstraints*)constraintsForMedia
+{
+    NSArray *mandatoryConstraints = @[
+                                      [[RTCPair alloc] initWithKey:@"OfferToReceiveAudio"
+                                                             value:@"true"],
+                                      [[RTCPair alloc] initWithKey:@"OfferToReceiveVideo"
+                                                             value:@"true"]
+                                      ];
+    
+    return [[RTCMediaConstraints alloc] initWithMandatoryConstraints:mandatoryConstraints
+                                                 optionalConstraints:nil];
+}
+
 
 - (RTCPeerConnection *)createPeerConnection:(NSString *)sparkId asInitiator:(BOOL)initiator
 {
     self.initiator = initiator;
     
-    // set up the media constraints
-    self.constraints =
-    [[RTCMediaConstraints alloc]
-     initWithMandatoryConstraints:@[
-                                    [[RTCPair alloc] initWithKey:@"OfferToReceiveAudio"
-                                                           value:@"true"],
-                                    [[RTCPair alloc] initWithKey:@"OfferToReceiveVideo"
-                                                           value:@"true"]
-                                    ]
-     optionalConstraints:@[
-                           [[RTCPair alloc] initWithKey:@"internalSctpDataChannels"
-                                                  value:@"true"],
-                           [[RTCPair alloc] initWithKey:@"DtlsSrtpKeyAgreement"
-                                                  value:@"true"]
-                           ]];
+    RTCPeerConnection *conn =
+    [self.peerConnectionFactory peerConnectionWithICEServers:self.iceServers
+                                                 constraints:[self constraintsForPeer]
+                                                    delegate:self];
     
-    RTCPeerConnection *conn = [self.peerConnectionFactory peerConnectionWithICEServers:self.iceServers
-                                                                           constraints:self.constraints
-                                                                              delegate:self];
-    
-    [conn addStream:self.localMediaStream constraints:self.constraints];
+    [conn addStream:self.localMediaStream constraints:[self constraintsForPeer]];
     
     if (self.initiator) {
-        [conn createOfferWithDelegate:self constraints:self.constraints];
+        [conn createOfferWithDelegate:self constraints:[self constraintsForMedia]];
     }
 
     return conn;
@@ -187,8 +206,8 @@
     [[RTCSessionDescription alloc] initWithType:sdpDict[@"type"]
                                             sdp:[CinePeerUtil preferISAC:sdpString]];
 
-    self.peerConnection = [self getPeerConnection:self.remoteSparkId asInitiator:NO];
-    [self.peerConnection setRemoteDescriptionWithDelegate:self sessionDescription:sdp];
+    RTCPeerConnection *conn = [self getPeerConnection:self.remoteSparkId asInitiator:NO];
+    [conn setRemoteDescriptionWithDelegate:self sessionDescription:sdp];
 }
 
 - (void)didDetectNewMember:(NSDictionary *)message
@@ -231,7 +250,7 @@
             RTCICECandidate* candidate = [[RTCICECandidate alloc] initWithMid:sdpMid
                                                                         index:sdpLineIndex.intValue
                                                                           sdp:sdp];
-            [self.peerConnection addICECandidate:candidate];
+            [self.queuedRemoteCandidates addObject:candidate];
         },
         @"offer": ^(NSDictionary *message) {
             NSLog(@"got offer: %@", message);
@@ -249,6 +268,13 @@
     } else {
         NSLog(@"incoming data: %@", data);
     }
+}
+
+- (void)drainRemoteCandidates {
+    for (RTCICECandidate* candidate in self.queuedRemoteCandidates) {
+        [self.peerConnection addICECandidate:candidate];
+    }
+    self.queuedRemoteCandidates = nil;
 }
 
 
@@ -368,16 +394,21 @@
         }
 
         if (self.initiator) {
-            if (!self.peerConnection.remoteDescription) {
-                [self sendLocalSDP];
-            }
-        } else {
-            if (!self.peerConnection.localDescription) {
-                [self.peerConnection createAnswerWithDelegate:self constraints:self.constraints];
+            if (self.peerConnection.remoteDescription) {
+                [self drainRemoteCandidates];
             } else {
                 [self sendLocalSDP];
             }
-            
+        } else {
+            NSLog(@"local SDP: %@", self.peerConnection.localDescription);
+            NSLog(@"remote SDP: `%@", self.peerConnection.remoteDescription);
+            if (!self.peerConnection.localDescription) {
+                    [self.peerConnection createAnswerWithDelegate:self
+                                                      constraints:[self constraintsForMedia]];
+            } else {
+                [self sendLocalSDP];
+                [self drainRemoteCandidates];
+            }
         }
     });
 }
