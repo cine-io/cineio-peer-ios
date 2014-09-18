@@ -7,9 +7,12 @@
 //
 
 #import "CineSignalingClient.h"
-#import "CinePeerUtil.h"
+#import <AVFoundation/AVFoundation.h>
+
 #import <Primus/Primus.h>
 #import <Primus/SocketRocketClient.h>
+
+#import "CinePeerUtil.h"
 
 // WebRTC includes
 #import "RTCICECandidate.h"
@@ -33,7 +36,6 @@
 @property (nonatomic, strong) NSMutableArray *iceServers;
 @property (nonatomic, assign) BOOL initiator;
 @property (nonatomic, strong) NSString *remoteSparkId;
-@property (nonatomic, strong) NSMutableArray* queuedRemoteCandidates;
 @property (nonatomic, strong) RTCSessionDescription *localSDP;
 @property (nonatomic, strong) RTCMediaStream *localMediaStream;
 @property (nonatomic, strong) RTCPeerConnection *peerConnection;
@@ -51,6 +53,7 @@
 {
     if (self = [super init]) {
         self.delegate = theDelegate;
+        [RTCPeerConnectionFactory initializeSSL];
         self.peerConnectionFactory = [[RTCPeerConnectionFactory alloc] init];
     }
     return self;
@@ -121,10 +124,9 @@
     localVideoTrack = [self.peerConnectionFactory videoTrackWithID:@"ARDAMSv0"
                                                             source:self.videoSource];
     if (localVideoTrack) {
-        [lms addVideoTrack:localVideoTrack];
+        [self.localMediaStream addVideoTrack:localVideoTrack];
     }
-    [self.delegate connectionManager:self
-           didReceiveLocalVideoTrack:localVideoTrack];
+    [self.delegate signalingClient:self didReceiveLocalVideoTrack:localVideoTrack];
 #endif
     
     [self.localMediaStream addAudioTrack:[self.peerConnectionFactory audioTrackWithID:@"ARDAMSa0"]];
@@ -216,8 +218,6 @@
     [self getPeerConnection:message[@"sparkId"] asInitiator:YES];
 }
 
-
-
 - (void)onError:(NSError *)error
 {
     NSLog(@"ERROR: %@", error);
@@ -250,7 +250,7 @@
             RTCICECandidate* candidate = [[RTCICECandidate alloc] initWithMid:sdpMid
                                                                         index:sdpLineIndex.intValue
                                                                           sdp:sdp];
-            [self.queuedRemoteCandidates addObject:candidate];
+            [self.peerConnection addICECandidate:candidate];
         },
         @"offer": ^(NSDictionary *message) {
             NSLog(@"got offer: %@", message);
@@ -268,13 +268,6 @@
     } else {
         NSLog(@"incoming data: %@", data);
     }
-}
-
-- (void)drainRemoteCandidates {
-    for (RTCICECandidate* candidate in self.queuedRemoteCandidates) {
-        [self.peerConnection addICECandidate:candidate];
-    }
-    self.queuedRemoteCandidates = nil;
 }
 
 
@@ -295,6 +288,18 @@
            addedStream:(RTCMediaStream *)stream
 {
     NSLog(@"addedStream");
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSAssert([stream.audioTracks count] == 1 || [stream.videoTracks count] == 1,
+                 @"Expected audio or video track");
+        NSAssert([stream.audioTracks count] <= 1, @"Expected at most 1 audio stream");
+        NSAssert([stream.videoTracks count] <= 1, @"Expected at most 1 video stream");
+        if ([stream.videoTracks count] != 0) {
+            [self.delegate signalingClient:self didReceiveRemoteVideoTrack:stream.videoTracks[0]];
+        }
+        if ([stream.audioTracks count] != 0) {
+            [self.delegate signalingClient:self didReceiveRemoteAudioTrack:stream.audioTracks[0]];
+        }
+    });
 }
 
 - (void)peerConnection:(RTCPeerConnection *)peerConnection
@@ -394,9 +399,7 @@
         }
 
         if (self.initiator) {
-            if (self.peerConnection.remoteDescription) {
-                [self drainRemoteCandidates];
-            } else {
+            if (!self.peerConnection.remoteDescription) {
                 [self sendLocalSDP];
             }
         } else {
@@ -407,7 +410,6 @@
                                                       constraints:[self constraintsForMedia]];
             } else {
                 [self sendLocalSDP];
-                [self drainRemoteCandidates];
             }
         }
     });
