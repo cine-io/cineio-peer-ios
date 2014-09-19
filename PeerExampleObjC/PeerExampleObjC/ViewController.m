@@ -1,4 +1,4 @@
-//
+    //
 //  ViewController.m
 //  PeerExampleObjC
 //
@@ -32,7 +32,7 @@ static CGFloat const kLocalViewPadding = 20;
     [super viewDidLoad];
 
     [self initializeVideoViews];
-    NSURL *url = [NSURL URLWithString:@"http://smile.local:8888/primus/websocket"];
+    NSURL *url = [NSURL URLWithString:@"http://signaling.cine.io/primus/websocket"];
     CineSignalingClient *signalingClient = [[CineSignalingClient alloc] initWithDelegate:self];
     [signalingClient connect:url];
 }
@@ -65,11 +65,11 @@ static CGFloat const kLocalViewPadding = 20;
         CGSizeEqualToSize(_remoteVideoSize, CGSizeZero) ? defaultAspectRatio : _remoteVideoSize;
     
     CGRect remoteVideoFrame =
-        AVMakeRectWithAspectRatioInsideRect(remoteAspectRatio, self.remoteVideoView.bounds);
+        AVMakeRectWithAspectRatioInsideRect(remoteAspectRatio, self.videosView.bounds);
     self.remoteVideoView.frame = remoteVideoFrame;
     
     CGRect localVideoFrame =
-        AVMakeRectWithAspectRatioInsideRect(localAspectRatio, self.localVideoView.bounds);
+        AVMakeRectWithAspectRatioInsideRect(localAspectRatio, self.videosView.bounds);
     localVideoFrame.size.width = localVideoFrame.size.width / 3;
     localVideoFrame.size.height = localVideoFrame.size.height / 3;
     localVideoFrame.origin.x = CGRectGetMaxX(self.videosView.bounds) - localVideoFrame.size.width - kLocalViewPadding;
@@ -94,7 +94,6 @@ static CGFloat const kLocalViewPadding = 20;
 
 - (void)signalingClient:(CineSignalingClient *)client didReceiveLocalVideoTrack:(RTCVideoTrack *)track
 {
-    self.localVideoView.hidden = NO;
     self.localVideoView.videoTrack = track;
 }
 

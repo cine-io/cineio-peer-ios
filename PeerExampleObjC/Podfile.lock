@@ -16,7 +16,7 @@ PODS:
   - SocketRocket (0.3.1-beta2)
 
 DEPENDENCIES:
-  - libjingle_peerconnection
+  - libjingle_peerconnection (~> 7136.2)
   - Primus
   - SocketRocket
 
@@ -30,4 +30,4 @@ SPEC CHECKSUMS:
   Reachability: 8e9635e3cb4f98e7f825e51147f677ecc694d0e7
   SocketRocket: 79a68ae186063c65e1fe6f638b1ae2927aa5f304
 
-COCOAPODS: 0.33.1
+COCOAPODS: 0.34.0.rc2

@@ -53,7 +53,6 @@
 {
     if (self = [super init]) {
         self.delegate = theDelegate;
-        [RTCPeerConnectionFactory initializeSSL];
         self.peerConnectionFactory = [[RTCPeerConnectionFactory alloc] init];
     }
     return self;
@@ -102,10 +101,9 @@
 
 - (void)createLocalMediaStream
 {
-    self.localMediaStream = [self.peerConnectionFactory mediaStreamWithLabel:@"ARDAMS"];
+    self.localMediaStream = [self.peerConnectionFactory mediaStreamWithLabel:@"CINESTREAM"];
     
 #if !TARGET_IPHONE_SIMULATOR && TARGET_OS_IPHONE
-    RTCVideoTrack* localVideoTrack;
     NSString* cameraID = nil;
     for (AVCaptureDevice* captureDevice in
          [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo]) {
@@ -116,20 +114,19 @@
     }
     NSAssert(cameraID, @"Unable to get the front camera id");
     
-    RTCVideoCapturer* capturer =
-    [RTCVideoCapturer capturerWithDeviceName:cameraID];
+    RTCVideoCapturer* capturer = [RTCVideoCapturer capturerWithDeviceName:cameraID];
     self.videoSource = [self.peerConnectionFactory
                         videoSourceWithCapturer:capturer
-                        constraints:[self constraintsForMedia]];
-    localVideoTrack = [self.peerConnectionFactory videoTrackWithID:@"ARDAMSv0"
-                                                            source:self.videoSource];
+                        constraints:[[RTCMediaConstraints alloc] init]];
+    RTCVideoTrack* localVideoTrack = [self.peerConnectionFactory videoTrackWithID:@"CINESTREAMv0"
+                                                                           source:self.videoSource];
     if (localVideoTrack) {
         [self.localMediaStream addVideoTrack:localVideoTrack];
     }
     [self.delegate signalingClient:self didReceiveLocalVideoTrack:localVideoTrack];
 #endif
     
-    [self.localMediaStream addAudioTrack:[self.peerConnectionFactory audioTrackWithID:@"ARDAMSa0"]];
+    [self.localMediaStream addAudioTrack:[self.peerConnectionFactory audioTrackWithID:@"CINESTREAMa0"]];
 }
 
 - (RTCMediaConstraints*)constraintsForPeer
@@ -174,7 +171,7 @@
     [self.peerConnectionFactory peerConnectionWithICEServers:self.iceServers
                                                  constraints:[self constraintsForPeer]
                                                     delegate:self];
-    
+
     [conn addStream:self.localMediaStream constraints:[self constraintsForPeer]];
     
     if (self.initiator) {
@@ -215,6 +212,7 @@
 - (void)didDetectNewMember:(NSDictionary *)message
 {
     // TODO: handle multiple peers
+    self.remoteSparkId = message[@"sparkId"];
     [self getPeerConnection:message[@"sparkId"] asInitiator:YES];
 }
 
@@ -328,7 +326,7 @@
 - (void)peerConnection:(RTCPeerConnection *)peerConnection
        gotICECandidate:(RTCICECandidate *)candidate
 {
-    NSLog(@"gotICECandidate: %@", candidate);
+    //NSLog(@"gotICECandidate: %@", candidate);
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.signalingServer write:@{
                                       @"source": @"iOS",
@@ -403,8 +401,6 @@
                 [self sendLocalSDP];
             }
         } else {
-            NSLog(@"local SDP: %@", self.peerConnection.localDescription);
-            NSLog(@"remote SDP: `%@", self.peerConnection.remoteDescription);
             if (!self.peerConnection.localDescription) {
                     [self.peerConnection createAnswerWithDelegate:self
                                                       constraints:[self constraintsForMedia]];

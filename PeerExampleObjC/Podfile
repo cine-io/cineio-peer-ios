@@ -1,4 +1,4 @@
-pod "libjingle_peerconnection"
+pod "libjingle_peerconnection", "~> 7136.2"
 pod "Primus"
 pod "SocketRocket"
 
