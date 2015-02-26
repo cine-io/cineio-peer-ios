@@ -80,12 +80,17 @@
         NSLog(@"[open] - The connection has been established.");
     }];
     
-    [self.signalingServer once:@"open" selector:@selector(onOpen) target:self];
+    [self.signalingServer on:@"open" selector:@selector(onOpen) target:self];
 
 //    [self.signalingServer on:@"open" selector:@selector(onOpen) target:self];
     [self.signalingServer on:@"data" selector:@selector(onData:withRaw:) target:self];
     [self.signalingServer on:@"error" selector:@selector(onError:) target:self];
     
+    [self.signalingServer on:@"open" listener:^{
+        NSLog(@"[open] - The connection has been established2.");
+    }];
+    
+
     
     [self.signalingServer on:@"online" listener:^{
         NSLog(@"[network] - We have regained control over our internet connection.");
