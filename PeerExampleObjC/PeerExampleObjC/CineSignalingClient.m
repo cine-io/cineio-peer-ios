@@ -79,7 +79,7 @@
     [self.signalingServer write:@{
                                   @"source": @"iOS",
                                   @"action": @"join",
-                                  @"room": @(123)
+                                  @"room": @"hello"
                                   }];
 }
 

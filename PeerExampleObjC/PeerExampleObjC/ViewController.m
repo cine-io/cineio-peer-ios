@@ -32,7 +32,7 @@ static CGFloat const kLocalViewPadding = 20;
     [super viewDidLoad];
 
     [self initializeVideoViews];
-    NSURL *url = [NSURL URLWithString:@"http://signaling.cine.io/primus/websocket"];
+    NSURL *url = [NSURL URLWithString:@"http://192.168.1.139:8443/primus/websocket"];
     CineSignalingClient *signalingClient = [[CineSignalingClient alloc] initWithDelegate:self];
     [signalingClient connect:url];
 }
