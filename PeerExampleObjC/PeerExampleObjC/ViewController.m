@@ -33,7 +33,9 @@ static CGFloat const kLocalViewPadding = 20;
 
     [self initializeVideoViews];
     NSURL *url = [NSURL URLWithString:@"http://192.168.1.139:8443/primus/websocket"];
+    NSString *publicKey = @"0b519f759096c48bf455941a02cf2c90";
     CineSignalingClient *signalingClient = [[CineSignalingClient alloc] initWithDelegate:self];
+    [signalingClient init:publicKey];
     [signalingClient connect:url];
 }
 

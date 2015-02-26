@@ -33,5 +33,6 @@
 
 - (id)initWithDelegate:(id<CineSignalingClientDelegate>)delegate;
 - (void)connect:(NSURL *)url;
+- (void)init:(NSString *)publicKey;
 
 @end

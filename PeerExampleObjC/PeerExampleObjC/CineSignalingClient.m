@@ -41,6 +41,8 @@
 @property (nonatomic, strong) RTCPeerConnection *peerConnection;
 @property (nonatomic, strong) RTCPeerConnectionFactory *peerConnectionFactory;
 @property (nonatomic, strong) RTCVideoSource *videoSource;
+@property (nonatomic, strong) NSString *publicKey;
+@property (nonatomic, strong) NSString *uuid;
 
 @end
 
@@ -58,24 +60,69 @@
     return self;
 }
 
+- (void)init:(NSString *)publicKey
+{
+    NSLog(@"INIT");
+
+    self.publicKey = publicKey;
+}
+
 - (void)connect:(NSURL *)url
 {
     PrimusConnectOptions *options = [[PrimusConnectOptions alloc] init];
     options.transformerClass = SocketRocketClient.class;
     options.manual = YES;
-    
+    NSLog(@"CONNECT");
+
     self.signalingServer = [[Primus alloc] initWithURL:url options:options];
     
-    [self.signalingServer on:@"open" selector:@selector(onOpen) target:self];
+    [self.signalingServer on:@"open" listener:^{
+        NSLog(@"[open] - The connection has been established.");
+    }];
+    
+    [self.signalingServer once:@"open" selector:@selector(onOpen) target:self];
+
+//    [self.signalingServer on:@"open" selector:@selector(onOpen) target:self];
     [self.signalingServer on:@"data" selector:@selector(onData:withRaw:) target:self];
     [self.signalingServer on:@"error" selector:@selector(onError:) target:self];
     
+    
+    [self.signalingServer on:@"online" listener:^{
+        NSLog(@"[network] - We have regained control over our internet connection.");
+    }];
+    
+    [self.signalingServer on:@"offline" listener:^{
+        NSLog(@"[network] - We lost our internet connection.");
+    }];
+    [self.signalingServer on:@"end" listener:^{
+        NSLog(@"[end] - The connection has ended.");
+    }];
+
     [self.signalingServer open];
+    NSLog(@"CONNECTED");
+
+}
+
+- (void)send:(id)data
+{
+    NSLog(@"send");
+    [self.signalingServer write:@{
+                                  @"client": @"cineio-peer-ios version-", //TODO: set version
+                                  @"publicKey": self.publicKey,
+                                  @"uuid": @"NEED-TO-SET-UUID"
+                                  }];
 }
 
 - (void)onOpen
 {
     NSLog(@"connected");
+    [self.signalingServer write:@{
+                                  @"source": @"iOS",
+                                  @"publicKey": self.publicKey,
+                                  @"action": @"auth",
+                                  @"uuid": @"NEED-TO-SET-UUID"
+                                  }];
+
     [self.signalingServer write:@{
                                   @"source": @"iOS",
                                   @"action": @"join",
@@ -218,11 +265,14 @@
 
 - (void)onError:(NSError *)error
 {
+    NSLog(@"ERROR:");
+
     NSLog(@"ERROR: %@", error);
 }
 
 - (void)onData:(NSDictionary *)data withRaw:(id)raw
 {
+    NSLog(@"ON DATA WITH RAW");
     typedef void (^OnDataBlock)(NSDictionary*);
     NSDictionary *caseDict =
     @{
