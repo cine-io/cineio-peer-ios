@@ -172,7 +172,7 @@
                                                  constraints:[self constraintsForPeer]
                                                     delegate:self];
 
-    [conn addStream:self.localMediaStream constraints:[self constraintsForPeer]];
+    [conn addStream:self.localMediaStream];
     
     if (self.initiator) {
         [conn createOfferWithDelegate:self constraints:[self constraintsForMedia]];

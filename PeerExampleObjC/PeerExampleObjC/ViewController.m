@@ -94,12 +94,12 @@ static CGFloat const kLocalViewPadding = 20;
 
 - (void)signalingClient:(CineSignalingClient *)client didReceiveLocalVideoTrack:(RTCVideoTrack *)track
 {
-    self.localVideoView.videoTrack = track;
+//    self.localVideoView.videoTrack = track;
 }
 
 - (void)signalingClient:(CineSignalingClient *)client didReceiveRemoteVideoTrack:(RTCVideoTrack *)track
 {
-    self.remoteVideoView.videoTrack = track;
+//    self.remoteVideoView.videoTrack = track;
 }
 - (void)signalingClient:(CineSignalingClient *)client didReceiveRemoteAudioTrack:(RTCAudioTrack *)track
 {
