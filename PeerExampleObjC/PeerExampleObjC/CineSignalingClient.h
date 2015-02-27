@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PeerConnectionManager.h"
 
 @class RTCVideoTrack;
 @class RTCAudioTrack;
@@ -35,4 +36,5 @@
 - (void)connect;
 - (void)init:(NSString *)publicKey;
 - (void)joinRoom:(NSString *)roomName;
+- (void)setPeerConnectionsManager:(PeerConnectionManager *)peerConnectionManager;
 @end

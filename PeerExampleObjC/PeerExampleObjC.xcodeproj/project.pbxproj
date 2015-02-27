@@ -17,6 +17,7 @@
 		003092E219C409070042DAEE /* CinePeerUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 003092E119C409070042DAEE /* CinePeerUtil.m */; };
 		003092E719C410100042DAEE /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 003092E619C410100042DAEE /* README.md */; };
 		0CE6CA6B70D94804845E5ECE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80537E8ADEDE4322B3E07771 /* libPods.a */; };
+		E98A6B9A1A9FF4610004162C /* PeerConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6B991A9FF4610004162C /* PeerConnectionManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,8 @@
 		025E3D59144EA424FB1FB48D /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		80537E8ADEDE4322B3E07771 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1A9AD6BF208873637DD2CFB /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		E98A6B981A9FF3F40004162C /* PeerConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeerConnectionManager.h; sourceTree = "<group>"; };
+		E98A6B991A9FF4610004162C /* PeerConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeerConnectionManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +104,8 @@
 				003092E119C409070042DAEE /* CinePeerUtil.m */,
 				003092DA19C12A990042DAEE /* CineSignalingClient.h */,
 				003092DB19C12A990042DAEE /* CineSignalingClient.m */,
+				E98A6B981A9FF3F40004162C /* PeerConnectionManager.h */,
+				E98A6B991A9FF4610004162C /* PeerConnectionManager.m */,
 				003092BE19C12A680042DAEE /* ViewController.h */,
 				003092BF19C12A680042DAEE /* ViewController.m */,
 				003092C119C12A680042DAEE /* Main.storyboard */,
@@ -292,6 +297,7 @@
 				003092BD19C12A680042DAEE /* AppDelegate.m in Sources */,
 				003092E719C410100042DAEE /* README.md in Sources */,
 				003092BA19C12A680042DAEE /* main.m in Sources */,
+				E98A6B9A1A9FF4610004162C /* PeerConnectionManager.m in Sources */,
 				003092E219C409070042DAEE /* CinePeerUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

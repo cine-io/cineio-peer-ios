@@ -10,11 +10,12 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import "CineSignalingClient.h"
+#import "PeerConnectionManager.h"
 #import "RTCEAGLVideoView.h"
 
 static CGFloat const kLocalViewPadding = 20;
 
-@interface ViewController () <CineSignalingClientDelegate, RTCEAGLVideoViewDelegate>
+@interface ViewController () <CineSignalingClientDelegate, PeerConnectionManagerDelegate, RTCEAGLVideoViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *videosView;
 @property (nonatomic, strong) RTCEAGLVideoView* localVideoView;
@@ -33,9 +34,12 @@ static CGFloat const kLocalViewPadding = 20;
 
     [self initializeVideoViews];
     NSString *publicKey = @"0b519f759096c48bf455941a02cf2c90";
+    NSString *roomName = @"example";
+    PeerConnectionManager *connectionManager = [[PeerConnectionManager alloc] initWithDelegate:self];
     CineSignalingClient *signalingClient = [[CineSignalingClient alloc] initWithDelegate:self];
+    [signalingClient setPeerConnectionsManager:connectionManager];
     [signalingClient init:publicKey];
-    [signalingClient joinRoom:@"hello"];
+    [signalingClient joinRoom:roomName];
 }
 
 - (void)didReceiveMemoryWarning {

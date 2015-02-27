@@ -40,6 +40,7 @@
 @property (nonatomic, strong) RTCMediaStream *localMediaStream;
 @property (nonatomic, strong) RTCPeerConnection *peerConnection;
 @property (nonatomic, strong) RTCPeerConnectionFactory *peerConnectionFactory;
+@property (nonatomic, strong) PeerConnectionManager *peerConnectionManager;
 @property (nonatomic, strong) RTCVideoSource *videoSource;
 @property (nonatomic, strong) NSString *publicKey;
 @property (nonatomic, strong) NSString *uuid;
@@ -60,6 +61,11 @@
     return self;
 }
 
+- (void)setPeerConnectionsManager:(PeerConnectionManager *)peerConnectionManager
+{
+    self.peerConnectionManager = peerConnectionManager;
+}
+
 - (void)init:(NSString *)publicKey
 {
     NSLog(@"INIT");
@@ -73,15 +79,17 @@
     NSTimeInterval pingInterval = 25;
     PrimusConnectOptions *options = [[PrimusConnectOptions alloc] init];
     options.transformerClass = SocketRocketClient.class;
-    options.manual = YES;
+    // for some reason I can't use /primus so it can't properly get the /spec
+    // so i need to manually specify the timeout and ping
     options.autodetect = false;
+    options.strategy = @[@(kPrimusReconnectionStrategyTimeout)];
+
     options.timeout = 35000;
     options.ping = pingInterval;
     NSLog(@"CONNECT");
     NSURL *url = [NSURL URLWithString:@"http://192.168.1.139:8443/primus/websocket"];
 
     self.signalingServer = [[Primus alloc] initWithURL:url options:options];
-//        self.signalingServer = [[Primus alloc] initWithURL:url];
 
     [self.signalingServer on:@"open" listener:^{
         NSLog(@"[open] - The connection has been established.");
@@ -89,7 +97,7 @@
     }];
     
     [self.signalingServer on:@"reconnect" listener:^(PrimusReconnectOptions *options) {
-        NSLog(@"[reconnect] - We are scheduling a new reconnect attempt");
+        NSLog(@"Reconnect attempt %@ of %@", @(options.attempt), @(options.retries));
     }];
 
     [self.signalingServer on:@"data" selector:@selector(onData:withRaw:) target:self];
@@ -99,7 +107,7 @@
         NSLog(@"[end] - The connection has ended.");
     }];
 
-    [self.signalingServer open];
+//    [self.signalingServer open];
     NSLog(@"CONNECTED");
 
 }
@@ -116,30 +124,29 @@
     for (id key in data) {
         [dict setValue:[data objectForKey:key] forKey:key];
     }
-//    NSLog(@"send1");
-//    [data setObject:@"cineio-peer-ios version-" forKey:@"client"];
-//    NSLog(@"send2");
-//    [data setObject:self.publicKey forKey:@"publicKey"];
-//    NSLog(@"send3");
 
     [self.signalingServer write:dict];
-//    [self.signalingServer write:@{
-//                                  @"client": @"cineio-peer-ios version-", //TODO: set version
-//                                  @"publicKey": self.publicKey,
-//                                  @"uuid": @"NEED-TO-SET-UUID"
-//                                  }];
 }
+
+- (void)sendToOtherSpark:(NSString*)otherClientSparkId data:(id)data
+{
+    NSLog(@"send");
+
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:otherClientSparkId forKey:@"sparkId"];
+
+    for (id key in data) {
+        [dict setValue:[data objectForKey:key] forKey:key];
+    }
+
+    [self send:dict];
+}
+
 
 - (void)onOpen
 {
     NSLog(@"connected");
     [self send:@{@"action": @"auth"}];
-//    [self.signalingServer write:@{
-//                                  @"publicKey": self.publicKey,
-//                                  @"action": @"auth",
-//                                  @"uuid": @"NEED-TO-SET-UUID"
-//                                  }];
-
 }
 
 - (void)joinRoom:(NSString *)roomName
@@ -273,17 +280,18 @@
     [conn setRemoteDescriptionWithDelegate:self sessionDescription:sdp];
 }
 
-- (void)didDetectNewMember:(NSDictionary *)message
+- (void)roomJoin:(NSDictionary *)message
 {
     // TODO: handle multiple peers
-    self.remoteSparkId = message[@"sparkId"];
-    [self getPeerConnection:message[@"sparkId"] asInitiator:YES];
+    NSString* otherClientSparkId = message[@"sparkId"];
+    NSString* otherClientSparkUUID = message[@"sparkUUID"];
+    [self.peerConnectionManager ensurePeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:true];
+    [self sendToOtherSpark:otherClientSparkId data:@{@"action": @"room-announce", @"room": message[@"room"]}];
+
 }
 
 - (void)onError:(NSError *)error
 {
-    NSLog(@"ERROR:");
-
     NSLog(@"ERROR: %@", error);
 }
 
@@ -293,20 +301,23 @@
     typedef void (^OnDataBlock)(NSDictionary*);
     NSDictionary *caseDict =
     @{
-        @"allservers": ^(NSDictionary *message) {
+        @"ack": ^(NSDictionary *message) {
+            NSLog(@"ack: %@", message);
+        },
+        @"rtc-servers": ^(NSDictionary *message) {
             NSArray *serverConfigs = message[@"data"];
-            //NSLog(@"got ICE servers: %@", serverConfigs);
+//            NSLog(@"got ICE servers: %@", serverConfigs);
             [self configureICEServers:serverConfigs];
             [self createLocalMediaStream];
         },
         @"leave": ^(NSDictionary *message) {
             NSLog(@"leave: %@", message);
         },
-        @"member": ^(NSDictionary *message) {
+        @"room-join": ^(NSDictionary *message) {
             NSLog(@"got new member: %@", message);
-            [self didDetectNewMember:message];
+            [self roomJoin:message];
         },
-        @"ice": ^(NSDictionary *message) {
+        @"rtc-ice": ^(NSDictionary *message) {
             NSDictionary *candidateDict = message[@"candidate"][@"candidate"];
             //NSLog(@"got remote ICE candidate: %@", message);
             NSString* sdpMid = candidateDict[@"sdpMid"];
@@ -317,11 +328,11 @@
                                                                           sdp:sdp];
             [self.peerConnection addICECandidate:candidate];
         },
-        @"offer": ^(NSDictionary *message) {
+        @"rtc-offer": ^(NSDictionary *message) {
             NSLog(@"got offer: %@", message);
             [self didReceiveRemoteOfferOrAnswer:message];
         },
-        @"answer": ^(NSDictionary *message) {
+        @"rtc-answer": ^(NSDictionary *message) {
             NSLog(@"got answer: %@", message);
             [self didReceiveRemoteOfferOrAnswer:message];
         }
@@ -331,7 +342,7 @@
     if (blk) {
         blk(data);
     } else {
-        NSLog(@"incoming data: %@", data);
+        NSLog(@"unknown data: %@", data);
     }
 }
 
