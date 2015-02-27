@@ -32,7 +32,7 @@
 @property (nonatomic, weak) id<CineSignalingClientDelegate> delegate;
 
 - (id)initWithDelegate:(id<CineSignalingClientDelegate>)delegate;
-- (void)connect:(NSURL *)url;
+- (void)connect;
 - (void)init:(NSString *)publicKey;
-
+- (void)joinRoom:(NSString *)roomName;
 @end

@@ -65,40 +65,36 @@
     NSLog(@"INIT");
 
     self.publicKey = publicKey;
+    [self connect];
 }
 
-- (void)connect:(NSURL *)url
+- (void)connect
 {
+    NSTimeInterval pingInterval = 25;
     PrimusConnectOptions *options = [[PrimusConnectOptions alloc] init];
     options.transformerClass = SocketRocketClient.class;
     options.manual = YES;
+    options.autodetect = false;
+    options.timeout = 35000;
+    options.ping = pingInterval;
     NSLog(@"CONNECT");
+    NSURL *url = [NSURL URLWithString:@"http://192.168.1.139:8443/primus/websocket"];
 
     self.signalingServer = [[Primus alloc] initWithURL:url options:options];
-    
+//        self.signalingServer = [[Primus alloc] initWithURL:url];
+
     [self.signalingServer on:@"open" listener:^{
         NSLog(@"[open] - The connection has been established.");
+        [self onOpen];
     }];
     
-    [self.signalingServer on:@"open" selector:@selector(onOpen) target:self];
+    [self.signalingServer on:@"reconnect" listener:^(PrimusReconnectOptions *options) {
+        NSLog(@"[reconnect] - We are scheduling a new reconnect attempt");
+    }];
 
-//    [self.signalingServer on:@"open" selector:@selector(onOpen) target:self];
     [self.signalingServer on:@"data" selector:@selector(onData:withRaw:) target:self];
     [self.signalingServer on:@"error" selector:@selector(onError:) target:self];
     
-    [self.signalingServer on:@"open" listener:^{
-        NSLog(@"[open] - The connection has been established2.");
-    }];
-    
-
-    
-    [self.signalingServer on:@"online" listener:^{
-        NSLog(@"[network] - We have regained control over our internet connection.");
-    }];
-    
-    [self.signalingServer on:@"offline" listener:^{
-        NSLog(@"[network] - We lost our internet connection.");
-    }];
     [self.signalingServer on:@"end" listener:^{
         NSLog(@"[end] - The connection has ended.");
     }];
@@ -111,28 +107,44 @@
 - (void)send:(id)data
 {
     NSLog(@"send");
-    [self.signalingServer write:@{
-                                  @"client": @"cineio-peer-ios version-", //TODO: set version
-                                  @"publicKey": self.publicKey,
-                                  @"uuid": @"NEED-TO-SET-UUID"
-                                  }];
+
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:@"cineio-peer-ios version-" forKey:@"client"];
+    [dict setValue:self.publicKey forKey:@"publicKey"];
+    [dict setValue:@"NEED-TO-CREATE-UUID" forKey:@"uuid"];
+
+    for (id key in data) {
+        [dict setValue:[data objectForKey:key] forKey:key];
+    }
+//    NSLog(@"send1");
+//    [data setObject:@"cineio-peer-ios version-" forKey:@"client"];
+//    NSLog(@"send2");
+//    [data setObject:self.publicKey forKey:@"publicKey"];
+//    NSLog(@"send3");
+
+    [self.signalingServer write:dict];
+//    [self.signalingServer write:@{
+//                                  @"client": @"cineio-peer-ios version-", //TODO: set version
+//                                  @"publicKey": self.publicKey,
+//                                  @"uuid": @"NEED-TO-SET-UUID"
+//                                  }];
 }
 
 - (void)onOpen
 {
     NSLog(@"connected");
-    [self.signalingServer write:@{
-                                  @"source": @"iOS",
-                                  @"publicKey": self.publicKey,
-                                  @"action": @"auth",
-                                  @"uuid": @"NEED-TO-SET-UUID"
-                                  }];
+    [self send:@{@"action": @"auth"}];
+//    [self.signalingServer write:@{
+//                                  @"publicKey": self.publicKey,
+//                                  @"action": @"auth",
+//                                  @"uuid": @"NEED-TO-SET-UUID"
+//                                  }];
 
-    [self.signalingServer write:@{
-                                  @"source": @"iOS",
-                                  @"action": @"join",
-                                  @"room": @"hello"
-                                  }];
+}
+
+- (void)joinRoom:(NSString *)roomName
+{
+    [self send:@{@"action": @"room-join", @"room": roomName}];
 }
 
 - (void)configureICEServers:(NSArray *)configDicts
