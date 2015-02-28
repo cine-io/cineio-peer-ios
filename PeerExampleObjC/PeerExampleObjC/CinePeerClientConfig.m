@@ -59,8 +59,6 @@
     [signatureToSha appendString:@"&timestamp="];
     [signatureToSha appendFormat:@"%ld",timestamp];
     [signatureToSha appendString:secretKey];
-    NSLog(@"identity");
-    NSLog(signatureToSha);
 
     NSString *signature = [DigestHelper sha1:signatureToSha];
 

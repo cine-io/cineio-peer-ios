@@ -112,6 +112,10 @@
     [dict setValue:[self.config getPublicKey] forKey:@"publicKey"];
     [dict setValue:self.uuid forKey:@"uuid"];
 
+    if (self.identity != nil) {
+        [dict setValue:[self.identity getIdentity] forKey:@"identity"];
+    }
+
     for (id key in data) {
         [dict setValue:[data objectForKey:key] forKey:key];
     }
