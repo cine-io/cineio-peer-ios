@@ -169,7 +169,7 @@
                                           }];
 }
 //END Signaling api
-
+// Signaling callbacks
 - (void)handleOffer:(NSDictionary *)message
 {
     [self.peerConnectionManager handleOffer:message[@"sparkUUID"] otherClientSparkId:message[@"sparkId"] offer:message[@"offer"]];
@@ -180,7 +180,12 @@
     [self.peerConnectionManager handleAnswer:message[@"sparkUUID"] otherClientSparkId:message[@"sparkId"] answer:message[@"answer"]];
 }
 
-// Signaling callbacks
+- (void)handleError:(NSDictionary *)message
+{
+    NSLog(@"Got error");
+    // todo handle error
+}
+
 - (void)roomJoin:(NSDictionary *)message
 {
     NSString* otherClientSparkId = message[@"sparkId"];
@@ -233,6 +238,9 @@
           NSArray *serverConfigs = message[@"data"];
           //            NSLog(@"got ICE servers: %@", serverConfigs);
           [self.peerConnectionManager configureICEServers:serverConfigs];
+      },
+      @"error": ^(NSDictionary *message) {
+          [self handleError:message];
       },
       // END BASE
       // ROOMS

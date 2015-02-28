@@ -46,9 +46,6 @@
     [[RTCSessionDescription alloc] initWithType:origSdp.type
                                             sdp:[CinePeerUtil preferISAC:origSdp.description]];
 
-
-    //TODO: That craziness that Android is doing with preferISAC
-
     dispatch_async(dispatch_get_main_queue(), ^{
         if (error) {
             NSAssert(NO, error.description);
