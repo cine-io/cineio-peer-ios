@@ -57,7 +57,7 @@
         }
         LocalAnswerSDPObserver *observer = [[LocalAnswerSDPObserver alloc] init];
         [observer rtcMember:self.rtcMember cinePeerClient:self.cinePeerClient];
-        [peerConnection createAnswerWithDelegate:observer constraints:[self.cinePeerClient constraintsForMedia]];
+        [peerConnection createAnswerWithDelegate:(id)observer constraints:[self.cinePeerClient constraintsForMedia]];
 
     });
 }

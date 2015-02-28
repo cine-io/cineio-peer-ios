@@ -125,7 +125,6 @@
 				003092BF19C12A680042DAEE /* ViewController.m */,
 				003092C119C12A680042DAEE /* Main.storyboard */,
 				003092C419C12A680042DAEE /* Images.xcassets */,
-				003092B719C12A680042DAEE /* Supporting Files */,
 				E98A6B9D1AA004BD0004162C /* RTCMember.h */,
 				E98A6B9B1AA0049E0004162C /* RTCMember.m */,
 				E98A6B9E1AA100C20004162C /* PeerObserver.h */,
@@ -136,6 +135,7 @@
 				E98A6BA41AA17DD20004162C /* RemoteOfferSDPObserver.m */,
 				E98A6BA71AA181E60004162C /* LocalAnswerSDPObserver.h */,
 				E98A6BA81AA1824D0004162C /* LocalAnswerSDPObserver.m */,
+				003092B719C12A680042DAEE /* Supporting Files */,
 			);
 			path = PeerExampleObjC;
 			sourceTree = "<group>";
