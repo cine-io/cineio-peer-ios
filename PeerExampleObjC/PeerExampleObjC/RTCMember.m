@@ -46,5 +46,15 @@
     return self.peerObserver;
 }
 
+- (void)close
+{
+    if (self.peerConnection != nil) {
+        [self.peerConnection close];
+    }
+    if (self.peerObserver != nil){
+        [self.peerObserver close];
+    }
+}
+
 
 @end

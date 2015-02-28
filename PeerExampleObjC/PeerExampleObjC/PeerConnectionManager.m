@@ -181,5 +181,17 @@
     return member;
 }
 
+- (void)closePeerConnection:(NSString *)otherClientSparkUUID
+{
+    RTCMember *member = [self.rtcMembers objectForKey:otherClientSparkUUID];
+    if (member == nil) {
+        return;
+    }
+    [member close];
+    [self.rtcMembers removeObjectForKey:otherClientSparkUUID];
+
+}
+
+
 
 @end

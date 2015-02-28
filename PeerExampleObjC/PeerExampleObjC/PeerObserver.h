@@ -16,5 +16,7 @@
 
 @interface PeerObserver : NSObject
 - (void)rtcMember:(RTCMember *)member cinePeerClient:(CinePeerClient *)cinePeerClient;
+- (void)close;
+
 @end
 #endif

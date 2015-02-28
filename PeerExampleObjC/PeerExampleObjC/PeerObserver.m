@@ -67,6 +67,7 @@
          removedStream:(RTCMediaStream *)stream
 {
     NSLog(@"removedStream");
+    [self disposeOfStream:stream];
 }
 
 - (void)peerConnectionOnRenegotiationNeeded:(RTCPeerConnection *)peerConnection
@@ -104,7 +105,15 @@
     NSLog(@"didOpenDataChannel");
 }
 
+- (void)close
+{
+    [self disposeOfStream:self.addedStream];
+}
 
-#pragma mark - RTCSessionDescriptionDelegate
+- (void)disposeOfStream:(RTCMediaStream *)stream
+{
+    [self.cinePeerClient removeStream:stream];
+}
+
 
 @end

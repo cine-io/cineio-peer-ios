@@ -16,6 +16,7 @@
 
 @protocol CinePeerClientDelegate <NSObject>
 - (void) addStream:(RTCMediaStream *)stream local:(BOOL)local;
+- (void) removeStream:(RTCMediaStream *)stream local:(BOOL)local;
 
 //- (void)signalingClient:(CineSignalingClient *)client didReceiveLocalVideoTrack:(RTCVideoTrack *)track;
 //
@@ -36,6 +37,7 @@
 - (void)joinRoom:(NSString *)roomName;
 - (void)startMediaStream;
 - (void)addStream:(RTCMediaStream *)mediaStream;
+- (void)removeStream:(RTCMediaStream *)mediaStream;
 - (SignalingConnection *)getSignalingConnection;
 - (RTCMediaConstraints*)constraintsForMedia;
 - (RTCMediaConstraints*)constraintsForPeer;

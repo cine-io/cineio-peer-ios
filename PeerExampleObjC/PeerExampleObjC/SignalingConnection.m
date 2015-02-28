@@ -146,30 +146,15 @@
     [self send:@{@"action": @"auth"}];
 }
 
+// Signaling API
 - (void)joinRoom:(NSString *)roomName
 {
     [self send:@{@"action": @"room-join", @"room": roomName}];
 }
 
-
-- (void)handleOffer:(NSDictionary *)message
+- (void)leaveRoom:(NSString *)roomName
 {
-    [self.peerConnectionManager handleOffer:message[@"sparkUUID"] otherClientSparkId:message[@"sparkId"] offer:message[@"offer"]];
-}
-
-- (void)handleAnswer:(NSDictionary *)message
-{
-    [self.peerConnectionManager handleAnswer:message[@"sparkUUID"] otherClientSparkId:message[@"sparkId"] answer:message[@"answer"]];
-}
-
-- (void)roomJoin:(NSDictionary *)message
-{
-    // TODO: handle multiple peers
-    NSString* otherClientSparkId = message[@"sparkId"];
-    NSString* otherClientSparkUUID = message[@"sparkUUID"];
-    [self.peerConnectionManager ensurePeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:true];
-    [self sendToOtherSpark:otherClientSparkId data:@{@"action": @"room-announce", @"room": message[@"room"]}];
-
+    [self send:@{@"action": @"room-leave", @"room": roomName}];
 }
 
 - (void)sendIceCandidate:(NSString *)sparkId candidate:(RTCICECandidate *)candidate;
@@ -186,6 +171,51 @@
                                                   }
                                           }];
 }
+//END Signaling api
+
+- (void)handleOffer:(NSDictionary *)message
+{
+    [self.peerConnectionManager handleOffer:message[@"sparkUUID"] otherClientSparkId:message[@"sparkId"] offer:message[@"offer"]];
+}
+
+- (void)handleAnswer:(NSDictionary *)message
+{
+    [self.peerConnectionManager handleAnswer:message[@"sparkUUID"] otherClientSparkId:message[@"sparkId"] answer:message[@"answer"]];
+}
+
+// Signaling callbacks
+- (void)roomJoin:(NSDictionary *)message
+{
+    NSString* otherClientSparkId = message[@"sparkId"];
+    NSString* otherClientSparkUUID = message[@"sparkUUID"];
+    [self.peerConnectionManager ensurePeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:true];
+    [self sendToOtherSpark:otherClientSparkId data:@{@"action": @"room-announce", @"room": message[@"room"]}];
+
+}
+
+- (void)roomLeave:(NSDictionary *)message
+{
+    NSString* otherClientSparkId = message[@"sparkId"];
+    NSString* otherClientSparkUUID = message[@"sparkUUID"];
+    [self.peerConnectionManager closePeerConnection:otherClientSparkUUID];
+    [self sendToOtherSpark:otherClientSparkId data:@{@"action": @"room-goodbye", @"room": message[@"room"]}];
+
+}
+
+- (void)roomAnnounce:(NSDictionary *)message
+{
+    NSString* otherClientSparkId = message[@"sparkId"];
+    NSString* otherClientSparkUUID = message[@"sparkUUID"];
+    [self.peerConnectionManager ensurePeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:false];
+}
+
+- (void)roomGoodbye:(NSDictionary *)message
+{
+    NSString* otherClientSparkUUID = message[@"sparkUUID"];
+    [self.peerConnectionManager closePeerConnection:otherClientSparkUUID];
+}
+
+//End callbacks
 
 - (void)onError:(NSError *)error
 {
@@ -198,6 +228,7 @@
     typedef void (^OnDataBlock)(NSDictionary*);
     NSDictionary *caseDict =
     @{
+      // BASE
       @"ack": ^(NSDictionary *message) {
           NSLog(@"ack: %@", message);
       },
@@ -206,13 +237,26 @@
           //            NSLog(@"got ICE servers: %@", serverConfigs);
           [self.peerConnectionManager configureICEServers:serverConfigs];
       },
-      @"leave": ^(NSDictionary *message) {
-          NSLog(@"leave: %@", message);
-      },
+      // END BASE
+      // ROOMS
       @"room-join": ^(NSDictionary *message) {
-          NSLog(@"got new member: %@", message);
+          NSLog(@"room-join: %@", message);
           [self roomJoin:message];
       },
+      @"room-leave": ^(NSDictionary *message) {
+          NSLog(@"room-leave: %@", message);
+          [self roomLeave:message];
+      },
+      @"room-announce": ^(NSDictionary *message) {
+          NSLog(@"room-leave: %@", message);
+          [self roomAnnounce:message];
+      },
+      @"room-goodbye": ^(NSDictionary *message) {
+          NSLog(@"room-leave: %@", message);
+          [self roomGoodbye:message];
+      },
+      // END ROOMS
+      // RTC
       @"rtc-ice": ^(NSDictionary *message) {
           NSDictionary *candidateDict = message[@"candidate"][@"candidate"];
           //NSLog(@"got remote ICE candidate: %@", message);
@@ -232,7 +276,8 @@
           NSLog(@"got answer: %@", message);
           [self handleAnswer:message];
       }
-      };
+      //END RTC
+    };
 
     OnDataBlock blk = caseDict[data[@"action"]];
     if (blk) {

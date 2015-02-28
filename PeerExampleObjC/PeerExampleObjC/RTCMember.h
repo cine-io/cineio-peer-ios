@@ -26,4 +26,5 @@
 - (void) setPeerObserver:(PeerObserver *)peerObserver;
 - (PeerObserver *) getPeerObserver;
 
+- (void) close;
 @end

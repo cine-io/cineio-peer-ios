@@ -105,6 +105,17 @@ static CGFloat const kLocalViewPadding = 20;
     }
 }
 
+- (void) removeStream:(RTCMediaStream *)stream local:(BOOL)local
+{
+    RTCVideoTrack *track = [stream.videoTracks firstObject];
+    if(local){
+        [track removeRenderer:self.localVideoView];
+    }
+    else{
+        [track removeRenderer:self.remoteVideoView];
+    }
+}
+
 
 #pragma mark - RTCEAGLVideoViewDelegate
 

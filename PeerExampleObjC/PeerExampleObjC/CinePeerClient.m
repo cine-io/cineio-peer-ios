@@ -58,6 +58,11 @@
     [self.signalingConnection joinRoom:roomName];
 }
 
+- (void)leaveRoom:(NSString *)roomName
+{
+    [self.signalingConnection leaveRoom:roomName];
+}
+
 - (void)startMediaStream
 {
     RTCPeerConnectionFactory *factory = [self.connectionManager getFactory];
@@ -97,7 +102,14 @@
 
 - (void)addStream:(RTCMediaStream *)mediaStream
 {
+    NSLog(@"CinePeerClient - addStream");
     [self.delegate addStream:mediaStream local:false];
+}
+
+- (void)removeStream:(RTCMediaStream *)mediaStream
+{
+    NSLog(@"CinePeerClient - removeStream");
+    [self.delegate removeStream:mediaStream local:false];
 }
 
 - (SignalingConnection *)getSignalingConnection
