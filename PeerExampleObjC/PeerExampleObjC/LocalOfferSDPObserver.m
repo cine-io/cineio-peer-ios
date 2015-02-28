@@ -1,5 +1,5 @@
 //
-//  LocalAnswerSDPObserver.m
+//  LocalOfferSDPObserver.m
 //  PeerExampleObjC
 //
 //  Created by Thomas Shafer on 2/27/15.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "CinePeerClient.h"
-#import "LocalAnswerSDPObserver.h"
+#import "LocalOfferSDPObserver.h"
 #import "RTCSessionDescriptionDelegate.h"
 #import "CinePeerUtil.h"
 #import "RTCSessionDescription.h"
@@ -17,13 +17,13 @@
 #import "RTCMember.h"
 
 
-@interface LocalAnswerSDPObserver () <RTCSessionDescriptionDelegate>
+@interface LocalOfferSDPObserver () <RTCSessionDescriptionDelegate>
 @property (nonatomic, strong) RTCMember* rtcMember;
 @property (nonatomic, strong) CinePeerClient* cinePeerClient;
 @property (nonatomic, strong) RTCSessionDescription* localSdp;
 @end
 
-@implementation LocalAnswerSDPObserver
+@implementation LocalOfferSDPObserver
 
 - (void)rtcMember:(RTCMember *)member cinePeerClient:(CinePeerClient *)cinePeerClient
 {
@@ -37,7 +37,7 @@
     didCreateSessionDescription:(RTCSessionDescription *)origSdp
                           error:(NSError *)error
 {
-    NSLog(@"LocalAnswerSDPObserver");
+    NSLog(@"LocalOfferSDPObserver");
     NSLog(@"didCreateSessionDescription");
     self.localSdp = origSdp;
 
@@ -69,7 +69,7 @@
 - (void)               peerConnection:(RTCPeerConnection *)peerConnection
     didSetSessionDescriptionWithError:(NSError *)error
 {
-    NSLog(@"LocalAnswerSDPObserver");
+    NSLog(@"LocalOfferSDPObserver");
     NSLog(@"didSetSessionDescriptionWithError");
     if (error) {
         NSLog(@"didSetSessionDescriptionWithError has error");

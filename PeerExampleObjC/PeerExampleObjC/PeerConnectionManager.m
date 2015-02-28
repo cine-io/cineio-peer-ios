@@ -12,6 +12,8 @@
 #import "CinePeerUtil.h"
 #import "RTCMember.h"
 #import "RemoteOfferSDPObserver.h"
+#import "LocalOfferSDPObserver.h"
+#import "RemoteAnswerSDPObserver.h"
 
 // WebRTC includes
 #import "RTCICECandidate.h"
@@ -99,6 +101,21 @@
 - (void)handleAnswer:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId answer:(NSDictionary *)answer
 {
     NSLog(@"HANDLE ANSWER");
+    NSString* sdpString = answer[@"sdp"];
+    RTCSessionDescription* sdp =
+    [[RTCSessionDescription alloc] initWithType:answer[@"type"]
+                                            sdp:[CinePeerUtil preferISAC:sdpString]];
+
+    RTCMember *rtcMember = [self getPeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:false];
+    NSLog(@"GOT member");
+
+    RTCPeerConnection* conn = [rtcMember getPeerConnection];
+    NSLog(@"got connection");
+
+    RemoteAnswerSDPObserver *observer = [[RemoteAnswerSDPObserver alloc] init];
+    [observer rtcMember:rtcMember cinePeerClient:self.cinePeerClient];
+    [conn setRemoteDescriptionWithDdelegate:(id)observer sessionDescription:sdp];
+
 }
 
 
@@ -152,8 +169,11 @@
     [self.rtcMembers setObject:member forKey:otherClientSparkUUID];
 
     if (offer) {
+        LocalOfferSDPObserver *observer = [[LocalOfferSDPObserver alloc] init];
+        [observer rtcMember:member cinePeerClient:self.cinePeerClient];
+
         NSLog(@"offerring");
-        [conn createOfferWithDelegate:(id)self constraints:[self.cinePeerClient constraintsForMedia]];
+        [conn createOfferWithDelegate:(id)observer constraints:[self.cinePeerClient constraintsForMedia]];
     }
 
     NSLog(@"returning member");

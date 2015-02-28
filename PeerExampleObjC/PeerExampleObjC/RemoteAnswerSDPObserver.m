@@ -1,5 +1,5 @@
 //
-//  RemoteOfferSDPObserver.m
+//  RemoteAnswerSDPObserver.m
 //  PeerExampleObjC
 //
 //  Created by Thomas Shafer on 2/27/15.
@@ -8,19 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
-#import "RemoteOfferSDPObserver.h"
+#import "RemoteAnswerSDPObserver.h"
 #import "LocalAnswerSDPObserver.h"
 #import "RTCSessionDescriptionDelegate.h"
 #import "CinePeerClient.h"
 #import "RTCPeerConnection.h"
 
 
-@interface RemoteOfferSDPObserver () <RTCSessionDescriptionDelegate>
+@interface RemoteAnswerSDPObserver () <RTCSessionDescriptionDelegate>
 @property (nonatomic, strong) RTCMember* rtcMember;
 @property (nonatomic, strong) CinePeerClient* cinePeerClient;
 @end
 
-@implementation RemoteOfferSDPObserver
+@implementation RemoteAnswerSDPObserver
 
 - (void)rtcMember:(RTCMember *)member cinePeerClient:(CinePeerClient *)cinePeerClient
 {
@@ -34,31 +34,20 @@
     didCreateSessionDescription:(RTCSessionDescription *)origSdp
                           error:(NSError *)error
 {
-    NSLog(@"RemoteOfferSDPObserver");
-    NSLog(@"SHOULD NOT CREATE REMOTE DESCRIPTION");
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (error) {
-            NSAssert(NO, error.description);
-            return;
-        }
-    });
+    NSLog(@"RemoteAnswerSDPObserver");
+    NSLog(@"SHOULD NOT CREATE REMOTE ANSWER");
 }
 
 // Called when setting a local or remote description.
 - (void)               peerConnection:(RTCPeerConnection *)peerConnection
     didSetSessionDescriptionWithError:(NSError *)error
 {
-    NSLog(@"RemoteOfferSDPObserver");
+    NSLog(@"RemoteAnswerSDPObserver");
     NSLog(@"didSetSessionDescriptionWithError");
     if (error) {
         NSAssert(NO, error.description);
         return;
     }
-    dispatch_async(dispatch_get_main_queue(), ^{
-        LocalAnswerSDPObserver *observer = [[LocalAnswerSDPObserver alloc] init];
-        [observer rtcMember:self.rtcMember cinePeerClient:self.cinePeerClient];
-        [peerConnection createAnswerWithDelegate:(id)observer constraints:[self.cinePeerClient constraintsForMedia]];
-    });
 }
 
 @end
