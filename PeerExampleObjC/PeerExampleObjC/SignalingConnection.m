@@ -44,6 +44,7 @@
 @property (nonatomic, strong) NSString *uuid;
 @property (nonatomic, strong) Identity *identity;
 @property (nonatomic, strong) NSMutableDictionary *ongoingCalls;
+@property (nonatomic, strong) NSMutableArray *joinedRooms;
 
 @end
 
@@ -58,6 +59,7 @@
         self.peerConnectionFactory = [[RTCPeerConnectionFactory alloc] init];
         self.uuid = [[NSUUID UUID] UUIDString];
         self.ongoingCalls = [[NSMutableDictionary alloc] init];
+        self.joinedRooms = [[NSMutableArray alloc] init];
         [self connect];
     }
     return self;
@@ -143,16 +145,27 @@
 {
     NSLog(@"connected");
     [self send:@{@"action": @"auth"}];
+    [self sendIdentity];
+    for (id roomName in self.joinedRooms) {
+        [self sendJoinRoom:roomName];
+    }
 }
 
 // Signaling API
 - (void)joinRoom:(NSString *)roomName
+{
+    [self.joinedRooms addObject:roomName];
+    [self sendJoinRoom:roomName];
+}
+
+- (void)sendJoinRoom:(NSString *)roomName
 {
     [self send:@{@"action": @"room-join", @"room": roomName}];
 }
 
 - (void)leaveRoom:(NSString *)roomName
 {
+    [self.joinedRooms removeObject:roomName];
     [self send:@{@"action": @"room-leave", @"room": roomName}];
 }
 - (void)identify:(Identity *)theIdentity
