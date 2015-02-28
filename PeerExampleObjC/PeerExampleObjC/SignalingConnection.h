@@ -14,11 +14,12 @@
 @class PeerConnectionManager;
 @class RTCICECandidate;
 @class RTCSessionDescription;
+@class CinePeerClientConfig;
 
 @interface SignalingConnection : NSObject
 
 - (void)connect;
-- (void)init:(NSString *)publicKey;
+- (id)initWithConfig:(CinePeerClientConfig *)theConfig;
 - (void)joinRoom:(NSString *)roomName;
 - (void)leaveRoom:(NSString *)roomName;
 - (void)setPeerConnectionsManager:(PeerConnectionManager *)peerConnectionManager;

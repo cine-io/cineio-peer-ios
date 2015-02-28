@@ -25,6 +25,8 @@
 		E98A6BAB1AA193850004162C /* RemoteAnswerSDPObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6BAA1AA193850004162C /* RemoteAnswerSDPObserver.m */; };
 		E98A6BAF1AA194420004162C /* LocalOfferSDPObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6BAE1AA194420004162C /* LocalOfferSDPObserver.m */; };
 		E98A6BB11AA2582D0004162C /* SignalingConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6BB01AA2582D0004162C /* SignalingConnection.m */; };
+		E98A6BB51AA26B470004162C /* Identity.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6BB41AA26B470004162C /* Identity.m */; };
+		E98A6BB71AA26C6D0004162C /* CinePeerClientConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6BB61AA26C6D0004162C /* CinePeerClientConfig.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,10 @@
 		E98A6BAE1AA194420004162C /* LocalOfferSDPObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalOfferSDPObserver.m; sourceTree = "<group>"; };
 		E98A6BB01AA2582D0004162C /* SignalingConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignalingConnection.m; sourceTree = "<group>"; };
 		E98A6BB21AA258500004162C /* SignalingConnection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignalingConnection.h; sourceTree = "<group>"; };
+		E98A6BB31AA26AEF0004162C /* Identity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Identity.h; sourceTree = "<group>"; };
+		E98A6BB41AA26B470004162C /* Identity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Identity.m; sourceTree = "<group>"; };
+		E98A6BB61AA26C6D0004162C /* CinePeerClientConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CinePeerClientConfig.m; sourceTree = "<group>"; };
+		E98A6BB81AA26C7D0004162C /* CinePeerClientConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CinePeerClientConfig.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,31 +127,35 @@
 			children = (
 				003092BB19C12A680042DAEE /* AppDelegate.h */,
 				003092BC19C12A680042DAEE /* AppDelegate.m */,
-				003092E019C409070042DAEE /* CinePeerUtil.h */,
-				003092E119C409070042DAEE /* CinePeerUtil.m */,
-				E98A6B981A9FF3F40004162C /* PeerConnectionManager.h */,
-				E98A6B991A9FF4610004162C /* PeerConnectionManager.m */,
-				003092BE19C12A680042DAEE /* ViewController.h */,
-				003092BF19C12A680042DAEE /* ViewController.m */,
-				003092C119C12A680042DAEE /* Main.storyboard */,
-				E98A6B9D1AA004BD0004162C /* RTCMember.h */,
-				E98A6B9B1AA0049E0004162C /* RTCMember.m */,
-				E98A6B9E1AA100C20004162C /* PeerObserver.h */,
-				E98A6B9F1AA100D10004162C /* PeerObserver.m */,
 				E98A6BA31AA1036B0004162C /* CinePeerClient.h */,
 				E98A6BA11AA103610004162C /* CinePeerClient.m */,
-				E98A6BA61AA17DDC0004162C /* RemoteOfferSDPObserver.h */,
-				E98A6BAD1AA1941F0004162C /* LocalOfferSDPObserver.h */,
-				E98A6BAE1AA194420004162C /* LocalOfferSDPObserver.m */,
-				E98A6BA41AA17DD20004162C /* RemoteOfferSDPObserver.m */,
+				E98A6BB81AA26C7D0004162C /* CinePeerClientConfig.h */,
+				E98A6BB61AA26C6D0004162C /* CinePeerClientConfig.m */,
+				003092E019C409070042DAEE /* CinePeerUtil.h */,
+				003092E119C409070042DAEE /* CinePeerUtil.m */,
+				E98A6BB31AA26AEF0004162C /* Identity.h */,
+				E98A6BB41AA26B470004162C /* Identity.m */,
+				003092C419C12A680042DAEE /* Images.xcassets */,
 				E98A6BA71AA181E60004162C /* LocalAnswerSDPObserver.h */,
 				E98A6BA81AA1824D0004162C /* LocalAnswerSDPObserver.m */,
-				E98A6BAA1AA193850004162C /* RemoteAnswerSDPObserver.m */,
+				E98A6BAD1AA1941F0004162C /* LocalOfferSDPObserver.h */,
+				E98A6BAE1AA194420004162C /* LocalOfferSDPObserver.m */,
+				003092C119C12A680042DAEE /* Main.storyboard */,
+				E98A6B981A9FF3F40004162C /* PeerConnectionManager.h */,
+				E98A6B991A9FF4610004162C /* PeerConnectionManager.m */,
+				E98A6B9E1AA100C20004162C /* PeerObserver.h */,
+				E98A6B9F1AA100D10004162C /* PeerObserver.m */,
 				E98A6BAC1AA193B50004162C /* RemoteAnswerSDPObserver.h */,
+				E98A6BAA1AA193850004162C /* RemoteAnswerSDPObserver.m */,
+				E98A6BA61AA17DDC0004162C /* RemoteOfferSDPObserver.h */,
+				E98A6BA41AA17DD20004162C /* RemoteOfferSDPObserver.m */,
+				E98A6B9D1AA004BD0004162C /* RTCMember.h */,
+				E98A6B9B1AA0049E0004162C /* RTCMember.m */,
 				E98A6BB21AA258500004162C /* SignalingConnection.h */,
 				E98A6BB01AA2582D0004162C /* SignalingConnection.m */,
 				003092B719C12A680042DAEE /* Supporting Files */,
-				003092C419C12A680042DAEE /* Images.xcassets */,
+				003092BE19C12A680042DAEE /* ViewController.h */,
+				003092BF19C12A680042DAEE /* ViewController.m */,
 			);
 			path = PeerExampleObjC;
 			sourceTree = "<group>";
@@ -328,7 +338,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E98A6BAF1AA194420004162C /* LocalOfferSDPObserver.m in Sources */,
+				E98A6BB71AA26C6D0004162C /* CinePeerClientConfig.m in Sources */,
 				E98A6BA01AA100D10004162C /* PeerObserver.m in Sources */,
+				E98A6BB51AA26B470004162C /* Identity.m in Sources */,
 				E98A6BA91AA1824D0004162C /* LocalAnswerSDPObserver.m in Sources */,
 				003092C019C12A680042DAEE /* ViewController.m in Sources */,
 				003092BD19C12A680042DAEE /* AppDelegate.m in Sources */,

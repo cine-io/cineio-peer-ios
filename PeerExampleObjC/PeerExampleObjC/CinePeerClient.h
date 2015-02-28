@@ -14,26 +14,10 @@
 #include "RTCMediaConstraints.h"
 @class CinePeerClient;
 
-@protocol CinePeerClientDelegate <NSObject>
-- (void) addStream:(RTCMediaStream *)stream local:(BOOL)local;
-- (void) removeStream:(RTCMediaStream *)stream local:(BOOL)local;
-
-//- (void)signalingClient:(CineSignalingClient *)client didReceiveLocalVideoTrack:(RTCVideoTrack *)track;
-//
-//- (void)signalingClient:(CineSignalingClient *)client didReceiveRemoteVideoTrack:(RTCVideoTrack *)track;
-//- (void)signalingClient:(CineSignalingClient *)client didReceiveRemoteAudioTrack:(RTCAudioTrack *)track;
-//
-//- (void)signalingClientDidReceiveHangup:(CineSignalingClient *)client;
-//
-//- (void)signalingClient:(CineSignalingClient *)client didErrorWithMessage:(NSString *)message;
-
-@end
 
 @interface CinePeerClient : NSObject
-@property (nonatomic, weak) id<CinePeerClientDelegate> delegate;
 
-- (id)initWithDelegate:(id<CinePeerClientDelegate>)delegate;
-- (void)init:(NSString *)publicKey;
+- (id)initWithConfig:(CinePeerClientConfig *)config;
 - (void)joinRoom:(NSString *)roomName;
 - (void)startMediaStream;
 - (void)addStream:(RTCMediaStream *)mediaStream;

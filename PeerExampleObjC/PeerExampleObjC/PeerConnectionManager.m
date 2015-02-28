@@ -118,6 +118,24 @@
 
 }
 
+- (void)handleIce:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId iceCandidate:(NSDictionary *)iceCandidate
+{
+    NSDictionary *candidateDict = iceCandidate[@"candidate"][@"candidate"];
+    NSString* sdpMid = candidateDict[@"sdpMid"];
+    NSNumber* sdpLineIndex = candidateDict[@"sdpMLineIndex"];
+    NSString* sdp = candidateDict[@"candidate"];
+    RTCICECandidate* candidate = [[RTCICECandidate alloc] initWithMid:sdpMid index:sdpLineIndex.intValue sdp:sdp];
+
+    RTCMember *rtcMember = [self getPeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:false];
+    NSLog(@"GOT member");
+
+    RTCPeerConnection* conn = [rtcMember getPeerConnection];
+    NSLog(@"got connection");
+
+    [conn addICECandidate:candidate];
+}
+
+
 
 - (void)ensurePeerConnection:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId offer:(BOOL)offer
 {

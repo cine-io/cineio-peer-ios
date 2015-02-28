@@ -19,6 +19,7 @@
 #import "RTCPeerConnectionFactory.h"
 #import "RTCMediaConstraints.h"
 #import "CinePeerClient.h"
+#import "CinePeerClientConfig.h"
 
 static CGFloat const kLocalViewPadding = 20;
 
@@ -45,8 +46,9 @@ static CGFloat const kLocalViewPadding = 20;
     NSString *publicKey = @"0b519f759096c48bf455941a02cf2c90";
     NSString *roomName = @"example";
 
-    self.cinePeerClient  = [[CinePeerClient alloc] initWithDelegate:self];
-    [self.cinePeerClient init:publicKey];
+    CinePeerClientConfig *config = [[CinePeerClientConfig alloc] initWithPublicKey:publicKey delegate:self];
+    self.cinePeerClient  = [[CinePeerClient alloc] initWithConfig:config];
+
 
     [self.cinePeerClient startMediaStream];
 
@@ -114,6 +116,11 @@ static CGFloat const kLocalViewPadding = 20;
     else{
         [track removeRenderer:self.remoteVideoView];
     }
+}
+
+-(void) handleError:(NSDictionary *)error
+{
+    NSLog(@"ViewController got error");
 }
 
 

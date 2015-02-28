@@ -10,6 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import "CinePeerClient.h"
+#import "CinePeerClientConfig.h"
 #import "SignalingConnection.h"
 #import "PeerConnectionManager.h"
 #import "RTCPeerConnectionFactory.h"
@@ -27,30 +28,23 @@
 @property (nonatomic, strong) SignalingConnection *signalingConnection;
 @property (nonatomic, strong) RTCVideoSource *videoSource;
 @property (nonatomic, strong) RTCMediaStream *localMediaStream;
+@property (nonatomic, strong) CinePeerClientConfig *config;
 
 @end
 
 @implementation CinePeerClient
 
-@synthesize delegate;
 
-- (id)initWithDelegate:(id<CinePeerClientDelegate>)theDelegate
+- (id)initWithConfig:(CinePeerClientConfig *)config
 {
     if (self = [super init]) {
-        self.delegate = theDelegate;
+        self.config = config;
         self.connectionManager = [[PeerConnectionManager alloc] initWithPeerClient:self];
-        self.signalingConnection = [[SignalingConnection alloc] init];
+        self.signalingConnection = [[SignalingConnection alloc] initWithConfig:self.config];
         [self.signalingConnection setPeerConnectionsManager:self.connectionManager];
 
     }
     return self;
-}
-- (void)init:(NSString *)publicKey
-{
-    NSLog(@"INIT peer client");
-
-    self.publicKey = publicKey;
-    [self.signalingConnection init:publicKey];
 }
 
 - (void)joinRoom:(NSString *)roomName
@@ -94,7 +88,7 @@
 
     [self.connectionManager setLocalMediaStream:self.localMediaStream];
 
-    [self.delegate addStream:self.localMediaStream local:true];
+    [[self.config getDelegate] addStream:self.localMediaStream local:true];
 
 #endif
 
@@ -103,13 +97,13 @@
 - (void)addStream:(RTCMediaStream *)mediaStream
 {
     NSLog(@"CinePeerClient - addStream");
-    [self.delegate addStream:mediaStream local:false];
+    [[self.config getDelegate] addStream:mediaStream local:false];
 }
 
 - (void)removeStream:(RTCMediaStream *)mediaStream
 {
     NSLog(@"CinePeerClient - removeStream");
-    [self.delegate removeStream:mediaStream local:false];
+    [[self.config getDelegate] removeStream:mediaStream local:false];
 }
 
 - (SignalingConnection *)getSignalingConnection
