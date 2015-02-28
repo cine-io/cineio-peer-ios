@@ -1,5 +1,5 @@
 //
-//  RemoteOfferSDPObserver.h
+//  LocalAnswerSDPObserver.h
 //  PeerExampleObjC
 //
 //  Created by Thomas Shafer on 2/27/15.

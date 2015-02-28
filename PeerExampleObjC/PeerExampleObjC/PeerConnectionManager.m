@@ -153,7 +153,7 @@
 
     if (offer) {
         NSLog(@"offerring");
-        [conn createOfferWithDelegate:self constraints:[self.cinePeerClient constraintsForMedia]];
+        [conn createOfferWithDelegate:(id)self constraints:[self.cinePeerClient constraintsForMedia]];
     }
 
     NSLog(@"returning member");
