@@ -44,11 +44,17 @@ static CGFloat const kLocalViewPadding = 20;
     [self initializeVideoViews];
 
     NSString *publicKey = @"0b519f759096c48bf455941a02cf2c90";
+    NSString *secretKey = @"d9c0f1cd4de4cf45616b350930dfb399";
     NSString *roomName = @"example";
+    NSString *identityName = @"Thomas";
 
     CinePeerClientConfig *config = [[CinePeerClientConfig alloc] initWithPublicKey:publicKey delegate:self];
+    [config setSecretKey:secretKey];
+
     self.cinePeerClient  = [[CinePeerClient alloc] initWithConfig:config];
 
+    Identity *identity = [config generateIdentity:identityName];
+    [self.cinePeerClient identify:identity];
 
     [self.cinePeerClient startMediaStream];
 
@@ -120,7 +126,7 @@ static CGFloat const kLocalViewPadding = 20;
 
 -(void) handleError:(NSDictionary *)error
 {
-    NSLog(@"ViewController got error");
+    NSLog(@"ViewController got error: %@", error);
 }
 
 

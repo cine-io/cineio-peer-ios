@@ -15,6 +15,7 @@
 @class RTCICECandidate;
 @class RTCSessionDescription;
 @class CinePeerClientConfig;
+@class Identity;
 
 @interface SignalingConnection : NSObject
 
@@ -22,6 +23,7 @@
 - (id)initWithConfig:(CinePeerClientConfig *)theConfig;
 - (void)joinRoom:(NSString *)roomName;
 - (void)leaveRoom:(NSString *)roomName;
+- (void)identify:(Identity *)identity;
 - (void)setPeerConnectionsManager:(PeerConnectionManager *)peerConnectionManager;
 - (void)sendIceCandidate:(NSString *)sparkId candidate:(RTCICECandidate *)candidate;
 - (void)sendLocalDescription:(NSString *)sparkId  description:(RTCSessionDescription *)description;

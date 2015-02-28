@@ -16,6 +16,7 @@
 #import "RTCMember.h"
 #import "PeerConnectionManager.h"
 #import "CinePeerClientConfig.h"
+#import "Identity.h"
 
 // WebRTC includes
 #import "RTCICECandidate.h"
@@ -40,6 +41,7 @@
 @property (nonatomic, strong) RTCPeerConnectionFactory *peerConnectionFactory;
 @property (nonatomic, strong) PeerConnectionManager *peerConnectionManager;
 @property (nonatomic, strong) NSString *uuid;
+@property (nonatomic, strong) Identity *identity;
 
 @end
 
@@ -146,6 +148,23 @@
 {
     [self send:@{@"action": @"room-leave", @"room": roomName}];
 }
+- (void)identify:(Identity *)theIdentity
+{
+    self.identity = theIdentity;
+    [self sendIdentity];
+}
+- (void)sendIdentity
+{
+    [self send:@{
+                 @"action": @"identify",
+                 @"identity": [self.identity getIdentity],
+                 @"timestamp": [NSNumber numberWithLong:[self.identity getTimestamp]],
+                 @"signature": [self.identity getSignature]
+                 }
+     ];
+
+}
+
 
 - (void)sendIceCandidate:(NSString *)sparkId candidate:(RTCICECandidate *)candidate;
 {

@@ -13,18 +13,22 @@
 #include "RTCMediaStream.h"
 #include "RTCMediaConstraints.h"
 @class CinePeerClient;
-
+@class Identity;
 
 @interface CinePeerClient : NSObject
 
+//API METHODS
 - (id)initWithConfig:(CinePeerClientConfig *)config;
 - (void)joinRoom:(NSString *)roomName;
 - (void)startMediaStream;
+- (void)identify:(Identity *)identity;
+//END API METHODS
+
 - (void)addStream:(RTCMediaStream *)mediaStream;
 - (void)removeStream:(RTCMediaStream *)mediaStream;
+
 - (SignalingConnection *)getSignalingConnection;
 - (RTCMediaConstraints*)constraintsForMedia;
 - (RTCMediaConstraints*)constraintsForPeer;
-
 @end
 #endif

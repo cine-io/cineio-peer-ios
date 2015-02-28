@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "CinePeerClientConfig.h"
+#import "Identity.h"
+#import "DigestHelper.h"
 
 @interface CinePeerClientConfig ()
 
@@ -45,6 +47,25 @@
 - (id)getDelegate
 {
     return self.delegate;
+}
+- (Identity *) generateIdentity:(NSString *)identityName
+{
+    long timestamp = CFAbsoluteTimeGetCurrent();
+
+    NSMutableString *signatureToSha = [[NSMutableString alloc] init];
+//    "identity="+identityName+"&timestamp="+timestamp+secretKey
+    [signatureToSha appendString:@"identity="];
+    [signatureToSha appendString:identityName];
+    [signatureToSha appendString:@"&timestamp="];
+    [signatureToSha appendFormat:@"%ld",timestamp];
+    [signatureToSha appendString:secretKey];
+    NSLog(@"identity");
+    NSLog(signatureToSha);
+
+    NSString *signature = [DigestHelper sha1:signatureToSha];
+
+    Identity *identity = [[Identity alloc] initWithName:identityName timestamp:timestamp signature:signature];
+    return identity;
 }
 
 

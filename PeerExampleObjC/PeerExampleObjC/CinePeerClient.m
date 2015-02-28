@@ -34,7 +34,7 @@
 
 @implementation CinePeerClient
 
-
+//API BEGIN
 - (id)initWithConfig:(CinePeerClientConfig *)config
 {
     if (self = [super init]) {
@@ -93,6 +93,12 @@
 #endif
 
 }
+
+- (void)identify:(Identity *)theIdentity
+{
+    [self.signalingConnection identify:theIdentity];
+}
+//API END
 
 - (void)addStream:(RTCMediaStream *)mediaStream
 {

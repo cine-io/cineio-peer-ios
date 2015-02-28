@@ -12,25 +12,26 @@
 
 @class CinePeerClientConfig;
 @class RTCMediaStream;
+@class Identity;
 
 @protocol CinePeerClientDelegate <NSObject>
 - (void) addStream:(RTCMediaStream *)stream local:(BOOL)local;
 - (void) removeStream:(RTCMediaStream *)stream local:(BOOL)local;
 - (void) handleError:(NSDictionary *)error;
-
 @end
 
 @interface CinePeerClientConfig : NSObject
 @property (nonatomic, weak) id<CinePeerClientDelegate> delegate;
+
+- (id) initWithPublicKey:(NSString *)publicKey delegate:(id<CinePeerClientDelegate>)delegate;
+- (id<CinePeerClientDelegate>) getDelegate;
 
 - (NSString *)getPublicKey;
 
 - (NSString *)getSecretKey;
 - (void)setSecretKey:(NSString *)secretKey;
 
-- (id) initWithPublicKey:(NSString *)publicKey delegate:(id<CinePeerClientDelegate>)delegate;
-
-- (id<CinePeerClientDelegate>) getDelegate;
+- (Identity *) generateIdentity:(NSString *)identityName;
 @end
 
 #endif

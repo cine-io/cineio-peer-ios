@@ -27,6 +27,7 @@
 		E98A6BB11AA2582D0004162C /* SignalingConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6BB01AA2582D0004162C /* SignalingConnection.m */; };
 		E98A6BB51AA26B470004162C /* Identity.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6BB41AA26B470004162C /* Identity.m */; };
 		E98A6BB71AA26C6D0004162C /* CinePeerClientConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6BB61AA26C6D0004162C /* CinePeerClientConfig.m */; };
+		E98A6BBB1AA27D8A0004162C /* DigestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6BBA1AA27D8A0004162C /* DigestHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,8 @@
 		E98A6BB41AA26B470004162C /* Identity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Identity.m; sourceTree = "<group>"; };
 		E98A6BB61AA26C6D0004162C /* CinePeerClientConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CinePeerClientConfig.m; sourceTree = "<group>"; };
 		E98A6BB81AA26C7D0004162C /* CinePeerClientConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CinePeerClientConfig.h; sourceTree = "<group>"; };
+		E98A6BB91AA27D510004162C /* DigestHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DigestHelper.h; sourceTree = "<group>"; };
+		E98A6BBA1AA27D8A0004162C /* DigestHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigestHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +159,8 @@
 				003092B719C12A680042DAEE /* Supporting Files */,
 				003092BE19C12A680042DAEE /* ViewController.h */,
 				003092BF19C12A680042DAEE /* ViewController.m */,
+				E98A6BB91AA27D510004162C /* DigestHelper.h */,
+				E98A6BBA1AA27D8A0004162C /* DigestHelper.m */,
 			);
 			path = PeerExampleObjC;
 			sourceTree = "<group>";
@@ -353,6 +358,7 @@
 				003092E219C409070042DAEE /* CinePeerUtil.m in Sources */,
 				E98A6B9C1AA0049E0004162C /* RTCMember.m in Sources */,
 				E98A6BAB1AA193850004162C /* RemoteAnswerSDPObserver.m in Sources */,
+				E98A6BBB1AA27D8A0004162C /* DigestHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

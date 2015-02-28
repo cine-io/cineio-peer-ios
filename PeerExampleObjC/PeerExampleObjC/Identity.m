@@ -21,9 +21,15 @@
 
 @implementation Identity
 
-//@synthesize identity;
-//@synthesize signature;
-//@synthesize timestamp;
+- (id) initWithName:(NSString *)identityName timestamp:(long)timestamp signature:(NSString *)signature;
+{
+    if (self = [super init]) {
+        self.identity = identityName;
+        self.timestamp = timestamp;
+        self.signature = signature;
+    }
+    return self;
+}
 
 - (NSString *)getIdentity;
 {

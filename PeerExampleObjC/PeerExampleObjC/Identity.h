@@ -13,6 +13,8 @@
 
 @interface Identity : NSObject
 
+- (id) initWithName:(NSString *)identityName timestamp:(long)timestamp signature:(NSString *)signature;
+
 - (NSString *)getIdentity;
 
 - (NSString *)getSignature;
