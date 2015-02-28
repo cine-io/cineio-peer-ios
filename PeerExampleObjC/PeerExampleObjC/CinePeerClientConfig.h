@@ -13,11 +13,13 @@
 @class CinePeerClientConfig;
 @class RTCMediaStream;
 @class Identity;
+@class Call;
 
 @protocol CinePeerClientDelegate <NSObject>
 - (void) addStream:(RTCMediaStream *)stream local:(BOOL)local;
 - (void) removeStream:(RTCMediaStream *)stream local:(BOOL)local;
 - (void) handleError:(NSDictionary *)error;
+- (void) handleCall:(Call *)call;
 @end
 
 @interface CinePeerClientConfig : NSObject

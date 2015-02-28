@@ -10,6 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import "SignalingConnection.h"
+#import "Call.h"
 #import "PeerConnectionManager.h"
 #import "RTCEAGLVideoView.h"
 #import "RTCVideoTrack.h"
@@ -54,9 +55,10 @@ static CGFloat const kLocalViewPadding = 20;
     self.cinePeerClient  = [[CinePeerClient alloc] initWithConfig:config];
 
     Identity *identity = [config generateIdentity:identityName];
-    [self.cinePeerClient identify:identity];
 
     [self.cinePeerClient startMediaStream];
+
+    [self.cinePeerClient identify:identity];
 
     [self.cinePeerClient joinRoom:roomName];
 }
@@ -127,6 +129,12 @@ static CGFloat const kLocalViewPadding = 20;
 -(void) handleError:(NSDictionary *)error
 {
     NSLog(@"ViewController got error: %@", error);
+}
+
+- (void) handleCall:(Call *)call
+{
+    NSLog(@"ViewController got call");
+    [call answer];
 }
 
 

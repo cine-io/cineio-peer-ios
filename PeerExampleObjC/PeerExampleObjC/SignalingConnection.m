@@ -17,6 +17,7 @@
 #import "PeerConnectionManager.h"
 #import "CinePeerClientConfig.h"
 #import "Identity.h"
+#import "Call.h"
 
 // WebRTC includes
 #import "RTCICECandidate.h"
@@ -42,6 +43,7 @@
 @property (nonatomic, strong) PeerConnectionManager *peerConnectionManager;
 @property (nonatomic, strong) NSString *uuid;
 @property (nonatomic, strong) Identity *identity;
+@property (nonatomic, strong) NSMutableDictionary *ongoingCalls;
 
 @end
 
@@ -55,6 +57,7 @@
         self.config = theConfig;
         self.peerConnectionFactory = [[RTCPeerConnectionFactory alloc] init];
         self.uuid = [[NSUUID UUID] UUIDString];
+        self.ongoingCalls = [[NSMutableDictionary alloc] init];
         [self connect];
     }
     return self;
@@ -200,6 +203,13 @@
 
                                           }];
 }
+- (void)rejectCall:(NSString *)roomName
+{
+    [self send:@{
+                 @"action": @"call-reject",
+                 @"room": roomName
+                 }];
+}
 
 //END Signaling api
 // Signaling callbacks
@@ -256,6 +266,41 @@
     [self.peerConnectionManager closePeerConnection:otherClientSparkUUID];
 }
 
+- (void)handleCall:(NSDictionary *)message
+{
+    NSLog(@"handleCall: %@", message);
+    Call *call = [self callForRoom:message[@"room"] initated:false];
+    [[self.config getDelegate] handleCall:call];
+
+}
+- (void)handleCallCancel:(NSDictionary *)message
+{
+    NSLog(@"handleCallCancel: %@", message);
+    Call *call = [self callForRoom:message[@"room"] initated:false];
+    [call cancelled:message[@"identity"]];
+
+}
+- (void)handleCallReject:(NSDictionary *)message
+{
+    NSLog(@"handleCallReject: %@", message);
+    Call *call = [self callForRoom:message[@"room"] initated:false];
+    [call rejected:message[@"identity"]];
+
+//    call.rejected(response.getString("identity"));
+}
+
+-(Call *)callForRoom:(NSString *)roomName initated:(BOOL)initiated
+{
+    Call *call = [self.ongoingCalls valueForKey:roomName];
+    if (call == nil) {
+        call = [[Call alloc]initWithRoom:roomName signalingConnection:self initiated:initiated];
+        [self.ongoingCalls setObject:call forKey:roomName];
+        return call;
+    }
+    return call;
+}
+
+
 //End callbacks
 
 - (void)onError:(NSError *)error
@@ -282,6 +327,20 @@
           [self handleError:message];
       },
       // END BASE
+      // CALLING
+      @"call": ^(NSDictionary *message) {
+          NSLog(@"call: %@", message);
+          [self handleCall:message];
+      },
+      @"call-cancel": ^(NSDictionary *message) {
+          NSLog(@"call-cancel: %@", message);
+          [self handleCallCancel:message];
+      },
+      @"call-reject": ^(NSDictionary *message) {
+          NSLog(@"call-reject: %@", message);
+          [self handleCallReject:message];
+      },
+      // END CALLING
       // ROOMS
       @"room-join": ^(NSDictionary *message) {
           NSLog(@"room-join: %@", message);

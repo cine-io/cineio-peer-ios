@@ -28,6 +28,7 @@
 		E98A6BB51AA26B470004162C /* Identity.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6BB41AA26B470004162C /* Identity.m */; };
 		E98A6BB71AA26C6D0004162C /* CinePeerClientConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6BB61AA26C6D0004162C /* CinePeerClientConfig.m */; };
 		E98A6BBB1AA27D8A0004162C /* DigestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6BBA1AA27D8A0004162C /* DigestHelper.m */; };
+		E98A6BBD1AA282F80004162C /* Call.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6BBC1AA282F80004162C /* Call.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,8 @@
 		E98A6BB81AA26C7D0004162C /* CinePeerClientConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CinePeerClientConfig.h; sourceTree = "<group>"; };
 		E98A6BB91AA27D510004162C /* DigestHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DigestHelper.h; sourceTree = "<group>"; };
 		E98A6BBA1AA27D8A0004162C /* DigestHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigestHelper.m; sourceTree = "<group>"; };
+		E98A6BBC1AA282F80004162C /* Call.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Call.m; sourceTree = "<group>"; };
+		E98A6BBF1AA2830A0004162C /* Call.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Call.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +164,8 @@
 				003092BF19C12A680042DAEE /* ViewController.m */,
 				E98A6BB91AA27D510004162C /* DigestHelper.h */,
 				E98A6BBA1AA27D8A0004162C /* DigestHelper.m */,
+				E98A6BBF1AA2830A0004162C /* Call.h */,
+				E98A6BBC1AA282F80004162C /* Call.m */,
 			);
 			path = PeerExampleObjC;
 			sourceTree = "<group>";
@@ -345,6 +350,7 @@
 				E98A6BAF1AA194420004162C /* LocalOfferSDPObserver.m in Sources */,
 				E98A6BB71AA26C6D0004162C /* CinePeerClientConfig.m in Sources */,
 				E98A6BA01AA100D10004162C /* PeerObserver.m in Sources */,
+				E98A6BBD1AA282F80004162C /* Call.m in Sources */,
 				E98A6BB51AA26B470004162C /* Identity.m in Sources */,
 				E98A6BA91AA1824D0004162C /* LocalAnswerSDPObserver.m in Sources */,
 				003092C019C12A680042DAEE /* ViewController.m in Sources */,
