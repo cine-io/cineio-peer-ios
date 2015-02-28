@@ -15,21 +15,8 @@
 @class RTCICECandidate;
 @class RTCSessionDescription;
 
-
-@protocol SignalingConnectionDelegate <NSObject>
-
-- (void)signalingClientDidReceiveHangup:(SignalingConnection *)client;
-
-- (void)signalingClient:(SignalingConnection *)client didErrorWithMessage:(NSString *)message;
-
-@end
-
-
 @interface SignalingConnection : NSObject
 
-@property (nonatomic, weak) id<SignalingConnectionDelegate> delegate;
-
-- (id)initWithDelegate:(id<SignalingConnectionDelegate>)delegate;
 - (void)connect;
 - (void)init:(NSString *)publicKey;
 - (void)joinRoom:(NSString *)roomName;

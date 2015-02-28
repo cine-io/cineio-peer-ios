@@ -49,12 +49,9 @@
 
 @implementation SignalingConnection
 
-@synthesize delegate;
-
-- (id)initWithDelegate:(id<SignalingConnectionDelegate>)theDelegate
+- (id)init
 {
     if (self = [super init]) {
-        self.delegate = theDelegate;
         self.peerConnectionFactory = [[RTCPeerConnectionFactory alloc] init];
     }
     return self;

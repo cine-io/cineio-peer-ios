@@ -21,7 +21,7 @@
 #import "RTCPeerConnectionFactory.h"
 #import "RTCMediaConstraints.h"
 
-@interface CinePeerClient () <SignalingConnectionDelegate>
+@interface CinePeerClient ()
 @property (nonatomic, strong) NSString *publicKey;
 @property (nonatomic, strong) PeerConnectionManager *connectionManager;
 @property (nonatomic, strong) SignalingConnection *signalingConnection;
@@ -39,7 +39,7 @@
     if (self = [super init]) {
         self.delegate = theDelegate;
         self.connectionManager = [[PeerConnectionManager alloc] initWithPeerClient:self];
-        self.signalingConnection = [[SignalingConnection alloc] initWithDelegate:self];
+        self.signalingConnection = [[SignalingConnection alloc] init];
         [self.signalingConnection setPeerConnectionsManager:self.connectionManager];
 
     }
