@@ -114,7 +114,7 @@
 
     RemoteAnswerSDPObserver *observer = [[RemoteAnswerSDPObserver alloc] init];
     [observer rtcMember:rtcMember cinePeerClient:self.cinePeerClient];
-    [conn setRemoteDescriptionWithDdelegate:(id)observer sessionDescription:sdp];
+    [conn setRemoteDescriptionWithDelegate:(id)observer sessionDescription:sdp];
 
 }
 
