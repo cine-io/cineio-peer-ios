@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "RTCPeerConnectionFactory.h"
+#import "RTCMediaStream.h"
 
 @class PeerConnectionManager;
 @class CinePeerClient;
@@ -16,6 +17,7 @@
 @interface PeerConnectionManager : NSObject
 
 - (id)initWithPeerClient:(CinePeerClient *)cinePeerClient;
+- (void)setLocalMediaStream:(RTCMediaStream *)localMediaStream;
 
 - (RTCPeerConnectionFactory*)getFactory;
 

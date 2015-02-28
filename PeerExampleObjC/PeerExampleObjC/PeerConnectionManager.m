@@ -42,6 +42,8 @@
 
 @implementation PeerConnectionManager
 
+@synthesize localMediaStream;
+
 - (id)initWithPeerClient:(CinePeerClient *)cinePeerClient
 {
     if (self = [super init]) {

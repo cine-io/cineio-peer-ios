@@ -87,6 +87,8 @@
 
     [self.localMediaStream addAudioTrack:[factory audioTrackWithID:@"ARDAMSa0"]];
 
+    [self.connectionManager setLocalMediaStream:self.localMediaStream];
+
     [self.delegate addStream:self.localMediaStream local:true];
 
 #endif
