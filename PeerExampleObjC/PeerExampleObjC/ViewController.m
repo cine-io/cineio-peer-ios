@@ -9,18 +9,12 @@
 #import "ViewController.h"
 #import <AVFoundation/AVFoundation.h>
 
-#import "SignalingConnection.h"
+#import "CinePeerClient.h"
+#import "CinePeerClientConfig.h"
 #import "Call.h"
-#import "PeerConnectionManager.h"
 #import "RTCEAGLVideoView.h"
 #import "RTCVideoTrack.h"
 #import "RTCMediaStream.h"
-#import "RTCVideoCapturer.h"
-#import "RTCVideoSource.h"
-#import "RTCPeerConnectionFactory.h"
-#import "RTCMediaConstraints.h"
-#import "CinePeerClient.h"
-#import "CinePeerClientConfig.h"
 
 static CGFloat const kLocalViewPadding = 20;
 
