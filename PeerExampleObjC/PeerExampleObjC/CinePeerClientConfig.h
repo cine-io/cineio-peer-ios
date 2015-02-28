@@ -18,15 +18,6 @@
 - (void) removeStream:(RTCMediaStream *)stream local:(BOOL)local;
 - (void) handleError:(NSDictionary *)error;
 
-//- (void)signalingClient:(CineSignalingClient *)client didReceiveLocalVideoTrack:(RTCVideoTrack *)track;
-//
-//- (void)signalingClient:(CineSignalingClient *)client didReceiveRemoteVideoTrack:(RTCVideoTrack *)track;
-//- (void)signalingClient:(CineSignalingClient *)client didReceiveRemoteAudioTrack:(RTCAudioTrack *)track;
-//
-//- (void)signalingClientDidReceiveHangup:(CineSignalingClient *)client;
-//
-//- (void)signalingClient:(CineSignalingClient *)client didErrorWithMessage:(NSString *)message;
-
 @end
 
 @interface CinePeerClientConfig : NSObject
