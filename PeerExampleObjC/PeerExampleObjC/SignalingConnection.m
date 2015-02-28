@@ -53,6 +53,7 @@
 {
     if (self = [super init]) {
         self.peerConnectionFactory = [[RTCPeerConnectionFactory alloc] init];
+        self.uuid = [[NSUUID UUID] UUIDString];
     }
     return self;
 }
@@ -115,7 +116,7 @@
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
     [dict setValue:@"cineio-peer-ios version-" forKey:@"client"];
     [dict setValue:self.publicKey forKey:@"publicKey"];
-    [dict setValue:@"NEED-TO-CREATE-UUID" forKey:@"uuid"];
+    [dict setValue:self.uuid forKey:@"uuid"];
 
     for (id key in data) {
         [dict setValue:[data objectForKey:key] forKey:key];
