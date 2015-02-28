@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RTCMediaConstraints.h"
 
 @interface ViewController : UIViewController
 

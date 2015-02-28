@@ -12,16 +12,24 @@
 #import "CineSignalingClient.h"
 #import "PeerConnectionManager.h"
 #import "RTCEAGLVideoView.h"
+#import "RTCVideoTrack.h"
+#import "RTCMediaStream.h"
+#import "RTCVideoCapturer.h"
+#import "RTCVideoSource.h"
+#import "RTCPeerConnectionFactory.h"
+#import "RTCMediaConstraints.h"
+#import "CinePeerClient.h"
 
 static CGFloat const kLocalViewPadding = 20;
 
-@interface ViewController () <CineSignalingClientDelegate, PeerConnectionManagerDelegate, RTCEAGLVideoViewDelegate>
+@interface ViewController () <RTCEAGLVideoViewDelegate, CinePeerClientDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *videosView;
 @property (nonatomic, strong) RTCEAGLVideoView* localVideoView;
 @property (nonatomic, strong) RTCEAGLVideoView* remoteVideoView;
-
+@property (nonatomic, strong) CinePeerClient *cinePeerClient;
 @end
+
 
 @implementation ViewController
 {
@@ -33,13 +41,16 @@ static CGFloat const kLocalViewPadding = 20;
     [super viewDidLoad];
 
     [self initializeVideoViews];
+
     NSString *publicKey = @"0b519f759096c48bf455941a02cf2c90";
     NSString *roomName = @"example";
-    PeerConnectionManager *connectionManager = [[PeerConnectionManager alloc] initWithDelegate:self];
-    CineSignalingClient *signalingClient = [[CineSignalingClient alloc] initWithDelegate:self];
-    [signalingClient setPeerConnectionsManager:connectionManager];
-    [signalingClient init:publicKey];
-    [signalingClient joinRoom:roomName];
+
+    self.cinePeerClient  = [[CinePeerClient alloc] initWithDelegate:self];
+    [self.cinePeerClient init:publicKey];
+
+    [self.cinePeerClient startMediaStream];
+
+    [self.cinePeerClient joinRoom:roomName];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -82,6 +93,19 @@ static CGFloat const kLocalViewPadding = 20;
     self.localVideoView.frame = localVideoFrame;
 }
 
+#pragma mark - CinePeerClientDelegate
+- (void) addStream:(RTCMediaStream *)stream local:(BOOL)local
+{
+    RTCVideoTrack *track = [stream.videoTracks firstObject];
+    if(local){
+        [track addRenderer:self.localVideoView];
+    }
+    else{
+        [track addRenderer:self.remoteVideoView];
+    }
+}
+
+
 #pragma mark - RTCEAGLVideoViewDelegate
 
 - (void)videoView:(RTCEAGLVideoView*)videoView didChangeVideoSize:(CGSize)size {
@@ -93,32 +117,6 @@ static CGFloat const kLocalViewPadding = 20;
         NSParameterAssert(NO);
     }
     [self updateVideoViewLayout];
-}
-
-#pragma mark - CineSignalingClientDelegate
-
-- (void)signalingClient:(CineSignalingClient *)client didReceiveLocalVideoTrack:(RTCVideoTrack *)track
-{
-//    self.localVideoView.videoTrack = track;
-}
-
-- (void)signalingClient:(CineSignalingClient *)client didReceiveRemoteVideoTrack:(RTCVideoTrack *)track
-{
-//    self.remoteVideoView.videoTrack = track;
-}
-- (void)signalingClient:(CineSignalingClient *)client didReceiveRemoteAudioTrack:(RTCAudioTrack *)track
-{
-    NSLog(@"received audio track");
-}
-
-- (void)signalingClientDidReceiveHangup:(CineSignalingClient *)client
-{
-    NSLog(@"received hangup");
-}
-
-- (void)signalingClient:(CineSignalingClient *)client didErrorWithMessage:(NSString *)message
-{
-    NSLog(@"ERROR: %@", message);
 }
 
 @end

@@ -7,29 +7,26 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RTCPeerConnectionFactory.h"
 
 @class PeerConnectionManager;
-
-@protocol PeerConnectionManagerDelegate <NSObject>
-
-//- (void)signalingClient:(CineSignalingClient *)client didReceiveLocalVideoTrack:(RTCVideoTrack *)track;
-//
-//- (void)signalingClient:(CineSignalingClient *)client didReceiveRemoteVideoTrack:(RTCVideoTrack *)track;
-//- (void)signalingClient:(CineSignalingClient *)client didReceiveRemoteAudioTrack:(RTCAudioTrack *)track;
-//
-//- (void)signalingClientDidReceiveHangup:(CineSignalingClient *)client;
-//
-//- (void)signalingClient:(CineSignalingClient *)client didErrorWithMessage:(NSString *)message;
-
-@end
-
+@class CinePeerClient;
+@class RTCMember;
 
 @interface PeerConnectionManager : NSObject
 
-@property (nonatomic, weak) id<PeerConnectionManagerDelegate> delegate;
+- (id)initWithPeerClient:(CinePeerClient *)cinePeerClient;
 
-- (id)initWithDelegate:(id<PeerConnectionManagerDelegate>)delegate;
+- (RTCPeerConnectionFactory*)getFactory;
+
+- (void)configureICEServers:(NSArray *)configDicts;
 
 - (void)ensurePeerConnection:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId offer:(BOOL)offer;
+
+- (RTCMember*)getPeerConnection:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId offer:(BOOL)offer;
+- (RTCMember*)createPeerConnection:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId offer:(BOOL)offer;
+
+- (void)handleOffer:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId offer:(NSDictionary *)offer;
+- (void)handleAnswer:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId answer:(NSDictionary *)answer;
 
 @end

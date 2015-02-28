@@ -7,19 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PeerConnectionManager.h"
 
-@class RTCVideoTrack;
-@class RTCAudioTrack;
 @class CineSignalingClient;
+@class PeerConnectionManager;
+@class RTCICECandidate;
+@class RTCSessionDescription;
 
 
 @protocol CineSignalingClientDelegate <NSObject>
-
-- (void)signalingClient:(CineSignalingClient *)client didReceiveLocalVideoTrack:(RTCVideoTrack *)track;
-
-- (void)signalingClient:(CineSignalingClient *)client didReceiveRemoteVideoTrack:(RTCVideoTrack *)track;
-- (void)signalingClient:(CineSignalingClient *)client didReceiveRemoteAudioTrack:(RTCAudioTrack *)track;
 
 - (void)signalingClientDidReceiveHangup:(CineSignalingClient *)client;
 
@@ -37,4 +32,6 @@
 - (void)init:(NSString *)publicKey;
 - (void)joinRoom:(NSString *)roomName;
 - (void)setPeerConnectionsManager:(PeerConnectionManager *)peerConnectionManager;
+- (void)sendIceCandidate:(NSString *)sparkId candidate:(RTCICECandidate *)candidate;
+- (void)sendLocalDescription:(NSString *)sparkId  description:(RTCSessionDescription *)description;
 @end
