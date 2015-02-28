@@ -1,12 +1,12 @@
 //
-//  CineSignalingClient.m
+//  SignalingConnection.m
 //  PeerExampleObjC
 //
-//  Created by Jeffrey Wescott on 9/10/14.
-//  Copyright (c) 2014 cine.io. All rights reserved.
+//  Created by Thomas Shafer on 2/28/15.
+//  Copyright (c) 2015 cine.io. All rights reserved.
 //
 
-#import "CineSignalingClient.h"
+#import "SignalingConnection.h"
 #import <AVFoundation/AVFoundation.h>
 
 #import <Primus/Primus.h>
@@ -32,7 +32,7 @@
 #import "RTCVideoSource.h"
 
 
-@interface CineSignalingClient ()
+@interface SignalingConnection ()
 
 @property (nonatomic, strong) Primus *signalingServer;
 @property (nonatomic, assign) BOOL initiator;
@@ -47,11 +47,11 @@
 @end
 
 
-@implementation CineSignalingClient
+@implementation SignalingConnection
 
 @synthesize delegate;
 
-- (id)initWithDelegate:(id<CineSignalingClientDelegate>)theDelegate
+- (id)initWithDelegate:(id<SignalingConnectionDelegate>)theDelegate
 {
     if (self = [super init]) {
         self.delegate = theDelegate;
@@ -106,7 +106,7 @@
         NSLog(@"[end] - The connection has ended.");
     }];
 
-//    [self.signalingServer open];
+    //    [self.signalingServer open];
     NSLog(@"CONNECTED");
 
 }
@@ -198,41 +198,41 @@
     typedef void (^OnDataBlock)(NSDictionary*);
     NSDictionary *caseDict =
     @{
-        @"ack": ^(NSDictionary *message) {
-            NSLog(@"ack: %@", message);
-        },
-        @"rtc-servers": ^(NSDictionary *message) {
-            NSArray *serverConfigs = message[@"data"];
-//            NSLog(@"got ICE servers: %@", serverConfigs);
-            [self.peerConnectionManager configureICEServers:serverConfigs];
-        },
-        @"leave": ^(NSDictionary *message) {
-            NSLog(@"leave: %@", message);
-        },
-        @"room-join": ^(NSDictionary *message) {
-            NSLog(@"got new member: %@", message);
-            [self roomJoin:message];
-        },
-        @"rtc-ice": ^(NSDictionary *message) {
-            NSDictionary *candidateDict = message[@"candidate"][@"candidate"];
-            //NSLog(@"got remote ICE candidate: %@", message);
-            NSString* sdpMid = candidateDict[@"sdpMid"];
-            NSNumber* sdpLineIndex = candidateDict[@"sdpMLineIndex"];
-            NSString* sdp = candidateDict[@"candidate"];
-            RTCICECandidate* candidate = [[RTCICECandidate alloc] initWithMid:sdpMid
-                                                                        index:sdpLineIndex.intValue
-                                                                          sdp:sdp];
-            [self.peerConnection addICECandidate:candidate];
-        },
-        @"rtc-offer": ^(NSDictionary *message) {
-            NSLog(@"got offer: %@", message);
-            [self handleOffer:message];
-        },
-        @"rtc-answer": ^(NSDictionary *message) {
-            NSLog(@"got answer: %@", message);
-            [self handleAnswer:message];
-        }
-    };
+      @"ack": ^(NSDictionary *message) {
+          NSLog(@"ack: %@", message);
+      },
+      @"rtc-servers": ^(NSDictionary *message) {
+          NSArray *serverConfigs = message[@"data"];
+          //            NSLog(@"got ICE servers: %@", serverConfigs);
+          [self.peerConnectionManager configureICEServers:serverConfigs];
+      },
+      @"leave": ^(NSDictionary *message) {
+          NSLog(@"leave: %@", message);
+      },
+      @"room-join": ^(NSDictionary *message) {
+          NSLog(@"got new member: %@", message);
+          [self roomJoin:message];
+      },
+      @"rtc-ice": ^(NSDictionary *message) {
+          NSDictionary *candidateDict = message[@"candidate"][@"candidate"];
+          //NSLog(@"got remote ICE candidate: %@", message);
+          NSString* sdpMid = candidateDict[@"sdpMid"];
+          NSNumber* sdpLineIndex = candidateDict[@"sdpMLineIndex"];
+          NSString* sdp = candidateDict[@"candidate"];
+          RTCICECandidate* candidate = [[RTCICECandidate alloc] initWithMid:sdpMid
+                                                                      index:sdpLineIndex.intValue
+                                                                        sdp:sdp];
+          [self.peerConnection addICECandidate:candidate];
+      },
+      @"rtc-offer": ^(NSDictionary *message) {
+          NSLog(@"got offer: %@", message);
+          [self handleOffer:message];
+      },
+      @"rtc-answer": ^(NSDictionary *message) {
+          NSLog(@"got answer: %@", message);
+          [self handleAnswer:message];
+      }
+      };
 
     OnDataBlock blk = caseDict[data[@"action"]];
     if (blk) {
@@ -252,11 +252,11 @@
     [self sendToOtherSpark:sparkId data:@{
                                           @"action": rtcType,
                                           description.type: @{
-                                              @"type": description.type,
-                                              @"sdp": description.description
-                                          }
+                                                  @"type": description.type,
+                                                  @"sdp": description.description
+                                                  }
 
-                                        }];
+                                          }];
 }
 
 - (void)sendLocalSDP

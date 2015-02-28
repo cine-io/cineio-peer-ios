@@ -13,7 +13,6 @@
 		003092C319C12A680042DAEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 003092C119C12A680042DAEE /* Main.storyboard */; };
 		003092C519C12A680042DAEE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 003092C419C12A680042DAEE /* Images.xcassets */; };
 		003092D119C12A680042DAEE /* PeerExampleObjCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 003092D019C12A680042DAEE /* PeerExampleObjCTests.m */; };
-		003092DC19C12A990042DAEE /* CineSignalingClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 003092DB19C12A990042DAEE /* CineSignalingClient.m */; };
 		003092E219C409070042DAEE /* CinePeerUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 003092E119C409070042DAEE /* CinePeerUtil.m */; };
 		003092E719C410100042DAEE /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 003092E619C410100042DAEE /* README.md */; };
 		0CE6CA6B70D94804845E5ECE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80537E8ADEDE4322B3E07771 /* libPods.a */; };
@@ -25,6 +24,7 @@
 		E98A6BA91AA1824D0004162C /* LocalAnswerSDPObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6BA81AA1824D0004162C /* LocalAnswerSDPObserver.m */; };
 		E98A6BAB1AA193850004162C /* RemoteAnswerSDPObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6BAA1AA193850004162C /* RemoteAnswerSDPObserver.m */; };
 		E98A6BAF1AA194420004162C /* LocalOfferSDPObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6BAE1AA194420004162C /* LocalOfferSDPObserver.m */; };
+		E98A6BB11AA2582D0004162C /* SignalingConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6BB01AA2582D0004162C /* SignalingConnection.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,8 +50,6 @@
 		003092CA19C12A680042DAEE /* PeerExampleObjCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PeerExampleObjCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		003092CF19C12A680042DAEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		003092D019C12A680042DAEE /* PeerExampleObjCTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeerExampleObjCTests.m; sourceTree = "<group>"; };
-		003092DA19C12A990042DAEE /* CineSignalingClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CineSignalingClient.h; sourceTree = "<group>"; };
-		003092DB19C12A990042DAEE /* CineSignalingClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CineSignalingClient.m; sourceTree = "<group>"; };
 		003092E019C409070042DAEE /* CinePeerUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinePeerUtil.h; sourceTree = "<group>"; };
 		003092E119C409070042DAEE /* CinePeerUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CinePeerUtil.m; sourceTree = "<group>"; };
 		003092E619C410100042DAEE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -74,6 +72,8 @@
 		E98A6BAC1AA193B50004162C /* RemoteAnswerSDPObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemoteAnswerSDPObserver.h; sourceTree = "<group>"; };
 		E98A6BAD1AA1941F0004162C /* LocalOfferSDPObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalOfferSDPObserver.h; sourceTree = "<group>"; };
 		E98A6BAE1AA194420004162C /* LocalOfferSDPObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalOfferSDPObserver.m; sourceTree = "<group>"; };
+		E98A6BB01AA2582D0004162C /* SignalingConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignalingConnection.m; sourceTree = "<group>"; };
+		E98A6BB21AA258500004162C /* SignalingConnection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignalingConnection.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,8 +123,6 @@
 				003092BC19C12A680042DAEE /* AppDelegate.m */,
 				003092E019C409070042DAEE /* CinePeerUtil.h */,
 				003092E119C409070042DAEE /* CinePeerUtil.m */,
-				003092DA19C12A990042DAEE /* CineSignalingClient.h */,
-				003092DB19C12A990042DAEE /* CineSignalingClient.m */,
 				E98A6B981A9FF3F40004162C /* PeerConnectionManager.h */,
 				E98A6B991A9FF4610004162C /* PeerConnectionManager.m */,
 				003092BE19C12A680042DAEE /* ViewController.h */,
@@ -146,6 +144,8 @@
 				003092B719C12A680042DAEE /* Supporting Files */,
 				E98A6BAA1AA193850004162C /* RemoteAnswerSDPObserver.m */,
 				E98A6BAC1AA193B50004162C /* RemoteAnswerSDPObserver.h */,
+				E98A6BB01AA2582D0004162C /* SignalingConnection.m */,
+				E98A6BB21AA258500004162C /* SignalingConnection.h */,
 			);
 			path = PeerExampleObjC;
 			sourceTree = "<group>";
@@ -330,7 +330,6 @@
 				E98A6BAF1AA194420004162C /* LocalOfferSDPObserver.m in Sources */,
 				E98A6BA01AA100D10004162C /* PeerObserver.m in Sources */,
 				E98A6BA91AA1824D0004162C /* LocalAnswerSDPObserver.m in Sources */,
-				003092DC19C12A990042DAEE /* CineSignalingClient.m in Sources */,
 				003092C019C12A680042DAEE /* ViewController.m in Sources */,
 				003092BD19C12A680042DAEE /* AppDelegate.m in Sources */,
 				E98A6BA51AA17DD20004162C /* RemoteOfferSDPObserver.m in Sources */,
@@ -338,6 +337,7 @@
 				E98A6BA21AA103610004162C /* CinePeerClient.m in Sources */,
 				003092BA19C12A680042DAEE /* main.m in Sources */,
 				E98A6B9A1A9FF4610004162C /* PeerConnectionManager.m in Sources */,
+				E98A6BB11AA2582D0004162C /* SignalingConnection.m in Sources */,
 				003092E219C409070042DAEE /* CinePeerUtil.m in Sources */,
 				E98A6B9C1AA0049E0004162C /* RTCMember.m in Sources */,
 				E98A6BAB1AA193850004162C /* RemoteAnswerSDPObserver.m in Sources */,

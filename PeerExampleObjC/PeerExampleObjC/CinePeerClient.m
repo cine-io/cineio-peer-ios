@@ -10,7 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import "CinePeerClient.h"
-#import "CineSignalingClient.h"
+#import "SignalingConnection.h"
 #import "PeerConnectionManager.h"
 #import "RTCPeerConnectionFactory.h"
 #import "RTCVideoTrack.h"
@@ -21,10 +21,10 @@
 #import "RTCPeerConnectionFactory.h"
 #import "RTCMediaConstraints.h"
 
-@interface CinePeerClient () <CineSignalingClientDelegate>
+@interface CinePeerClient () <SignalingConnectionDelegate>
 @property (nonatomic, strong) NSString *publicKey;
 @property (nonatomic, strong) PeerConnectionManager *connectionManager;
-@property (nonatomic, strong) CineSignalingClient *signalingConnection;
+@property (nonatomic, strong) SignalingConnection *signalingConnection;
 @property (nonatomic, strong) RTCVideoSource *videoSource;
 @property (nonatomic, strong) RTCMediaStream *localMediaStream;
 
@@ -39,7 +39,7 @@
     if (self = [super init]) {
         self.delegate = theDelegate;
         self.connectionManager = [[PeerConnectionManager alloc] initWithPeerClient:self];
-        self.signalingConnection = [[CineSignalingClient alloc] initWithDelegate:self];
+        self.signalingConnection = [[SignalingConnection alloc] initWithDelegate:self];
         [self.signalingConnection setPeerConnectionsManager:self.connectionManager];
 
     }
@@ -100,7 +100,7 @@
     [self.delegate addStream:mediaStream local:false];
 }
 
-- (CineSignalingClient *)getSignalingConnection
+- (SignalingConnection *)getSignalingConnection
 {
     return self.signalingConnection;
 }
@@ -140,21 +140,12 @@
 
 #pragma mark - CineSignalingClientDelegate
 
-- (void)signalingClient:(CineSignalingClient *)client didReceiveRemoteVideoTrack:(RTCVideoTrack *)track
-{
-    //    self.remoteVideoView.videoTrack = track;
-}
-- (void)signalingClient:(CineSignalingClient *)client didReceiveRemoteAudioTrack:(RTCAudioTrack *)track
-{
-    NSLog(@"received audio track");
-}
-
-- (void)signalingClientDidReceiveHangup:(CineSignalingClient *)client
+- (void)signalingClientDidReceiveHangup:(SignalingConnection *)client
 {
     NSLog(@"received hangup");
 }
 
-- (void)signalingClient:(CineSignalingClient *)client didErrorWithMessage:(NSString *)message
+- (void)signalingClient:(SignalingConnection *)client didErrorWithMessage:(NSString *)message
 {
     NSLog(@"ERROR: %@", message);
 }

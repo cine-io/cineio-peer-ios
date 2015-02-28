@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import <AVFoundation/AVFoundation.h>
 
-#import "CineSignalingClient.h"
+#import "SignalingConnection.h"
 #import "PeerConnectionManager.h"
 #import "RTCEAGLVideoView.h"
 #import "RTCVideoTrack.h"

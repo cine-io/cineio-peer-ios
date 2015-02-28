@@ -9,7 +9,7 @@
 #ifndef PeerExampleObjC_CinePeerClient_h
 #define PeerExampleObjC_CinePeerClient_h
 
-#include "CineSignalingClient.h"
+#include "SignalingConnection.h"
 #include "RTCMediaStream.h"
 #include "RTCMediaConstraints.h"
 @class CinePeerClient;
@@ -36,7 +36,7 @@
 - (void)joinRoom:(NSString *)roomName;
 - (void)startMediaStream;
 - (void)addStream:(RTCMediaStream *)mediaStream;
-- (CineSignalingClient *)getSignalingConnection;
+- (SignalingConnection *)getSignalingConnection;
 - (RTCMediaConstraints*)constraintsForMedia;
 - (RTCMediaConstraints*)constraintsForPeer;
 
