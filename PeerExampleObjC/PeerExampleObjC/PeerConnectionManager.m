@@ -84,7 +84,7 @@
     NSString* sdpString = offer[@"sdp"];
     RTCSessionDescription* sdp =
     [[RTCSessionDescription alloc] initWithType:offer[@"type"]
-                                    sdp:[CinePeerUtil preferISAC:sdpString]];
+                                            sdp:[CinePeerUtil preferISAC:sdpString]];
 
     RTCMember *rtcMember = [self getPeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:false];
     NSLog(@"GOT member");

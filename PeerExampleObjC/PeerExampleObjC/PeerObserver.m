@@ -53,13 +53,13 @@
         NSAssert([stream.videoTracks count] <= 1, @"Expected at most 1 video stream");
         self.addedStream = stream;
         [self.cinePeerClient addStream:stream];
-//        if ([stream.videoTracks count] != 0) {
-//            [self.cinePeerClient addStream]
-//            [self.delegate signalingClient:self didReceiveRemoteVideoTrack:stream.videoTracks[0]];
-//        }
-//        if ([stream.audioTracks count] != 0) {
-//            [self.delegate signalingClient:self didReceiveRemoteAudioTrack:stream.audioTracks[0]];
-//        }
+        //        if ([stream.videoTracks count] != 0) {
+        //            [self.cinePeerClient addStream]
+        //            [self.delegate signalingClient:self didReceiveRemoteVideoTrack:stream.videoTracks[0]];
+        //        }
+        //        if ([stream.audioTracks count] != 0) {
+        //            [self.delegate signalingClient:self didReceiveRemoteAudioTrack:stream.audioTracks[0]];
+        //        }
     });
 }
 
@@ -93,10 +93,10 @@
     NSString* sparkId = [self.rtcMember getSparkId];
     [[self.cinePeerClient getSignalingConnection] sendIceCandidate:sparkId candidate:candidate];
 
-//    //NSLog(@"gotICECandidate: %@", candidate);
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [self.signalingServer write:];
-//    });
+    //    //NSLog(@"gotICECandidate: %@", candidate);
+    //    dispatch_async(dispatch_get_main_queue(), ^{
+    //        [self.signalingServer write:];
+    //    });
 }
 
 - (void)peerConnection:(RTCPeerConnection*)peerConnection

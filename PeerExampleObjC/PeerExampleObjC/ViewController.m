@@ -1,4 +1,4 @@
-    //
+//
 //  ViewController.m
 //  PeerExampleObjC
 //
@@ -32,7 +32,7 @@ static CGFloat const kLocalViewPadding = 20;
     CGSize _localVideoSize;
     CGSize _remoteVideoSize;
 }
-            
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -80,16 +80,16 @@ static CGFloat const kLocalViewPadding = 20;
     // TODO(tkchin): handle rotation.
     CGSize defaultAspectRatio = CGSizeMake(4, 3);
     CGSize localAspectRatio =
-        CGSizeEqualToSize(_localVideoSize, CGSizeZero) ? defaultAspectRatio : _localVideoSize;
+    CGSizeEqualToSize(_localVideoSize, CGSizeZero) ? defaultAspectRatio : _localVideoSize;
     CGSize remoteAspectRatio =
-        CGSizeEqualToSize(_remoteVideoSize, CGSizeZero) ? defaultAspectRatio : _remoteVideoSize;
+    CGSizeEqualToSize(_remoteVideoSize, CGSizeZero) ? defaultAspectRatio : _remoteVideoSize;
     
     CGRect remoteVideoFrame =
-        AVMakeRectWithAspectRatioInsideRect(remoteAspectRatio, self.videosView.bounds);
+    AVMakeRectWithAspectRatioInsideRect(remoteAspectRatio, self.videosView.bounds);
     self.remoteVideoView.frame = remoteVideoFrame;
     
     CGRect localVideoFrame =
-        AVMakeRectWithAspectRatioInsideRect(localAspectRatio, self.videosView.bounds);
+    AVMakeRectWithAspectRatioInsideRect(localAspectRatio, self.videosView.bounds);
     localVideoFrame.size.width = localVideoFrame.size.width / 3;
     localVideoFrame.size.height = localVideoFrame.size.height / 3;
     localVideoFrame.origin.x = CGRectGetMaxX(self.videosView.bounds) - localVideoFrame.size.width - kLocalViewPadding;
@@ -128,7 +128,7 @@ static CGFloat const kLocalViewPadding = 20;
 - (void) handleCall:(Call *)call
 {
     NSLog(@"ViewController got call");
-//    [call answer];
+    //    [call answer];
 }
 
 

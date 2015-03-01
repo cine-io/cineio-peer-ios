@@ -299,7 +299,7 @@
     Call *call = [self callForRoom:message[@"room"] initated:false];
     [call rejected:message[@"identity"]];
 
-//    call.rejected(response.getString("identity"));
+    //    call.rejected(response.getString("identity"));
 }
 
 -(Call *)callForRoom:(NSString *)roomName initated:(BOOL)initiated
@@ -386,7 +386,7 @@
           [self handleAnswer:message];
       }
       //END RTC
-    };
+      };
 
     OnDataBlock blk = caseDict[data[@"action"]];
     if (blk) {

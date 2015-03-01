@@ -53,7 +53,7 @@
     long timestamp = CFAbsoluteTimeGetCurrent();
 
     NSMutableString *signatureToSha = [[NSMutableString alloc] init];
-//    "identity="+identityName+"&timestamp="+timestamp+secretKey
+    //    "identity="+identityName+"&timestamp="+timestamp+secretKey
     [signatureToSha appendString:@"identity="];
     [signatureToSha appendString:identityName];
     [signatureToSha appendString:@"&timestamp="];
