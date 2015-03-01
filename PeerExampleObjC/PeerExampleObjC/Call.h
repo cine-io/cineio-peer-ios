@@ -10,11 +10,12 @@
 #define PeerExampleObjC_Call_h
 
 @class Call;
+@class CinePeerClientConfig;
 @class SignalingConnection;
 
 @interface Call : NSObject
 
-- (id)initWithRoom:(NSString *)roomName signalingConnection:(SignalingConnection *)signalingConnection initiated:(BOOL)initiated;
+- (id)initWithRoom:(NSString *)roomName config:(CinePeerClientConfig *)config signalingConnection:(SignalingConnection *)signalingConnection initiated:(BOOL)initiated;
 
 - (void)answer;
 - (void)reject;

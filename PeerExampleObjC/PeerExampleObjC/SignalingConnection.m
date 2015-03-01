@@ -306,7 +306,7 @@
 {
     Call *call = [self.ongoingCalls valueForKey:roomName];
     if (call == nil) {
-        call = [[Call alloc]initWithRoom:roomName signalingConnection:self initiated:initiated];
+        call = [[Call alloc]initWithRoom:roomName config:self.config signalingConnection:self initiated:initiated];
         [self.ongoingCalls setObject:call forKey:roomName];
         return call;
     }

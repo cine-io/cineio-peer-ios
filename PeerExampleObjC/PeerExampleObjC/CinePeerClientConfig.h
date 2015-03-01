@@ -20,6 +20,8 @@
 - (void) removeStream:(RTCMediaStream *)stream local:(BOOL)local;
 - (void) handleError:(NSDictionary *)error;
 - (void) handleCall:(Call *)call;
+- (void) onCallCancel:(Call *)call;
+- (void) onCallReject:(Call *)call;
 @end
 
 @interface CinePeerClientConfig : NSObject

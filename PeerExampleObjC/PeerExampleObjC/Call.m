@@ -9,11 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "Call.h"
 #import "SignalingConnection.h"
+#import "CinePeerClientConfig.h"
 
 @interface Call ()
 
 @property (nonatomic, strong) NSString* roomName;
+@property (nonatomic, strong) CinePeerClientConfig* config;
 @property (nonatomic, strong) SignalingConnection* signalingConnection;
+
 @property BOOL initiated;
 
 @end
@@ -21,11 +24,11 @@
 
 @implementation Call
 
-- (id)initWithRoom:(NSString *)roomName signalingConnection:(SignalingConnection *)signalingConnection initiated:(BOOL)initiated
+- (id)initWithRoom:(NSString *)roomName config:(CinePeerClientConfig *)config signalingConnection:(SignalingConnection *)signalingConnection initiated:(BOOL)initiated
 {
     if (self = [super init]) {
         self.roomName = roomName;
-        self.signalingConnection = signalingConnection;
+        self.config = config;
         self.initiated = initiated;
     }
     return self;
@@ -49,11 +52,13 @@
 - (void)cancelled:(NSString *)identity
 {
     NSLog(@"cancelled");
+    [[self.config getDelegate] onCallCancel:self];
 
 }
 - (void)rejected:(NSString *)identity
 {
     NSLog(@"rejected");
+    [[self.config getDelegate] onCallReject:self];
 }
 
 

@@ -128,9 +128,19 @@ static CGFloat const kLocalViewPadding = 20;
 - (void) handleCall:(Call *)call
 {
     NSLog(@"ViewController got call");
-    [call answer];
+//    [call answer];
 }
 
+
+- (void) onCallCancel:(Call *)call
+{
+    NSLog(@"ViewController got call cancel");
+}
+
+- (void) onCallReject:(Call *)call
+{
+    NSLog(@"ViewController got call reject");
+}
 
 #pragma mark - RTCEAGLVideoViewDelegate
 
