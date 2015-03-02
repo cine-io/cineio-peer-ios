@@ -1,5 +1,5 @@
 //
-//  RTCMember.h
+//  CineRTCMember.h
 //  cineio-peer-ios
 //
 //  Created by Thomas Shafer on 02/26/15.
@@ -10,9 +10,9 @@
 @class RTCPeerConnection;
 
 //Cine Peer SDK
-@class PeerObserver;
+@class CinePeerObserver;
 
-@interface RTCMember : NSObject
+@interface CineRTCMember : NSObject
 
 - (void)setSparkId:(NSString *)sparkId;
 
@@ -23,8 +23,8 @@
 - (void)setPeerConnection:(RTCPeerConnection *)peerConnection;
 - (RTCPeerConnection *)getPeerConnection;
 
-- (void) setPeerObserver:(PeerObserver *)peerObserver;
-- (PeerObserver *) getPeerObserver;
+- (void) setPeerObserver:(CinePeerObserver *)peerObserver;
+- (CinePeerObserver *) getPeerObserver;
 
 - (void) close;
 @end

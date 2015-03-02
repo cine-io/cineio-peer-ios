@@ -1,5 +1,5 @@
 //
-//  PeerConnectionManager.m
+//  CineRTCMember.m
 //  cineio-peer-ios
 //
 //  Created by Thomas Shafer on 2/26/15.
@@ -8,24 +8,24 @@
 
 #import <AVFoundation/AVFoundation.h>
 
-#import "RTCMember.h"
-#import "PeerObserver.h"
+#import "CineRTCMember.h"
+#import "CinePeerObserver.h"
 
 // WebRTC includes
 #import "RTCPeerConnection.h"
 
 
-@interface RTCMember ()
+@interface CineRTCMember ()
 
 @property (nonatomic, strong) NSString* sparkId;
 @property (nonatomic, strong) NSString* sparkUUID;
 @property (nonatomic, strong) RTCPeerConnection* peerConnection;
-@property (nonatomic, strong) PeerObserver* peerObserver;
+@property (nonatomic, strong) CinePeerObserver* peerObserver;
 
 @end
 
 
-@implementation RTCMember
+@implementation CineRTCMember
 
 @synthesize sparkId;
 @synthesize sparkUUID;
@@ -41,7 +41,7 @@
     return self.peerConnection;
 }
 
-- (PeerObserver *) getPeerObserver
+- (CinePeerObserver *) getPeerObserver
 {
     return self.peerObserver;
 }

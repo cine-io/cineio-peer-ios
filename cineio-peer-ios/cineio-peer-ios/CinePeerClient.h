@@ -16,8 +16,8 @@
 @class RTCPeerConnection;
 
 //Cine Peer SDK
-@class Identity;
-@class SignalingConnection;
+@class CineIdentity;
+@class CineSignalingConnection;
 @class CinePeerClientConfig;
 
 @interface CinePeerClient : NSObject
@@ -29,13 +29,13 @@
 - (id)initWithConfig:(CinePeerClientConfig *)config;
 - (void)joinRoom:(NSString *)roomName;
 - (void)startMediaStream;
-- (void)identify:(Identity *)identity;
+- (void)identify:(CineIdentity *)identity;
 //END API METHODS
 
 - (void)addStream:(RTCMediaStream *)mediaStream peerConnection:(RTCPeerConnection *)peerConnection;
 - (void)removeStream:(RTCMediaStream *)mediaStream peerConnection:(RTCPeerConnection *)peerConnection;
 
-- (SignalingConnection *)getSignalingConnection;
+- (CineSignalingConnection *)getSignalingConnection;
 - (RTCMediaConstraints*)constraintsForMedia;
 - (RTCMediaConstraints*)constraintsForPeer;
 @end

@@ -1,5 +1,5 @@
 //
-//  PeerConnectionManager.h
+//  CinePeerConnectionManager.h
 //  cineio-peer-ios
 //
 //  Created by Thomas Shafer on 02/26/15.
@@ -14,9 +14,9 @@
 
 //Cine Peer SDK
 @class CinePeerClient;
-@class RTCMember;
+@class CineRTCMember;
 
-@interface PeerConnectionManager : NSObject
+@interface CinePeerConnectionManager : NSObject
 
 - (id)initWithPeerClient:(CinePeerClient *)cinePeerClient;
 - (void)setLocalMediaStream:(RTCMediaStream *)localMediaStream;
@@ -27,8 +27,7 @@
 
 - (void)ensurePeerConnection:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId offer:(BOOL)offer;
 
-- (RTCMember*)getPeerConnection:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId offer:(BOOL)offer;
-//- (RTCMember*)createPeerConnection:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId offer:(BOOL)offer;
+- (CineRTCMember*)getPeerConnection:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId offer:(BOOL)offer;
 
 - (void)closePeerConnection:(NSString *)otherClientSparkUUID;
 

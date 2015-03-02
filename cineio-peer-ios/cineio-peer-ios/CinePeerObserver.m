@@ -1,5 +1,5 @@
 //
-//  PeerObserver.m
+//  CinePeerObserver.m
 //  cineio-peer-ios
 //
 //  Created by Thomas Shafer on 2/27/15.
@@ -7,24 +7,24 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PeerObserver.h"
-#import "RTCMember.h"
+#import "CinePeerObserver.h"
+#import "CineRTCMember.h"
+#import "CinePeerClient.h"
+#import "CineSignalingConnection.h"
 #import "RTCMediaStream.h"
 #import "RTCPeerConnectionDelegate.h"
-#import "CinePeerClient.h"
-#import "SignalingConnection.h"
 
-@interface PeerObserver () <RTCPeerConnectionDelegate>
-@property (nonatomic, weak) RTCMember* rtcMember;
+@interface CinePeerObserver () <RTCPeerConnectionDelegate>
+@property (nonatomic, weak) CineRTCMember* rtcMember;
 @property (nonatomic, weak) RTCPeerConnection* peerConnection;
 @property (nonatomic, strong) RTCMediaStream* addedStream;
 @property (nonatomic, weak) CinePeerClient* cinePeerClient;
 @end
 
-@implementation PeerObserver
+@implementation CinePeerObserver
 
 
-- (void)rtcMember:(RTCMember *)member cinePeerClient:(CinePeerClient *)cinePeerClient
+- (void)rtcMember:(CineRTCMember *)member cinePeerClient:(CinePeerClient *)cinePeerClient
 {
     self.rtcMember = member;
     self.cinePeerClient = cinePeerClient;

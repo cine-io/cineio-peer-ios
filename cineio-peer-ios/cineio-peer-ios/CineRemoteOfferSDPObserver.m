@@ -1,5 +1,5 @@
 //
-//  RemoteOfferSDPObserver.m
+//  CineRemoteOfferSDPObserver.m
 //  cineio-peer-ios
 //
 //  Created by Thomas Shafer on 2/27/15.
@@ -8,22 +8,22 @@
 
 #import <Foundation/Foundation.h>
 
-#import "RemoteOfferSDPObserver.h"
-#import "LocalAnswerSDPObserver.h"
+#import "CineRemoteOfferSDPObserver.h"
+#import "CineLocalAnswerSDPObserver.h"
 #import "RTCSessionDescriptionDelegate.h"
 #import "CinePeerClient.h"
 #import "RTCPeerConnection.h"
-#import "RTCMember.h"
+#import "CineRTCMember.h"
 
 
-@interface RemoteOfferSDPObserver () <RTCSessionDescriptionDelegate>
-@property (nonatomic, weak) RTCMember* rtcMember;
+@interface CineRemoteOfferSDPObserver () <RTCSessionDescriptionDelegate>
+@property (nonatomic, weak) CineRTCMember* rtcMember;
 @property (nonatomic, weak) CinePeerClient* cinePeerClient;
 @end
 
-@implementation RemoteOfferSDPObserver
+@implementation CineRemoteOfferSDPObserver
 
-- (void)rtcMember:(RTCMember *)member cinePeerClient:(CinePeerClient *)cinePeerClient
+- (void)rtcMember:(CineRTCMember *)member cinePeerClient:(CinePeerClient *)cinePeerClient
 {
     self.rtcMember = member;
     self.cinePeerClient = cinePeerClient;
@@ -35,7 +35,7 @@
     didCreateSessionDescription:(RTCSessionDescription *)origSdp
                           error:(NSError *)error
 {
-    NSLog(@"RemoteOfferSDPObserver");
+    NSLog(@"CineRemoteOfferSDPObserver");
     NSLog(@"SHOULD NOT CREATE REMOTE DESCRIPTION");
     dispatch_async(dispatch_get_main_queue(), ^{
         if (error) {
@@ -49,14 +49,14 @@
 - (void)               peerConnection:(RTCPeerConnection *)peerConnection
     didSetSessionDescriptionWithError:(NSError *)error
 {
-    NSLog(@"RemoteOfferSDPObserver");
+    NSLog(@"CineRemoteOfferSDPObserver");
     NSLog(@"didSetSessionDescriptionWithError");
     if (error) {
         NSAssert(NO, error.description);
         return;
     }
     dispatch_async(dispatch_get_main_queue(), ^{
-        LocalAnswerSDPObserver *observer = [[LocalAnswerSDPObserver alloc] init];
+        CineLocalAnswerSDPObserver *observer = [[CineLocalAnswerSDPObserver alloc] init];
         [observer rtcMember:self.rtcMember cinePeerClient:self.cinePeerClient];
         [peerConnection createAnswerWithDelegate:(id)observer constraints:[self.cinePeerClient constraintsForMedia]];
     });

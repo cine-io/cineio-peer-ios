@@ -1,14 +1,14 @@
 //
-//  CinePeerUtil.m
+//  CineRTCHelper.m
 //  cineio-peer-ios
 //
 //  Created by Jeffrey Wescott on 9/12/14.
 //  Copyright (c) 2014 cine.io. All rights reserved.
 //
 
-#import "CinePeerUtil.h"
+#import "CineRTCHelper.h"
 
-@implementation CinePeerUtil
+@implementation CineRTCHelper
 
 // Match |pattern| to |string| and return the first group of the first
 // match, or nil if no match was found.

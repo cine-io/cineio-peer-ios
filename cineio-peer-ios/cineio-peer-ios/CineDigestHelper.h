@@ -1,15 +1,15 @@
 //
-//  DigestHelper.h
+//  CineDigestHelper.h
 //  cineio-peer-ios
 //
 //  Created by Thomas Shafer on 2/28/15.
 //  Copyright (c) 2015 cine.io. All rights reserved.
 //
 
-#ifndef cineioPeerIOS_DigestHelper_h
-#define cineioPeerIOS_DigestHelper_h
+#ifndef cineioPeerIOS_CineDigestHelper_h
+#define cineioPeerIOS_CineDigestHelper_h
 
-@interface DigestHelper : NSObject
+@interface CineDigestHelper : NSObject
 +(NSString*) sha1:(NSString*)input;
 @end
 

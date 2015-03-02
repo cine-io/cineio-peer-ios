@@ -11,8 +11,8 @@
 
 #import "CinePeerClient.h"
 #import "CinePeerClientConfig.h"
-#import "SignalingConnection.h"
-#import "PeerConnectionManager.h"
+#import "CineSignalingConnection.h"
+#import "CinePeerConnectionManager.h"
 #import "RTCPeerConnectionFactory.h"
 #import "RTCVideoTrack.h"
 #import "RTCMediaStream.h"
@@ -23,8 +23,8 @@
 
 @interface CinePeerClient ()
 @property (nonatomic, strong) NSString *publicKey;
-@property (nonatomic, strong) PeerConnectionManager *connectionManager;
-@property (nonatomic, strong) SignalingConnection *signalingConnection;
+@property (nonatomic, strong) CinePeerConnectionManager *connectionManager;
+@property (nonatomic, strong) CineSignalingConnection *signalingConnection;
 @property (nonatomic, strong) RTCVideoSource *videoSource;
 @property (nonatomic, strong) RTCMediaStream *localMediaStream;
 @property (nonatomic, strong) CinePeerClientConfig *config;
@@ -48,8 +48,8 @@
 {
     if (self = [super init]) {
         self.config = config;
-        self.connectionManager = [[PeerConnectionManager alloc] initWithPeerClient:self];
-        self.signalingConnection = [[SignalingConnection alloc] initWithConfig:self.config];
+        self.connectionManager = [[CinePeerConnectionManager alloc] initWithPeerClient:self];
+        self.signalingConnection = [[CineSignalingConnection alloc] initWithConfig:self.config];
         [self.signalingConnection setPeerConnectionsManager:self.connectionManager];
 
     }
@@ -103,7 +103,7 @@
 
 }
 
-- (void)identify:(Identity *)theIdentity
+- (void)identify:(CineIdentity *)theIdentity
 {
     [self.signalingConnection identify:theIdentity];
 }
@@ -121,7 +121,7 @@
     [[self.config getDelegate] removeStream:mediaStream peerConnection:peerConnection local:false];
 }
 
-- (SignalingConnection *)getSignalingConnection
+- (CineSignalingConnection *)getSignalingConnection
 {
     return self.signalingConnection;
 }
@@ -161,12 +161,12 @@
 
 #pragma mark - CineSignalingClientDelegate
 
-- (void)signalingClientDidReceiveHangup:(SignalingConnection *)client
+- (void)signalingClientDidReceiveHangup:(CineSignalingConnection *)client
 {
     NSLog(@"received hangup");
 }
 
-- (void)signalingClient:(SignalingConnection *)client didErrorWithMessage:(NSString *)message
+- (void)signalingClient:(CineSignalingConnection *)client didErrorWithMessage:(NSString *)message
 {
     NSLog(@"ERROR: %@", message);
 }

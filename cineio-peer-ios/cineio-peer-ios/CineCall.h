@@ -13,7 +13,7 @@
 @class CinePeerClientConfig;
 @class SignalingConnection;
 
-@interface Call : NSObject
+@interface CineCall : NSObject
 
 - (id)initWithRoom:(NSString *)roomName config:(CinePeerClientConfig *)config signalingConnection:(SignalingConnection *)signalingConnection initiated:(BOOL)initiated;
 

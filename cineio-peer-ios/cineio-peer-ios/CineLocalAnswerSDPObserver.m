@@ -1,5 +1,5 @@
 //
-//  LocalAnswerSDPObserver.m
+//  CineLocalAnswerSDPObserver.m
 //  cineio-peer-ios
 //
 //  Created by Thomas Shafer on 2/27/15.
@@ -8,25 +8,25 @@
 
 #import <Foundation/Foundation.h>
 
-#import "LocalAnswerSDPObserver.h"
+#import "CineLocalAnswerSDPObserver.h"
 #import "CinePeerClient.h"
 #import "RTCSessionDescriptionDelegate.h"
-#import "CinePeerUtil.h"
+#import "CineRTCHelper.h"
 #import "RTCSessionDescription.h"
 #import "RTCPeerConnection.h"
-#import "RTCMember.h"
-#import "SignalingConnection.h"
+#import "CineRTCMember.h"
+#import "CineSignalingConnection.h"
 
 
-@interface LocalAnswerSDPObserver () <RTCSessionDescriptionDelegate>
-@property (nonatomic, weak) RTCMember* rtcMember;
+@interface CineLocalAnswerSDPObserver () <RTCSessionDescriptionDelegate>
+@property (nonatomic, weak) CineRTCMember* rtcMember;
 @property (nonatomic, weak) CinePeerClient* cinePeerClient;
 @property (nonatomic, strong) RTCSessionDescription* localSdp;
 @end
 
-@implementation LocalAnswerSDPObserver
+@implementation CineLocalAnswerSDPObserver
 
-- (void)rtcMember:(RTCMember *)member cinePeerClient:(CinePeerClient *)cinePeerClient
+- (void)rtcMember:(CineRTCMember *)member cinePeerClient:(CinePeerClient *)cinePeerClient
 {
     self.rtcMember = member;
     self.cinePeerClient = cinePeerClient;
@@ -38,14 +38,14 @@
     didCreateSessionDescription:(RTCSessionDescription *)origSdp
                           error:(NSError *)error
 {
-    NSLog(@"LocalAnswerSDPObserver");
+    NSLog(@"CineLocalAnswerSDPObserver");
     NSLog(@"didCreateSessionDescription");
     self.localSdp = origSdp;
 
 
     RTCSessionDescription* sdp =
     [[RTCSessionDescription alloc] initWithType:origSdp.type
-                                            sdp:[CinePeerUtil preferISAC:origSdp.description]];
+                                            sdp:[CineRTCHelper preferISAC:origSdp.description]];
 
     dispatch_async(dispatch_get_main_queue(), ^{
         if (error) {
@@ -67,7 +67,7 @@
 - (void)               peerConnection:(RTCPeerConnection *)peerConnection
     didSetSessionDescriptionWithError:(NSError *)error
 {
-    NSLog(@"LocalAnswerSDPObserver");
+    NSLog(@"CineLocalAnswerSDPObserver");
     NSLog(@"didSetSessionDescriptionWithError");
     if (error) {
         NSLog(@"didSetSessionDescriptionWithError has error");

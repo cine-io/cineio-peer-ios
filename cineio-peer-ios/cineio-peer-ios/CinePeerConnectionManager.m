@@ -1,20 +1,21 @@
 //
-//  PeerConnectionManager.m
+//  CinePeerConnectionManager.m
 //  cineio-peer-ios
 //
 //  Created by Thomas Shafer on 2/26/15.
 //  Copyright (c) 2014 cine.io. All rights reserved.
 //
 
-#import "PeerConnectionManager.h"
+#import "CinePeerConnectionManager.h"
 #import <AVFoundation/AVFoundation.h>
 
-#import "CinePeerUtil.h"
-#import "RTCMember.h"
-#import "RemoteOfferSDPObserver.h"
-#import "LocalOfferSDPObserver.h"
-#import "RemoteAnswerSDPObserver.h"
+#import "CineRTCHelper.h"
+#import "CineRTCMember.h"
+#import "CineRemoteOfferSDPObserver.h"
+#import "CineLocalOfferSDPObserver.h"
+#import "CineRemoteAnswerSDPObserver.h"
 #import "CinePeerClient.h"
+#import "CinePeerObserver.h"
 
 // WebRTC includes
 #import "RTCICECandidate.h"
@@ -24,10 +25,9 @@
 #import "RTCPeerConnectionDelegate.h"
 #import "RTCPeerConnectionFactory.h"
 #import "RTCSessionDescription.h"
-#import "PeerObserver.h"
 
 
-@interface PeerConnectionManager ()
+@interface CinePeerConnectionManager ()
 @property (nonatomic, strong) RTCPeerConnectionFactory *peerConnectionFactory;
 @property (nonatomic, strong) NSMutableDictionary *rtcMembers;
 @property (nonatomic, weak) RTCMediaStream *localMediaStream;
@@ -37,7 +37,7 @@
 @end
 
 
-@implementation PeerConnectionManager
+@implementation CinePeerConnectionManager
 
 @synthesize localMediaStream;
 
@@ -79,15 +79,15 @@
     NSString* sdpString = offer[@"sdp"];
     RTCSessionDescription* sdp =
     [[RTCSessionDescription alloc] initWithType:offer[@"type"]
-                                            sdp:[CinePeerUtil preferISAC:sdpString]];
+                                            sdp:[CineRTCHelper preferISAC:sdpString]];
 
-    RTCMember *rtcMember = [self getPeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:false];
+    CineRTCMember *rtcMember = [self getPeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:false];
     NSLog(@"GOT member");
 
     RTCPeerConnection* conn = [rtcMember getPeerConnection];
     NSLog(@"got connection");
 
-    RemoteOfferSDPObserver *observer = [[RemoteOfferSDPObserver alloc] init];
+    CineRemoteOfferSDPObserver *observer = [[CineRemoteOfferSDPObserver alloc] init];
     [observer rtcMember:rtcMember cinePeerClient:self.cinePeerClient];
     [conn setRemoteDescriptionWithDelegate:(id)observer sessionDescription:sdp];
 
@@ -99,16 +99,18 @@
     NSString* sdpString = answer[@"sdp"];
     RTCSessionDescription* sdp =
     [[RTCSessionDescription alloc] initWithType:answer[@"type"]
-                                            sdp:[CinePeerUtil preferISAC:sdpString]];
+                                            sdp:[CineRTCHelper preferISAC:sdpString]];
 
-    RTCMember *rtcMember = [self getPeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:false];
+    CineRTCMember *rtcMember = [self getPeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:false];
     NSLog(@"GOT member");
 
     RTCPeerConnection* conn = [rtcMember getPeerConnection];
     NSLog(@"got connection");
 
-    RemoteAnswerSDPObserver *observer = [[RemoteAnswerSDPObserver alloc] init];
+    CineRemoteAnswerSDPObserver *observer = [[CineRemoteAnswerSDPObserver alloc] init];
+
     [observer rtcMember:rtcMember cinePeerClient:self.cinePeerClient];
+    NSLog(@"set observer");
 
     [conn setRemoteDescriptionWithDelegate:(id)observer sessionDescription:sdp];
     NSLog(@"set description");
@@ -123,7 +125,7 @@
     NSString* sdp = candidateDict[@"candidate"];
     RTCICECandidate* candidate = [[RTCICECandidate alloc] initWithMid:sdpMid index:sdpLineIndex.intValue sdp:sdp];
 
-    RTCMember *rtcMember = [self getPeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:false];
+    CineRTCMember *rtcMember = [self getPeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:false];
     NSLog(@"GOT member");
 
     RTCPeerConnection* conn = [rtcMember getPeerConnection];
@@ -139,9 +141,9 @@
     [self getPeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:offer];
 }
 
-- (RTCMember*)getPeerConnection:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId offer:(BOOL)offer
+- (CineRTCMember*)getPeerConnection:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId offer:(BOOL)offer
 {
-    RTCMember *member = [self.rtcMembers objectForKey:otherClientSparkUUID];
+    CineRTCMember *member = [self.rtcMembers objectForKey:otherClientSparkUUID];
     if (member != nil) {
         [member setSparkId:otherClientSparkId];
         return member;
@@ -149,10 +151,10 @@
     return [self createPeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:offer];
 }
 
-- (RTCMember*)createPeerConnection:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId offer:(BOOL)offer
+- (CineRTCMember*)createPeerConnection:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId offer:(BOOL)offer
 {
     NSLog(@"creating new peer connection: %@", otherClientSparkUUID);
-    RTCMember *member = [[RTCMember alloc] init];
+    CineRTCMember *member = [[CineRTCMember alloc] init];
     NSLog(@"created member");
     [member setSparkId:otherClientSparkId];
     NSLog(@"set spark id");
@@ -160,7 +162,7 @@
     NSLog(@"set spark uuid");
 
 
-    PeerObserver *observer = [[PeerObserver alloc] init];
+    CinePeerObserver *observer = [[CinePeerObserver alloc] init];
     NSLog(@"created observer");
 
     [member setPeerObserver:observer];
@@ -184,7 +186,7 @@
     [self.rtcMembers setObject:member forKey:otherClientSparkUUID];
 
     if (offer) {
-        LocalOfferSDPObserver *observer = [[LocalOfferSDPObserver alloc] init];
+        CineLocalOfferSDPObserver *observer = [[CineLocalOfferSDPObserver alloc] init];
         [observer rtcMember:member cinePeerClient:self.cinePeerClient];
 
         NSLog(@"offerring");
@@ -198,7 +200,7 @@
 
 - (void)closePeerConnection:(NSString *)otherClientSparkUUID
 {
-    RTCMember *member = [self.rtcMembers objectForKey:otherClientSparkUUID];
+    CineRTCMember *member = [self.rtcMembers objectForKey:otherClientSparkUUID];
     if (member == nil) {
         return;
     }

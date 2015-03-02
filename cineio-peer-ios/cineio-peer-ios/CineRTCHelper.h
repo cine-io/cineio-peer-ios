@@ -1,5 +1,5 @@
 //
-//  CinePeerUtil.h
+//  CineRTCHelper.h
 //  cineio-peer-ios
 //
 //  Created by Jeffrey Wescott on 9/12/14.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CinePeerUtil : NSObject
+@interface CineRTCHelper : NSObject
 
 + (NSString*)preferISAC:(NSString*)origSDP;
 

@@ -10,9 +10,9 @@
 
 #import <Foundation/Foundation.h>
 #import <CommonCrypto/CommonDigest.h>
-#import "DigestHelper.h"
+#import "CineDigestHelper.h"
 
-@implementation DigestHelper
+@implementation CineDigestHelper
 
 +(NSString*) sha1:(NSString*)input
 {

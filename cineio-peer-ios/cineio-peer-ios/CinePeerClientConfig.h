@@ -14,17 +14,17 @@
 @class RTCPeerConnection;
 
 //Cine Peer SDK
-@class Identity;
-@class Call;
+@class CineIdentity;
+@class CineCall;
 
 
 @protocol CinePeerClientDelegate <NSObject>
 - (void) addStream:(RTCMediaStream *)stream peerConnection:(RTCPeerConnection *)peerConnection local:(BOOL)local;
 - (void) removeStream:(RTCMediaStream *)stream peerConnection:(RTCPeerConnection *)peerConnection local:(BOOL)local;
 - (void) handleError:(NSDictionary *)error;
-- (void) handleCall:(Call *)call;
-- (void) onCallCancel:(Call *)call;
-- (void) onCallReject:(Call *)call;
+- (void) handleCall:(CineCall *)call;
+- (void) onCallCancel:(CineCall *)call;
+- (void) onCallReject:(CineCall *)call;
 @end
 
 @interface CinePeerClientConfig : NSObject
@@ -38,7 +38,7 @@
 - (NSString *)getSecretKey;
 - (void)setSecretKey:(NSString *)secretKey;
 
-- (Identity *) generateIdentity:(NSString *)identityName;
+- (CineIdentity *) generateIdentity:(NSString *)identityName;
 @end
 
 #endif

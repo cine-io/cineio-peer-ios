@@ -1,5 +1,5 @@
 //
-//  Identity.m
+//  CineIdentity.m
 //  cineio-peer-ios
 //
 //  Created by Thomas Shafer on 2/28/15.
@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-#import "Identity.h"
+#import "CineIdentity.h"
 
-@interface Identity ()
+@interface CineIdentity ()
 
 @property (nonatomic, strong) NSString* identity;
 @property (nonatomic, strong) NSString* signature;
@@ -19,7 +19,7 @@
 @end
 
 
-@implementation Identity
+@implementation CineIdentity
 
 - (id) initWithName:(NSString *)identityName timestamp:(long)timestamp signature:(NSString *)signature;
 {

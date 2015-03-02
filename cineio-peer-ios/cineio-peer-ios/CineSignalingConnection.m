@@ -1,43 +1,42 @@
 //
-//  SignalingConnection.m
+//  CineSignalingConnection.m
 //  cineio-peer-ios
 //
 //  Created by Thomas Shafer on 2/28/15.
 //  Copyright (c) 2015 cine.io. All rights reserved.
 //
 
-#import "SignalingConnection.h"
+#import "CineSignalingConnection.h"
 #import <AVFoundation/AVFoundation.h>
 
 #import <Primus/Primus.h>
 #import <Primus/SocketRocketClient.h>
 
-#import "CinePeerUtil.h"
-#import "RTCMember.h"
-#import "PeerConnectionManager.h"
+#import "CineRTCMember.h"
+#import "CinePeerConnectionManager.h"
 #import "CinePeerClientConfig.h"
-#import "Identity.h"
-#import "Call.h"
+#import "CineIdentity.h"
+#import "CineCall.h"
 
 // WebRTC includes
 #import "RTCICECandidate.h"
 #import "RTCSessionDescription.h"
 
 
-@interface SignalingConnection ()
+@interface CineSignalingConnection ()
 
 @property (nonatomic, strong) Primus *signalingServer;
 @property (nonatomic, weak) CinePeerClientConfig *config;
-@property (nonatomic, weak) PeerConnectionManager *peerConnectionManager;
+@property (nonatomic, weak) CinePeerConnectionManager *peerConnectionManager;
 @property (nonatomic, strong) NSString *uuid;
-@property (nonatomic, strong) Identity *identity;
+@property (nonatomic, strong) CineIdentity *identity;
 @property (nonatomic, strong) NSMutableDictionary *ongoingCalls;
 @property (nonatomic, strong) NSMutableArray *joinedRooms;
 
 @end
 
 
-@implementation SignalingConnection
+@implementation CineSignalingConnection
 
 - (id)initWithConfig:(CinePeerClientConfig *)theConfig;
 {
@@ -52,7 +51,7 @@
     return self;
 }
 
-- (void)setPeerConnectionsManager:(PeerConnectionManager *)peerConnectionManager
+- (void)setPeerConnectionsManager:(CinePeerConnectionManager *)peerConnectionManager
 {
     self.peerConnectionManager = peerConnectionManager;
 }
@@ -153,7 +152,7 @@
     [self.joinedRooms removeObject:roomName];
     [self send:@{@"action": @"room-leave", @"room": roomName}];
 }
-- (void)identify:(Identity *)theIdentity
+- (void)identify:(CineIdentity *)theIdentity
 {
     self.identity = theIdentity;
     [self sendIdentity];
@@ -267,31 +266,31 @@
 - (void)handleCall:(NSDictionary *)message
 {
     NSLog(@"handleCall: %@", message);
-    Call *call = [self callForRoom:message[@"room"] initated:false];
+    CineCall *call = [self callForRoom:message[@"room"] initated:false];
     [[self.config getDelegate] handleCall:call];
 
 }
 - (void)handleCallCancel:(NSDictionary *)message
 {
     NSLog(@"handleCallCancel: %@", message);
-    Call *call = [self callForRoom:message[@"room"] initated:false];
+    CineCall *call = [self callForRoom:message[@"room"] initated:false];
     [call cancelled:message[@"identity"]];
 
 }
 - (void)handleCallReject:(NSDictionary *)message
 {
     NSLog(@"handleCallReject: %@", message);
-    Call *call = [self callForRoom:message[@"room"] initated:false];
+    CineCall *call = [self callForRoom:message[@"room"] initated:false];
     [call rejected:message[@"identity"]];
 
     //    call.rejected(response.getString("identity"));
 }
 
--(Call *)callForRoom:(NSString *)roomName initated:(BOOL)initiated
+-(CineCall *)callForRoom:(NSString *)roomName initated:(BOOL)initiated
 {
-    Call *call = [self.ongoingCalls valueForKey:roomName];
+    CineCall *call = [self.ongoingCalls valueForKey:roomName];
     if (call == nil) {
-        call = [[Call alloc]initWithRoom:roomName config:self.config signalingConnection:self initiated:initiated];
+        call = [[CineCall alloc]initWithRoom:roomName config:self.config signalingConnection:self initiated:initiated];
         [self.ongoingCalls setObject:call forKey:roomName];
         return call;
     }

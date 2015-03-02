@@ -1,5 +1,5 @@
 //
-//  RemoteAnswerSDPObserver.m
+//  CineRemoteAnswerSDPObserver.m
 //  cineio-peer-ios
 //
 //  Created by Thomas Shafer on 2/27/15.
@@ -8,22 +8,22 @@
 
 #import <Foundation/Foundation.h>
 
-#import "RemoteAnswerSDPObserver.h"
-#import "LocalAnswerSDPObserver.h"
+#import "CineRemoteAnswerSDPObserver.h"
+#import "CineLocalAnswerSDPObserver.h"
 #import "RTCSessionDescriptionDelegate.h"
 #import "CinePeerClient.h"
-#import "RTCMember.h"
+#import "CineRTCMember.h"
 #import "RTCPeerConnection.h"
 
 
-@interface RemoteAnswerSDPObserver () <RTCSessionDescriptionDelegate>
-@property (nonatomic, weak) RTCMember* rtcMember;
+@interface CineRemoteAnswerSDPObserver () <RTCSessionDescriptionDelegate>
+@property (nonatomic, weak) CineRTCMember* rtcMember;
 @property (nonatomic, weak) CinePeerClient* cinePeerClient;
 @end
 
-@implementation RemoteAnswerSDPObserver
+@implementation CineRemoteAnswerSDPObserver
 
-- (void)rtcMember:(RTCMember *)member cinePeerClient:(CinePeerClient *)cinePeerClient
+- (void)rtcMember:(CineRTCMember *)member cinePeerClient:(CinePeerClient *)cinePeerClient
 {
     self.rtcMember = member;
     self.cinePeerClient = cinePeerClient;
@@ -35,7 +35,7 @@
     didCreateSessionDescription:(RTCSessionDescription *)origSdp
                           error:(NSError *)error
 {
-    NSLog(@"RemoteAnswerSDPObserver");
+    NSLog(@"CineRemoteAnswerSDPObserver");
     NSLog(@"SHOULD NOT CREATE REMOTE ANSWER");
 }
 
@@ -43,7 +43,7 @@
 - (void)               peerConnection:(RTCPeerConnection *)peerConnection
     didSetSessionDescriptionWithError:(NSError *)error
 {
-    NSLog(@"RemoteAnswerSDPObserver");
+    NSLog(@"CineRemoteAnswerSDPObserver");
     NSLog(@"didSetSessionDescriptionWithError");
     if (error) {
         NSAssert(NO, error.description);

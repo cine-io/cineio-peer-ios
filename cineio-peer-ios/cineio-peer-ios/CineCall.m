@@ -1,5 +1,5 @@
 //
-//  Call.m
+//  CineCall.m
 //  cineio-peer-ios
 //
 //  Created by Thomas Shafer on 2/28/15.
@@ -7,24 +7,24 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Call.h"
-#import "SignalingConnection.h"
+#import "CineCall.h"
+#import "CineSignalingConnection.h"
 #import "CinePeerClientConfig.h"
 
-@interface Call ()
+@interface CineCall ()
 
 @property (nonatomic, strong) NSString* roomName;
 @property (nonatomic, weak) CinePeerClientConfig* config;
-@property (nonatomic, weak) SignalingConnection* signalingConnection;
+@property (nonatomic, weak) CineSignalingConnection* signalingConnection;
 
 @property BOOL initiated;
 
 @end
 
 
-@implementation Call
+@implementation CineCall
 
-- (id)initWithRoom:(NSString *)roomName config:(CinePeerClientConfig *)config signalingConnection:(SignalingConnection *)signalingConnection initiated:(BOOL)initiated
+- (id)initWithRoom:(NSString *)roomName config:(CinePeerClientConfig *)config signalingConnection:(CineSignalingConnection *)signalingConnection initiated:(BOOL)initiated
 {
     if (self = [super init]) {
         self.roomName = roomName;
