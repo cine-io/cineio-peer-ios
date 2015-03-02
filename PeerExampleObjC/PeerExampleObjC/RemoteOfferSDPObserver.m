@@ -13,6 +13,7 @@
 #import "RTCSessionDescriptionDelegate.h"
 #import "CinePeerClient.h"
 #import "RTCPeerConnection.h"
+#import "RTCMember.h"
 
 
 @interface RemoteOfferSDPObserver () <RTCSessionDescriptionDelegate>

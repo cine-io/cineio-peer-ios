@@ -9,7 +9,7 @@
 #ifndef PeerExampleObjC_Call_h
 #define PeerExampleObjC_Call_h
 
-@class Call;
+//Cine Peer SDK
 @class CinePeerClientConfig;
 @class SignalingConnection;
 

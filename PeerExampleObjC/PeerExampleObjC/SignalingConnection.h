@@ -10,10 +10,12 @@
 #define PeerExampleObjC_SignalingConnection_h
 #import <Foundation/Foundation.h>
 
-@class SignalingConnection;
-@class PeerConnectionManager;
+//Vendor
 @class RTCICECandidate;
 @class RTCSessionDescription;
+
+//Cine Peer SDK
+@class PeerConnectionManager;
 @class CinePeerClientConfig;
 @class Identity;
 

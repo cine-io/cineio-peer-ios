@@ -12,6 +12,7 @@
 #import "LocalAnswerSDPObserver.h"
 #import "RTCSessionDescriptionDelegate.h"
 #import "CinePeerClient.h"
+#import "RTCMember.h"
 #import "RTCPeerConnection.h"
 
 

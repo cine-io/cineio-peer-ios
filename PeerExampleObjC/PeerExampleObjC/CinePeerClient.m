@@ -19,7 +19,6 @@
 #import "RTCPair.h"
 #import "RTCVideoCapturer.h"
 #import "RTCVideoSource.h"
-#import "RTCPeerConnectionFactory.h"
 #import "RTCMediaConstraints.h"
 
 @interface CinePeerClient ()

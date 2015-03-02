@@ -9,8 +9,6 @@
 #ifndef PeerExampleObjC_Identity_h
 #define PeerExampleObjC_Identity_h
 
-@class Identity;
-
 @interface Identity : NSObject
 
 - (id) initWithName:(NSString *)identityName timestamp:(long)timestamp signature:(NSString *)signature;

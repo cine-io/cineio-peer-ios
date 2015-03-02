@@ -8,13 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-#import "CinePeerClient.h"
 #import "LocalOfferSDPObserver.h"
+#import "CinePeerClient.h"
 #import "RTCSessionDescriptionDelegate.h"
 #import "CinePeerUtil.h"
 #import "RTCSessionDescription.h"
 #import "RTCPeerConnection.h"
 #import "RTCMember.h"
+#import "SignalingConnection.h"
 
 
 @interface LocalOfferSDPObserver () <RTCSessionDescriptionDelegate>

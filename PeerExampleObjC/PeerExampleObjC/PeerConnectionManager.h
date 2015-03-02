@@ -7,10 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RTCPeerConnectionFactory.h"
-#import "RTCMediaStream.h"
 
-@class PeerConnectionManager;
+//Vendor
+@class RTCMediaStream;
+@class RTCPeerConnectionFactory;
+
+//Cine Peer SDK
 @class CinePeerClient;
 @class RTCMember;
 

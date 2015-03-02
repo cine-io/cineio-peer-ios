@@ -21,25 +21,13 @@
 
 // WebRTC includes
 #import "RTCICECandidate.h"
-#import "RTCICEServer.h"
-#import "RTCMediaConstraints.h"
-#import "RTCMediaStream.h"
-#import "RTCPair.h"
-#import "RTCPeerConnection.h"
-#import "RTCPeerConnectionDelegate.h"
-#import "RTCPeerConnectionFactory.h"
 #import "RTCSessionDescription.h"
-#import "RTCSessionDescriptionDelegate.h"
-#import "RTCStatsDelegate.h"
-#import "RTCVideoCapturer.h"
-#import "RTCVideoSource.h"
 
 
 @interface SignalingConnection ()
 
 @property (nonatomic, strong) Primus *signalingServer;
 @property (nonatomic, strong) CinePeerClientConfig *config;
-@property (nonatomic, strong) RTCPeerConnectionFactory *peerConnectionFactory;
 @property (nonatomic, strong) PeerConnectionManager *peerConnectionManager;
 @property (nonatomic, strong) NSString *uuid;
 @property (nonatomic, strong) Identity *identity;
@@ -56,7 +44,6 @@
     NSLog(@"INIT");
     if (self = [super init]) {
         self.config = theConfig;
-        self.peerConnectionFactory = [[RTCPeerConnectionFactory alloc] init];
         self.uuid = [[NSUUID UUID] UUIDString];
         self.ongoingCalls = [[NSMutableDictionary alloc] init];
         self.joinedRooms = [[NSMutableArray alloc] init];

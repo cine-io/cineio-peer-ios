@@ -9,9 +9,9 @@
 #ifndef PeerExampleObjC_RemoteAnswerSDPObserver_h
 #define PeerExampleObjC_RemoteAnswerSDPObserver_h
 
-@class RemoteAnswerSDPObserver;
-@class RTCMember;
+//Cine Peer SDK
 @class CinePeerClient;
+@class RTCMember;
 
 @interface RemoteAnswerSDPObserver : NSObject
 - (void)rtcMember:(RTCMember *)member cinePeerClient:(CinePeerClient *)cinePeerClient;

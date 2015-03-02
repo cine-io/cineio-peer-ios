@@ -12,6 +12,7 @@
 #import "RTCMediaStream.h"
 #import "RTCPeerConnectionDelegate.h"
 #import "CinePeerClient.h"
+#import "SignalingConnection.h"
 
 @interface PeerObserver () <RTCPeerConnectionDelegate>
 @property (nonatomic, strong) RTCMember* rtcMember;

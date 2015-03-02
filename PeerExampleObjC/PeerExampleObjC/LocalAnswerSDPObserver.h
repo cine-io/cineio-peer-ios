@@ -9,8 +9,10 @@
 #ifndef PeerExampleObjC_LocalAnswerSDPObserver_h
 #define PeerExampleObjC_LocalAnswerSDPObserver_h
 
-@class LocalAnswerSDPObserver;
+//Vendor
 @class RTCMember;
+
+//Cine Peer SDK
 @class CinePeerClient;
 
 @interface LocalAnswerSDPObserver : NSObject

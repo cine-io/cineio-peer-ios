@@ -9,10 +9,9 @@
 #ifndef PeerExampleObjC_PeerObserver_h
 #define PeerExampleObjC_PeerObserver_h
 
-#import "CinePeerClient.h"
-
-@class PeerObserver;
+//Cine Peer SDK
 @class RTCMember;
+@class CinePeerClient;
 
 @interface PeerObserver : NSObject
 - (void)rtcMember:(RTCMember *)member cinePeerClient:(CinePeerClient *)cinePeerClient;

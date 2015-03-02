@@ -9,8 +9,6 @@
 #ifndef PeerExampleObjC_DigestHelper_h
 #define PeerExampleObjC_DigestHelper_h
 
-@class DigestHelper;
-
 @interface DigestHelper : NSObject
 +(NSString*) sha1:(NSString*)input;
 @end

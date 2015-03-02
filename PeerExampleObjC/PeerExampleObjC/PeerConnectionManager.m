@@ -14,21 +14,16 @@
 #import "RemoteOfferSDPObserver.h"
 #import "LocalOfferSDPObserver.h"
 #import "RemoteAnswerSDPObserver.h"
+#import "CinePeerClient.h"
 
 // WebRTC includes
 #import "RTCICECandidate.h"
 #import "RTCICEServer.h"
-#import "RTCMediaConstraints.h"
 #import "RTCMediaStream.h"
-#import "RTCPair.h"
 #import "RTCPeerConnection.h"
 #import "RTCPeerConnectionDelegate.h"
 #import "RTCPeerConnectionFactory.h"
 #import "RTCSessionDescription.h"
-#import "RTCSessionDescriptionDelegate.h"
-#import "RTCStatsDelegate.h"
-#import "RTCVideoCapturer.h"
-#import "RTCVideoSource.h"
 #import "PeerObserver.h"
 
 

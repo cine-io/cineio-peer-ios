@@ -9,11 +9,13 @@
 #ifndef PeerExampleObjC_CinePeerClientConfig_h
 #define PeerExampleObjC_CinePeerClientConfig_h
 
-
-@class CinePeerClientConfig;
+//Vendor
 @class RTCMediaStream;
+
+//Cine Peer SDK
 @class Identity;
 @class Call;
+
 
 @protocol CinePeerClientDelegate <NSObject>
 - (void) addStream:(RTCMediaStream *)stream local:(BOOL)local;

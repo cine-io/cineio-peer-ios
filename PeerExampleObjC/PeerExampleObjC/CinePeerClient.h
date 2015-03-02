@@ -9,11 +9,15 @@
 #ifndef PeerExampleObjC_CinePeerClient_h
 #define PeerExampleObjC_CinePeerClient_h
 
-#include "SignalingConnection.h"
-#include "RTCMediaStream.h"
-#include "RTCMediaConstraints.h"
-@class CinePeerClient;
+
+//Vendor
+@class RTCMediaConstraints;
+@class RTCMediaStream;
+
+//Cine Peer SDK
 @class Identity;
+@class SignalingConnection;
+@class CinePeerClientConfig;
 
 @interface CinePeerClient : NSObject
 

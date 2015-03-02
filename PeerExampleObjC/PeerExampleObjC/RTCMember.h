@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 cine.io. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "RTCPeerConnection.h"
+//Vendor
+@class RTCPeerConnection;
 
-@class RTCMember;
+//Cine Peer SDK
 @class PeerObserver;
 
 @interface RTCMember : NSObject
