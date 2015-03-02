@@ -78,7 +78,6 @@
     // for some reason I can't use /primus so it can't properly get the /spec
     // so i need to manually specify the timeout and ping
     options.autodetect = false;
-    options.strategy = @[@(kPrimusReconnectionStrategyTimeout)];
 
     options.timeout = 35000;
     options.ping = pingInterval;
@@ -318,7 +317,7 @@
 
 - (void)onError:(NSError *)error
 {
-    NSLog(@"ERROR: %@", error);
+    NSLog(@"PRIMUS ERROR: %@", error);
 }
 
 - (void)onData:(NSDictionary *)data withRaw:(id)raw

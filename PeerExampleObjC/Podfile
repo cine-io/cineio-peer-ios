@@ -1,5 +1,5 @@
 pod "libjingle_peerconnection"
-pod "Primus"
+pod "Primus", :git => 'git@github.com:cine-io/primus-objc.git', :commit => '8f63ae63d7f974655a5b22a5ee967e2b54050ba5'
 pod "SocketRocket", "= 0.3.1-beta2"
 
 # Add this to the bottom so it won't have issues with active architecture
