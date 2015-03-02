@@ -98,7 +98,7 @@
     NSLog(@"send, action:%@", [data valueForKey:@"action"]);
 
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-    [dict setValue:@"cineio-peer-ios version-0.0.3" forKey:@"client"];
+    [dict setValue:@"cineio-peer-ios version-0.0.4" forKey:@"client"];
     [dict setValue:[self.config getPublicKey] forKey:@"publicKey"];
     [dict setValue:self.uuid forKey:@"uuid"];
     if (self.identity != nil) {
