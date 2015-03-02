@@ -11,11 +11,11 @@
 
 //Cine Peer SDK
 @class CinePeerClientConfig;
-@class SignalingConnection;
+@class CineSignalingConnection;
 
 @interface CineCall : NSObject
 
-- (id)initWithRoom:(NSString *)roomName config:(CinePeerClientConfig *)config signalingConnection:(SignalingConnection *)signalingConnection initiated:(BOOL)initiated;
+- (id)initWithRoom:(NSString *)roomName config:(CinePeerClientConfig *)config signalingConnection:(CineSignalingConnection *)signalingConnection initiated:(BOOL)initiated;
 
 - (void)answer;
 - (void)reject;
