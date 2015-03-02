@@ -1,13 +1,13 @@
 //
-//  Call.h
+//  CineCall.h
 //  cineio-peer-ios
 //
 //  Created by Thomas Shafer on 2/28/15.
 //  Copyright (c) 2015 cine.io. All rights reserved.
 //
 
-#ifndef cineioPeerIOS_Call_h
-#define cineioPeerIOS_Call_h
+#ifndef cineioPeerIOS_CineCall_h
+#define cineioPeerIOS_CineCall_h
 
 //Cine Peer SDK
 @class CinePeerClientConfig;

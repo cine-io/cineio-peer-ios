@@ -6,6 +6,9 @@
 //  Copyright (c) 2015 cine.io. All rights reserved.
 //
 
+#ifndef cineioPeerIOS_CinePeerConnectionManager_h
+#define cineioPeerIOS_CinePeerConnectionManager_h
+
 #import <Foundation/Foundation.h>
 
 //Vendor
@@ -36,3 +39,5 @@
 - (void)handleIce:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId iceCandidate:(NSDictionary *)iceCandidate;
 
 @end
+
+#endif

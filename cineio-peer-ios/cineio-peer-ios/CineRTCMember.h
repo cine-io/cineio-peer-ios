@@ -6,6 +6,9 @@
 //  Copyright (c) 2015 cine.io. All rights reserved.
 //
 
+#ifndef cineioPeerIOS_CineRTCMember_h
+#define cineioPeerIOS_CineRTCMember_h
+
 //Vendor
 @class RTCPeerConnection;
 
@@ -28,3 +31,5 @@
 
 - (void) close;
 @end
+
+#endif
