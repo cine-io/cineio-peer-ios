@@ -129,7 +129,9 @@
 {
     NSLog(@"connected");
     [self send:@{@"action": @"auth"}];
-    [self sendIdentity];
+    if (self.identity != nil){
+        [self sendIdentity];
+    }
     for (id roomName in self.joinedRooms) {
         [self sendJoinRoom:roomName];
     }
