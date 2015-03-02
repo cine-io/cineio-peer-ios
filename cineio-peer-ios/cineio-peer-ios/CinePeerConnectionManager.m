@@ -119,6 +119,8 @@
 
 - (void)handleIce:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId iceCandidate:(NSDictionary *)iceCandidate
 {
+    NSLog(@"HANDLE ICE");
+
     NSDictionary *candidateDict = iceCandidate[@"candidate"][@"candidate"];
     NSString* sdpMid = candidateDict[@"sdpMid"];
     NSNumber* sdpLineIndex = candidateDict[@"sdpMLineIndex"];
@@ -132,6 +134,8 @@
     NSLog(@"got connection");
 
     [conn addICECandidate:candidate];
+    NSLog(@"added ice");
+
 }
 
 
