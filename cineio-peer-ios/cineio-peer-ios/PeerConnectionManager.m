@@ -30,9 +30,9 @@
 @interface PeerConnectionManager ()
 @property (nonatomic, strong) RTCPeerConnectionFactory *peerConnectionFactory;
 @property (nonatomic, strong) NSMutableDictionary *rtcMembers;
-@property (nonatomic, strong) RTCMediaStream *localMediaStream;
+@property (nonatomic, weak) RTCMediaStream *localMediaStream;
 @property (nonatomic, strong) NSMutableArray *iceServers;
-@property (nonatomic, strong) CinePeerClient *cinePeerClient;
+@property (nonatomic, weak) CinePeerClient *cinePeerClient;
 
 @end
 

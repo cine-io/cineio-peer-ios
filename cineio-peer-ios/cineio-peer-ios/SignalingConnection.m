@@ -27,8 +27,8 @@
 @interface SignalingConnection ()
 
 @property (nonatomic, strong) Primus *signalingServer;
-@property (nonatomic, strong) CinePeerClientConfig *config;
-@property (nonatomic, strong) PeerConnectionManager *peerConnectionManager;
+@property (nonatomic, weak) CinePeerClientConfig *config;
+@property (nonatomic, weak) PeerConnectionManager *peerConnectionManager;
 @property (nonatomic, strong) NSString *uuid;
 @property (nonatomic, strong) Identity *identity;
 @property (nonatomic, strong) NSMutableDictionary *ongoingCalls;

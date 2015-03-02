@@ -19,8 +19,8 @@
 
 
 @interface LocalAnswerSDPObserver () <RTCSessionDescriptionDelegate>
-@property (nonatomic, strong) RTCMember* rtcMember;
-@property (nonatomic, strong) CinePeerClient* cinePeerClient;
+@property (nonatomic, weak) RTCMember* rtcMember;
+@property (nonatomic, weak) CinePeerClient* cinePeerClient;
 @property (nonatomic, strong) RTCSessionDescription* localSdp;
 @end
 

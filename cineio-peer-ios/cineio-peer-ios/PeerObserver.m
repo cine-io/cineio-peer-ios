@@ -15,10 +15,10 @@
 #import "SignalingConnection.h"
 
 @interface PeerObserver () <RTCPeerConnectionDelegate>
-@property (nonatomic, strong) RTCMember* rtcMember;
-@property (nonatomic, strong) RTCPeerConnection* peerConnection;
+@property (nonatomic, weak) RTCMember* rtcMember;
+@property (nonatomic, weak) RTCPeerConnection* peerConnection;
 @property (nonatomic, strong) RTCMediaStream* addedStream;
-@property (nonatomic, strong) CinePeerClient* cinePeerClient;
+@property (nonatomic, weak) CinePeerClient* cinePeerClient;
 @end
 
 @implementation PeerObserver

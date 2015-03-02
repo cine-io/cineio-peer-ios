@@ -14,8 +14,8 @@
 @interface Call ()
 
 @property (nonatomic, strong) NSString* roomName;
-@property (nonatomic, strong) CinePeerClientConfig* config;
-@property (nonatomic, strong) SignalingConnection* signalingConnection;
+@property (nonatomic, weak) CinePeerClientConfig* config;
+@property (nonatomic, weak) SignalingConnection* signalingConnection;
 
 @property BOOL initiated;
 

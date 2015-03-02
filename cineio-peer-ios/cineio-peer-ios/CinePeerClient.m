@@ -33,6 +33,16 @@
 
 @implementation CinePeerClient
 
++ (void)setup
+{
+    [RTCPeerConnectionFactory initializeSSL];
+}
+
++ (void)teardown
+{
+    [RTCPeerConnectionFactory deinitializeSSL];
+}
+
 //API BEGIN
 - (id)initWithConfig:(CinePeerClientConfig *)config
 {

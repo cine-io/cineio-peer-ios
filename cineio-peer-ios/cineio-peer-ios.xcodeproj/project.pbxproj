@@ -7,16 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		003092BA19C12A680042DAEE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 003092B919C12A680042DAEE /* main.m */; };
-		003092BD19C12A680042DAEE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 003092BC19C12A680042DAEE /* AppDelegate.m */; };
-		003092C019C12A680042DAEE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 003092BF19C12A680042DAEE /* ViewController.m */; };
-		003092C319C12A680042DAEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 003092C119C12A680042DAEE /* Main.storyboard */; };
-		003092C519C12A680042DAEE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 003092C419C12A680042DAEE /* Images.xcassets */; };
 		003092D119C12A680042DAEE /* cineio_peer_iosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 003092D019C12A680042DAEE /* cineio_peer_iosTests.m */; };
 		003092E219C409070042DAEE /* CinePeerUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 003092E119C409070042DAEE /* CinePeerUtil.m */; };
 		003092E719C410100042DAEE /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 003092E619C410100042DAEE /* README.md */; };
 		0CE6CA6B70D94804845E5ECE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80537E8ADEDE4322B3E07771 /* libPods.a */; };
-		E91D04AE1AA3F20F00BCA98C /* MediaStreamAndRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = E91D04AD1AA3F20F00BCA98C /* MediaStreamAndRenderer.m */; };
 		E98A6B9A1A9FF4610004162C /* PeerConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6B991A9FF4610004162C /* PeerConnectionManager.m */; };
 		E98A6B9C1AA0049E0004162C /* RTCMember.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6B9B1AA0049E0004162C /* RTCMember.m */; };
 		E98A6BA01AA100D10004162C /* PeerObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6B9F1AA100D10004162C /* PeerObserver.m */; };
@@ -38,20 +32,13 @@
 			containerPortal = 003092AC19C12A680042DAEE /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 003092B319C12A680042DAEE;
-			remoteInfo = cineio-peer-ios;
+			remoteInfo = "cineio-peer-ios";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		003092B419C12A680042DAEE /* cineio-peer-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cineio-peer-ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		003092B419C12A680042DAEE /* cineio-peer-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cineio-peer-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		003092B819C12A680042DAEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		003092B919C12A680042DAEE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		003092BB19C12A680042DAEE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		003092BC19C12A680042DAEE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		003092BE19C12A680042DAEE /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		003092BF19C12A680042DAEE /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		003092C219C12A680042DAEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		003092C419C12A680042DAEE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		003092CA19C12A680042DAEE /* cineio_peer_iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = cineio_peer_iosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		003092CF19C12A680042DAEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		003092D019C12A680042DAEE /* cineio_peer_iosTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = cineio_peer_iosTests.m; sourceTree = "<group>"; };
@@ -61,8 +48,6 @@
 		025E3D59144EA424FB1FB48D /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		80537E8ADEDE4322B3E07771 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1A9AD6BF208873637DD2CFB /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		E91D04AC1AA3F1A700BCA98C /* MediaStreamAndRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaStreamAndRenderer.h; sourceTree = "<group>"; };
-		E91D04AD1AA3F20F00BCA98C /* MediaStreamAndRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaStreamAndRenderer.m; sourceTree = "<group>"; };
 		E98A6B981A9FF3F40004162C /* PeerConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeerConnectionManager.h; sourceTree = "<group>"; };
 		E98A6B991A9FF4610004162C /* PeerConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeerConnectionManager.m; sourceTree = "<group>"; };
 		E98A6B9B1AA0049E0004162C /* RTCMember.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTCMember.m; sourceTree = "<group>"; };
@@ -115,7 +100,7 @@
 			children = (
 				003092E619C410100042DAEE /* README.md */,
 				003092B619C12A680042DAEE /* cineio-peer-ios */,
-				003092CD19C12A680042DAEE /* cineio_peer_iosTests */,
+				003092CD19C12A680042DAEE /* cineio-peer-iosTests */,
 				003092B519C12A680042DAEE /* Products */,
 				3D198C082629411AAA1FD2D8 /* Frameworks */,
 				B6FA4301372F3FED68D85AA1 /* Pods */,
@@ -134,8 +119,6 @@
 		003092B619C12A680042DAEE /* cineio-peer-ios */ = {
 			isa = PBXGroup;
 			children = (
-				003092BB19C12A680042DAEE /* AppDelegate.h */,
-				003092BC19C12A680042DAEE /* AppDelegate.m */,
 				E98A6BA31AA1036B0004162C /* CinePeerClient.h */,
 				E98A6BA11AA103610004162C /* CinePeerClient.m */,
 				E98A6BB81AA26C7D0004162C /* CinePeerClientConfig.h */,
@@ -144,12 +127,10 @@
 				003092E119C409070042DAEE /* CinePeerUtil.m */,
 				E98A6BB31AA26AEF0004162C /* Identity.h */,
 				E98A6BB41AA26B470004162C /* Identity.m */,
-				003092C419C12A680042DAEE /* Images.xcassets */,
 				E98A6BA71AA181E60004162C /* LocalAnswerSDPObserver.h */,
 				E98A6BA81AA1824D0004162C /* LocalAnswerSDPObserver.m */,
 				E98A6BAD1AA1941F0004162C /* LocalOfferSDPObserver.h */,
 				E98A6BAE1AA194420004162C /* LocalOfferSDPObserver.m */,
-				003092C119C12A680042DAEE /* Main.storyboard */,
 				E98A6B981A9FF3F40004162C /* PeerConnectionManager.h */,
 				E98A6B991A9FF4610004162C /* PeerConnectionManager.m */,
 				E98A6B9E1AA100C20004162C /* PeerObserver.h */,
@@ -163,34 +144,29 @@
 				E98A6BB21AA258500004162C /* SignalingConnection.h */,
 				E98A6BB01AA2582D0004162C /* SignalingConnection.m */,
 				003092B719C12A680042DAEE /* Supporting Files */,
-				003092BE19C12A680042DAEE /* ViewController.h */,
-				003092BF19C12A680042DAEE /* ViewController.m */,
 				E98A6BB91AA27D510004162C /* DigestHelper.h */,
 				E98A6BBA1AA27D8A0004162C /* DigestHelper.m */,
 				E98A6BBF1AA2830A0004162C /* Call.h */,
 				E98A6BBC1AA282F80004162C /* Call.m */,
-				E91D04AC1AA3F1A700BCA98C /* MediaStreamAndRenderer.h */,
-				E91D04AD1AA3F20F00BCA98C /* MediaStreamAndRenderer.m */,
 			);
-			path = cineio-peer-ios;
+			path = "cineio-peer-ios";
 			sourceTree = "<group>";
 		};
 		003092B719C12A680042DAEE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
 				003092B819C12A680042DAEE /* Info.plist */,
-				003092B919C12A680042DAEE /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		003092CD19C12A680042DAEE /* cineio_peer_iosTests */ = {
+		003092CD19C12A680042DAEE /* cineio-peer-iosTests */ = {
 			isa = PBXGroup;
 			children = (
 				003092D019C12A680042DAEE /* cineio_peer_iosTests.m */,
 				003092CE19C12A680042DAEE /* Supporting Files */,
 			);
-			path = cineio-peer-iosTests;
+			path = "cineio-peer-iosTests";
 			sourceTree = "<group>";
 		};
 		003092CE19C12A680042DAEE /* Supporting Files */ = {
@@ -235,8 +211,8 @@
 			);
 			dependencies = (
 			);
-			name = cineio-peer-ios;
-			productName = cineio-peer-ios;
+			name = "cineio-peer-ios";
+			productName = "cineio-peer-ios";
 			productReference = 003092B419C12A680042DAEE /* cineio-peer-ios.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -300,8 +276,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				003092C319C12A680042DAEE /* Main.storyboard in Resources */,
-				003092C519C12A680042DAEE /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,13 +332,9 @@
 				E98A6BBD1AA282F80004162C /* Call.m in Sources */,
 				E98A6BB51AA26B470004162C /* Identity.m in Sources */,
 				E98A6BA91AA1824D0004162C /* LocalAnswerSDPObserver.m in Sources */,
-				003092C019C12A680042DAEE /* ViewController.m in Sources */,
-				003092BD19C12A680042DAEE /* AppDelegate.m in Sources */,
-				E91D04AE1AA3F20F00BCA98C /* MediaStreamAndRenderer.m in Sources */,
 				E98A6BA51AA17DD20004162C /* RemoteOfferSDPObserver.m in Sources */,
 				003092E719C410100042DAEE /* README.md in Sources */,
 				E98A6BA21AA103610004162C /* CinePeerClient.m in Sources */,
-				003092BA19C12A680042DAEE /* main.m in Sources */,
 				E98A6B9A1A9FF4610004162C /* PeerConnectionManager.m in Sources */,
 				E98A6BB11AA2582D0004162C /* SignalingConnection.m in Sources */,
 				003092E219C409070042DAEE /* CinePeerUtil.m in Sources */,
@@ -391,17 +361,6 @@
 			targetProxy = 003092CB19C12A680042DAEE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		003092C119C12A680042DAEE /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				003092C219C12A680042DAEE /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		003092D219C12A680042DAEE /* Debug */ = {
@@ -488,8 +447,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				INFOPLIST_FILE = cineio-peer-ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				INFOPLIST_FILE = "cineio-peer-ios/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -503,8 +462,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				INFOPLIST_FILE = cineio-peer-ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				INFOPLIST_FILE = "cineio-peer-ios/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = "armv7 armv7s";
@@ -523,7 +482,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = cineio-peer-iosTests/Info.plist;
+				INFOPLIST_FILE = "cineio-peer-iosTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/cineio-peer-ios.app/cineio-peer-ios";
@@ -538,7 +497,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = cineio-peer-iosTests/Info.plist;
+				INFOPLIST_FILE = "cineio-peer-iosTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/cineio-peer-ios.app/cineio-peer-ios";

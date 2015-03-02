@@ -23,6 +23,9 @@
 @interface CinePeerClient : NSObject
 
 //API METHODS
++ (void)setup;
++ (void)teardown;
+
 - (id)initWithConfig:(CinePeerClientConfig *)config;
 - (void)joinRoom:(NSString *)roomName;
 - (void)startMediaStream;
