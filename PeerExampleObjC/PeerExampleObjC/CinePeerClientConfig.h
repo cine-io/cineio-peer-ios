@@ -11,6 +11,7 @@
 
 //Vendor
 @class RTCMediaStream;
+@class RTCPeerConnection;
 
 //Cine Peer SDK
 @class Identity;
@@ -18,8 +19,8 @@
 
 
 @protocol CinePeerClientDelegate <NSObject>
-- (void) addStream:(RTCMediaStream *)stream local:(BOOL)local;
-- (void) removeStream:(RTCMediaStream *)stream local:(BOOL)local;
+- (void) addStream:(RTCMediaStream *)stream peerConnection:(RTCPeerConnection *)peerConnection local:(BOOL)local;
+- (void) removeStream:(RTCMediaStream *)stream peerConnection:(RTCPeerConnection *)peerConnection local:(BOOL)local;
 - (void) handleError:(NSDictionary *)error;
 - (void) handleCall:(Call *)call;
 - (void) onCallCancel:(Call *)call;

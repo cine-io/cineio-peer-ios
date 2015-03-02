@@ -87,7 +87,7 @@
 
     [self.connectionManager setLocalMediaStream:self.localMediaStream];
 
-    [[self.config getDelegate] addStream:self.localMediaStream local:true];
+    [[self.config getDelegate] addStream:self.localMediaStream peerConnection:nil local:true];
 
 #endif
 
@@ -99,16 +99,16 @@
 }
 //API END
 
-- (void)addStream:(RTCMediaStream *)mediaStream
+- (void)addStream:(RTCMediaStream *)mediaStream peerConnection:(RTCPeerConnection *)peerConnection
 {
     NSLog(@"CinePeerClient - addStream");
-    [[self.config getDelegate] addStream:mediaStream local:false];
+    [[self.config getDelegate] addStream:mediaStream peerConnection:peerConnection local:false];
 }
 
-- (void)removeStream:(RTCMediaStream *)mediaStream
+- (void)removeStream:(RTCMediaStream *)mediaStream peerConnection:(RTCPeerConnection *)peerConnection;
 {
     NSLog(@"CinePeerClient - removeStream");
-    [[self.config getDelegate] removeStream:mediaStream local:false];
+    [[self.config getDelegate] removeStream:mediaStream peerConnection:peerConnection local:false];
 }
 
 - (SignalingConnection *)getSignalingConnection

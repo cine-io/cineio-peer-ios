@@ -53,7 +53,7 @@
         NSAssert([stream.audioTracks count] <= 1, @"Expected at most 1 audio stream");
         NSAssert([stream.videoTracks count] <= 1, @"Expected at most 1 video stream");
         self.addedStream = stream;
-        [self.cinePeerClient addStream:stream];
+        [self.cinePeerClient addStream:stream peerConnection:[self.rtcMember getPeerConnection]];
         //        if ([stream.videoTracks count] != 0) {
         //            [self.cinePeerClient addStream]
         //            [self.delegate signalingClient:self didReceiveRemoteVideoTrack:stream.videoTracks[0]];
@@ -68,7 +68,7 @@
          removedStream:(RTCMediaStream *)stream
 {
     NSLog(@"removedStream");
-    [self disposeOfStream:stream];
+    [self disposeOfStream:stream peerConnection:peerConnection];
 }
 
 - (void)peerConnectionOnRenegotiationNeeded:(RTCPeerConnection *)peerConnection
@@ -108,12 +108,12 @@
 
 - (void)close
 {
-    [self disposeOfStream:self.addedStream];
+    [self disposeOfStream:self.addedStream peerConnection:[self.rtcMember getPeerConnection]];
 }
 
-- (void)disposeOfStream:(RTCMediaStream *)stream
+- (void)disposeOfStream:(RTCMediaStream *)stream peerConnection:(RTCPeerConnection *)peerConnection
 {
-    [self.cinePeerClient removeStream:stream];
+    [self.cinePeerClient removeStream:stream peerConnection:peerConnection];
 }
 
 

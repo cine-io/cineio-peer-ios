@@ -16,6 +16,7 @@
 		003092E219C409070042DAEE /* CinePeerUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 003092E119C409070042DAEE /* CinePeerUtil.m */; };
 		003092E719C410100042DAEE /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 003092E619C410100042DAEE /* README.md */; };
 		0CE6CA6B70D94804845E5ECE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80537E8ADEDE4322B3E07771 /* libPods.a */; };
+		E91D04AE1AA3F20F00BCA98C /* MediaStreamAndRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = E91D04AD1AA3F20F00BCA98C /* MediaStreamAndRenderer.m */; };
 		E98A6B9A1A9FF4610004162C /* PeerConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6B991A9FF4610004162C /* PeerConnectionManager.m */; };
 		E98A6B9C1AA0049E0004162C /* RTCMember.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6B9B1AA0049E0004162C /* RTCMember.m */; };
 		E98A6BA01AA100D10004162C /* PeerObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = E98A6B9F1AA100D10004162C /* PeerObserver.m */; };
@@ -60,6 +61,8 @@
 		025E3D59144EA424FB1FB48D /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		80537E8ADEDE4322B3E07771 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1A9AD6BF208873637DD2CFB /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		E91D04AC1AA3F1A700BCA98C /* MediaStreamAndRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaStreamAndRenderer.h; sourceTree = "<group>"; };
+		E91D04AD1AA3F20F00BCA98C /* MediaStreamAndRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaStreamAndRenderer.m; sourceTree = "<group>"; };
 		E98A6B981A9FF3F40004162C /* PeerConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeerConnectionManager.h; sourceTree = "<group>"; };
 		E98A6B991A9FF4610004162C /* PeerConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeerConnectionManager.m; sourceTree = "<group>"; };
 		E98A6B9B1AA0049E0004162C /* RTCMember.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTCMember.m; sourceTree = "<group>"; };
@@ -166,6 +169,8 @@
 				E98A6BBA1AA27D8A0004162C /* DigestHelper.m */,
 				E98A6BBF1AA2830A0004162C /* Call.h */,
 				E98A6BBC1AA282F80004162C /* Call.m */,
+				E91D04AC1AA3F1A700BCA98C /* MediaStreamAndRenderer.h */,
+				E91D04AD1AA3F20F00BCA98C /* MediaStreamAndRenderer.m */,
 			);
 			path = PeerExampleObjC;
 			sourceTree = "<group>";
@@ -355,6 +360,7 @@
 				E98A6BA91AA1824D0004162C /* LocalAnswerSDPObserver.m in Sources */,
 				003092C019C12A680042DAEE /* ViewController.m in Sources */,
 				003092BD19C12A680042DAEE /* AppDelegate.m in Sources */,
+				E91D04AE1AA3F20F00BCA98C /* MediaStreamAndRenderer.m in Sources */,
 				E98A6BA51AA17DD20004162C /* RemoteOfferSDPObserver.m in Sources */,
 				003092E719C410100042DAEE /* README.md in Sources */,
 				E98A6BA21AA103610004162C /* CinePeerClient.m in Sources */,

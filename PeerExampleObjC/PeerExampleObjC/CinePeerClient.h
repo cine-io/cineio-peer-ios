@@ -13,6 +13,7 @@
 //Vendor
 @class RTCMediaConstraints;
 @class RTCMediaStream;
+@class RTCPeerConnection;
 
 //Cine Peer SDK
 @class Identity;
@@ -28,8 +29,8 @@
 - (void)identify:(Identity *)identity;
 //END API METHODS
 
-- (void)addStream:(RTCMediaStream *)mediaStream;
-- (void)removeStream:(RTCMediaStream *)mediaStream;
+- (void)addStream:(RTCMediaStream *)mediaStream peerConnection:(RTCPeerConnection *)peerConnection;
+- (void)removeStream:(RTCMediaStream *)mediaStream peerConnection:(RTCPeerConnection *)peerConnection;
 
 - (SignalingConnection *)getSignalingConnection;
 - (RTCMediaConstraints*)constraintsForMedia;

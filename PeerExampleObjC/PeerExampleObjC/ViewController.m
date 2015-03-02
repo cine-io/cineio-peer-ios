@@ -15,14 +15,17 @@
 #import "RTCEAGLVideoView.h"
 #import "RTCVideoTrack.h"
 #import "RTCMediaStream.h"
+#import "MediaStreamAndRenderer.h"
 
 static CGFloat const kLocalViewPadding = 20;
 
 @interface ViewController () <RTCEAGLVideoViewDelegate, CinePeerClientDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *videosView;
-@property (nonatomic, strong) RTCEAGLVideoView* localVideoView;
-@property (nonatomic, strong) RTCEAGLVideoView* remoteVideoView;
+@property (strong, nonatomic) UIView *videosSubView;
+@property (nonatomic, strong) NSMutableArray* videoViews;
+//@property (nonatomic, strong) RTCEAGLVideoView* localVideoView;
+//@property (nonatomic, strong) RTCEAGLVideoView* remoteVideoView;
 @property (nonatomic, strong) CinePeerClient *cinePeerClient;
 @end
 
@@ -35,6 +38,7 @@ static CGFloat const kLocalViewPadding = 20;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.videoViews = [[NSMutableArray alloc] init];
 
     [self initializeVideoViews];
 
@@ -50,6 +54,7 @@ static CGFloat const kLocalViewPadding = 20;
 
     Identity *identity = [config generateIdentity:identityName];
 
+
     [self.cinePeerClient startMediaStream];
 
     [self.cinePeerClient identify:identity];
@@ -64,60 +69,94 @@ static CGFloat const kLocalViewPadding = 20;
 
 - (void)initializeVideoViews {
     self.videosView.hidden = NO;
-    self.remoteVideoView = [[RTCEAGLVideoView alloc] initWithFrame:self.videosView.bounds];
-    self.remoteVideoView.delegate = self;
-    self.remoteVideoView.transform = CGAffineTransformMakeScale(-1, 1);
-    [self.videosView addSubview:self.remoteVideoView];
-    
-    self.localVideoView = [[RTCEAGLVideoView alloc] initWithFrame:self.videosView.bounds];
-    self.localVideoView.delegate = self;
-    [self.videosView addSubview:self.localVideoView];
-
-    [self updateVideoViewLayout];
+    [self resetVideoLayout];
 }
 
-- (void)updateVideoViewLayout {
-    // TODO(tkchin): handle rotation.
-    CGSize defaultAspectRatio = CGSizeMake(4, 3);
-    CGSize localAspectRatio =
-    CGSizeEqualToSize(_localVideoSize, CGSizeZero) ? defaultAspectRatio : _localVideoSize;
-    CGSize remoteAspectRatio =
-    CGSizeEqualToSize(_remoteVideoSize, CGSizeZero) ? defaultAspectRatio : _remoteVideoSize;
-    
-    CGRect remoteVideoFrame =
-    AVMakeRectWithAspectRatioInsideRect(remoteAspectRatio, self.videosView.bounds);
-    self.remoteVideoView.frame = remoteVideoFrame;
-    
-    CGRect localVideoFrame =
-    AVMakeRectWithAspectRatioInsideRect(localAspectRatio, self.videosView.bounds);
-    localVideoFrame.size.width = localVideoFrame.size.width / 3;
-    localVideoFrame.size.height = localVideoFrame.size.height / 3;
-    localVideoFrame.origin.x = CGRectGetMaxX(self.videosView.bounds) - localVideoFrame.size.width - kLocalViewPadding;
-    localVideoFrame.origin.y = CGRectGetMaxY(self.videosView.bounds) - localVideoFrame.size.height - kLocalViewPadding;
-    self.localVideoView.frame = localVideoFrame;
+- (void)resetVideoLayout {
+    // TODO: handle rotation.
+
+    NSLog(@"Reset video layout");
+    for(MediaStreamAndRenderer* msr in self.videoViews){
+        [msr removeVideoRenderer];
+    }
+    if (self.videosSubView != nil){
+        NSLog(@"removing view");
+        [self.videosSubView performSelectorOnMainThread:@selector(removeFromSuperview) withObject:nil waitUntilDone:NO];
+    }
+    self.videosSubView = [[UIView alloc] initWithFrame:self.videosView.frame];
+    [self.videosView addSubview:self.videosSubView];
+
+    NSUInteger index = 0;
+    NSUInteger offset = 0;
+    for(MediaStreamAndRenderer* msr in self.videoViews){
+        offset = [self showMediaStream:msr index:index offset:offset];
+        [self.videosSubView addSubview:[msr getView]];
+        index++;
+    }
+}
+
+- (int)showMediaStream:(MediaStreamAndRenderer *)msr index:(int)index offset:(int)offset
+{
+    NSLog(@"Showing media stream");
+
+    RTCEAGLVideoView *renderer = [msr getView];
+    CGRect videoFrame = renderer.frame;
+
+    videoFrame.origin.x = CGRectGetMaxX(self.videosView.bounds) - videoFrame.size.width - offset - kLocalViewPadding;
+    videoFrame.origin.y = CGRectGetMaxY(self.videosView.bounds) - videoFrame.size.height - kLocalViewPadding;
+    renderer.frame = videoFrame;
+    offset += (videoFrame.size.width + kLocalViewPadding);
+    return offset;
 }
 
 #pragma mark - CinePeerClientDelegate
-- (void) addStream:(RTCMediaStream *)stream local:(BOOL)local
+- (void) addStream:(RTCMediaStream *)stream peerConnection:(RTCPeerConnection *)peerConnection local:(BOOL)local
 {
+    NSLog(@"Got media stream");
+    MediaStreamAndRenderer *msr = [[MediaStreamAndRenderer alloc] initWithStream:stream peerConnection:peerConnection local:local];
+
+    RTCEAGLVideoView *renderer = [[RTCEAGLVideoView alloc] initWithFrame:self.videosView.bounds];
+    renderer.delegate = self;
+
     RTCVideoTrack *track = [stream.videoTracks firstObject];
-    if(local){
-        [track addRenderer:self.localVideoView];
-    }
-    else{
-        [track addRenderer:self.remoteVideoView];
-    }
+    [track addRenderer:renderer];
+
+    [msr setView:renderer];
+
+    [self.videoViews addObject:msr];
+    [self resetVideoLayout];
 }
 
-- (void) removeStream:(RTCMediaStream *)stream local:(BOOL)local
+- (MediaStreamAndRenderer *)getMediaStreamAndRendererForPeerConnection:(RTCPeerConnection *)peerConnection
 {
-    RTCVideoTrack *track = [stream.videoTracks firstObject];
-    if(local){
-        [track removeRenderer:self.localVideoView];
+    MediaStreamAndRenderer *msrToReturn = nil;
+    for(MediaStreamAndRenderer* msr in self.videoViews){
+        if ([msr getPeerConnection] == peerConnection)
+            msrToReturn = msr;
     }
-    else{
-        [track removeRenderer:self.remoteVideoView];
+    return msrToReturn;
+}
+- (MediaStreamAndRenderer *)getMediaStreamAndRendererForView:(RTCEAGLVideoView *)view
+{
+    MediaStreamAndRenderer *msrToReturn = nil;
+    for(MediaStreamAndRenderer* msr in self.videoViews){
+        if ([msr getView] == view)
+            msrToReturn = msr;
     }
+    return msrToReturn;
+}
+
+- (void)removeStream:(RTCMediaStream *)mediaStream peerConnection:(RTCPeerConnection *)peerConnection local:(BOOL)local;
+{
+    NSLog(@"Remove stream");
+    MediaStreamAndRenderer *msrToDelete = [self getMediaStreamAndRendererForPeerConnection:peerConnection];
+    if (msrToDelete != nil){
+        [msrToDelete cleanup];
+        [self.videoViews removeObject:msrToDelete];
+    }
+    NSLog(@"Did removed");
+
+    [self resetVideoLayout];
 }
 
 -(void) handleError:(NSDictionary *)error
@@ -145,14 +184,14 @@ static CGFloat const kLocalViewPadding = 20;
 #pragma mark - RTCEAGLVideoViewDelegate
 
 - (void)videoView:(RTCEAGLVideoView*)videoView didChangeVideoSize:(CGSize)size {
-    if (videoView == self.localVideoView) {
-        _localVideoSize = size;
-    } else if (videoView == self.remoteVideoView) {
-        _remoteVideoSize = size;
+    NSLog(@"DID CHANGE SIZE");
+    MediaStreamAndRenderer *msr = [self getMediaStreamAndRendererForView:videoView];
+    if (msr != nil){
+        [msr setVideoSize:size videosView:self.videosView];
     } else {
         NSParameterAssert(NO);
     }
-    [self updateVideoViewLayout];
+    [self resetVideoLayout];
 }
 
 @end
