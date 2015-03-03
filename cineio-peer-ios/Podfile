@@ -1,4 +1,4 @@
-pod "libjingle_peerconnection"
+pod "libjingle_peerconnection", "8563.2.0"
 pod "Primus", :git => 'git@github.com:cine-io/primus-objc.git', :commit => '8f63ae63d7f974655a5b22a5ee967e2b54050ba5'
 pod "SocketRocket", "= 0.3.1-beta2"
 
