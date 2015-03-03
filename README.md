@@ -46,9 +46,9 @@ Start by including the necessary files
 #import "CinePeerClient.h"
 #import "CinePeerClientConfig.h"
 #import "CineCall.h"
-#import "CineIdentity.h" \\ Only necessary if your app requires identifying
+#import "CineIdentity.h" // Only necessary if your app requires identifying
 #import "RTCMediaStream.h"
-#import "RTCEAGLVideoView.h" \\ For displaying media strems
+#import "RTCEAGLVideoView.h" // For displaying media strems
 ```
 
 ### Initializing
