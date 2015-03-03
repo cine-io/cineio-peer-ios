@@ -36,11 +36,98 @@ open <project>.xcworkspace
 
 ## Example Application
 
-Example application coming soon…
+Check out the [cineio-peer-ios-example-app][cineio-peer-ios-example-app] repository
+for a working example that use this SDK.
 
 ## Basic Usage
 
-Basic usage coming soon…
+Start by including the necessary files
+```objective-c
+#import "CinePeerClient.h"
+#import "CinePeerClientConfig.h"
+#import "CineCall.h"
+#import "CineIdentity.h" \\ Only necessary if your app requires identifying
+#import "RTCMediaStream.h"
+#import "RTCEAGLVideoView.h" \\ For displaying media strems
+```
+
+### Initializing
+
+#### Create a CinePeerClientDelegate
+
+For simplicity sake, let's make our `ViewController` a `CinePeerClientDelegate`
+
+In ViewController.m
+
+```
+@interface ViewController () <CinePeerClientDelegate>
+
+```
+
+#### Create the CinePeerClient
+
+In `ViewController.m`, because that's our `CinePeerClientDelegate`.
+
+```objective-c
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    NSString *CINE_IO_PUBLIC_KEY = @"CINE_IO_PUBLIC_KEY";
+    NSString *CINE_IO_SECRET_KEY = @"CINE_IO_SECRET_KEY";
+
+    // Initialize the CinePeerClientConfig class
+    // Pass in a CinePeerClientDelegate
+    CinePeerClientConfig *config = [[CinePeerClientConfig alloc] initWithPublicKey:CINE_IO_PUBLIC_KEY delegate:self];
+
+    // Create the peer client
+    CinePeerClient *cinePeerClient  = [[CinePeerClient alloc] initWithConfig:config];
+}
+```
+
+### `CinePeerClientDelegate` methods
+
+You'll add the `CinePeerClientDelegate` methods to your `ViewController`.
+
+```objective-c
+// happens when a new peer joins, or your local camera and microphone starts
+- (void) addStream:(RTCMediaStream *)stream peerConnection:(RTCPeerConnection *)peerConnection local:(BOOL)local;
+// happens when a peer leaves, or your local camera and microphone stops
+- (void) removeStream:(RTCMediaStream *)stream peerConnection:(RTCPeerConnection *)peerConnection local:(BOOL)local;
+// when a new call comes in
+- (void) handleCall:(CineCall *)call;
+// when a call that came to you is cancelled
+- (void) onCallCancel:(CineCall *)call;
+// when a call that you sent out is rejected
+- (void) onCallReject:(CineCall *)call;
+// generic error catcher
+- (void) handleError:(NSDictionary *)error;
+```
+### `CinePeerClient` Methods
+
+#### Starting the camera and microphone
+
+```objective-c
+[cinePeerClient startMediaStream];
+```
+
+#### Joining a room
+
+```objective-c
+NSString *roomName = @"example";
+[cinePeerClient joinRoom:roomName];
+```
+
+#### Identifying
+
+You'll need to set the secretKey on the config to identify.
+
+```objective-c
+[config setSecretKey:CINE_IO_SECRET_KEY];
+
+NSString *identityName = @"UNIQUE-IDENTITY";
+CineIdentity *identity = [config generateIdentity:identityName];
+[self.cinePeerClient identify:identity];
+```
 
 ## Contributing
 
@@ -58,3 +145,4 @@ Basic usage coming soon…
 [cineio-peer-android]:https://github.com/cine-io/cineio-peer-android
 [cineio-peer-js]:https://github.com/cine-io/peer-js-sdk
 [cocoapods]:http://cocoapods.org/
+[cineio-peer-ios-example-app]:https://github.com/cine-io/cineio-peer-ios-example-app
