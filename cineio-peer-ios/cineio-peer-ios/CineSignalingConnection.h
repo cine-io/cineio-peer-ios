@@ -27,6 +27,7 @@
 - (void)joinRoom:(NSString *)roomName;
 - (void)leaveRoom:(NSString *)roomName;
 - (void)identify:(CineIdentity *)identity;
+- (void)call:(NSString *) otherIdentity;
 - (void)rejectCall:(NSString *)roomName;
 - (void)setPeerConnectionsManager:(CinePeerConnectionManager *)peerConnectionManager;
 - (void)sendIceCandidate:(NSString *)sparkId candidate:(RTCICECandidate *)candidate;

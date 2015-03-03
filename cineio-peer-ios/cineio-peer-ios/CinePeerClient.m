@@ -107,6 +107,9 @@
 {
     [self.signalingConnection identify:theIdentity];
 }
+- (void)call:(NSString *) identity{
+    [self.signalingConnection call:identity];
+}
 //API END
 
 - (void)addStream:(RTCMediaStream *)mediaStream peerConnection:(RTCPeerConnection *)peerConnection

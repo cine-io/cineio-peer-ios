@@ -159,6 +159,7 @@
     self.identity = theIdentity;
     [self sendIdentity];
 }
+
 - (void)sendIdentity
 {
     [self send:@{
@@ -166,6 +167,15 @@
                  @"identity": [self.identity getIdentity],
                  @"timestamp": [NSNumber numberWithLong:[self.identity getTimestamp]],
                  @"signature": [self.identity getSignature]
+                 }
+     ];
+
+}
+- (void)call:(NSString *) otherIdentity
+{
+    [self send:@{
+                 @"action": @"call",
+                 @"otheridentity": otherIdentity,
                  }
      ];
 

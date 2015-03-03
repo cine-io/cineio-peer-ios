@@ -30,6 +30,7 @@
 - (void)joinRoom:(NSString *)roomName;
 - (void)startMediaStream;
 - (void)identify:(CineIdentity *)identity;
+- (void)call:(NSString *) identity;
 //END API METHODS
 
 - (void)addStream:(RTCMediaStream *)mediaStream peerConnection:(RTCPeerConnection *)peerConnection;
