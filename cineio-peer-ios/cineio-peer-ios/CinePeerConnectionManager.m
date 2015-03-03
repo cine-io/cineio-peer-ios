@@ -190,11 +190,15 @@
     [self.rtcMembers setObject:member forKey:otherClientSparkUUID];
 
     if (offer) {
-        CineLocalOfferSDPObserver *observer = [[CineLocalOfferSDPObserver alloc] init];
-        [observer rtcMember:member cinePeerClient:self.cinePeerClient];
+        NSLog(@"dispatching offer");
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"Async create offer");
+            CineLocalOfferSDPObserver *observer = [[CineLocalOfferSDPObserver alloc] init];
+            [observer rtcMember:member cinePeerClient:self.cinePeerClient];
 
-        NSLog(@"offerring");
-        [conn createOfferWithDelegate:(id)observer constraints:[self.cinePeerClient constraintsForMedia]];
+            NSLog(@"offerring");
+            [conn createOfferWithDelegate:(id)observer constraints:[self.cinePeerClient constraintsForPeer]];
+        });
     }
 
     NSLog(@"returning member");

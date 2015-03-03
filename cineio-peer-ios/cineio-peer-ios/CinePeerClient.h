@@ -37,7 +37,6 @@
 - (void)removeStream:(RTCMediaStream *)mediaStream peerConnection:(RTCPeerConnection *)peerConnection;
 
 - (CineSignalingConnection *)getSignalingConnection;
-- (RTCMediaConstraints*)constraintsForMedia;
 - (RTCMediaConstraints*)constraintsForPeer;
 @end
 #endif

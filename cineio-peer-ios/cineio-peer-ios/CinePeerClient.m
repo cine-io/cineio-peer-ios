@@ -138,40 +138,16 @@
                                                              value:@"true"]
                                       ];
     NSArray *optionalConstraints = @[
-                                     [[RTCPair alloc] initWithKey:@"internalSctpDataChannels"
-                                                            value:@"true"],
+//                                     [[RTCPair alloc] initWithKey:@"internalSctpDataChannels"
+//                                                            value:@"true"],
+//                                     [[RTCPair alloc] initWithKey:@"RtpDataChannels"
+//                                                            value:@"true"],
                                      [[RTCPair alloc] initWithKey:@"DtlsSrtpKeyAgreement"
                                                             value:@"true"]
                                      ];
 
     return [[RTCMediaConstraints alloc] initWithMandatoryConstraints:mandatoryConstraints
                                                  optionalConstraints:optionalConstraints];
-}
-
-- (RTCMediaConstraints*)constraintsForMedia
-{
-    NSArray *mandatoryConstraints = @[
-                                      [[RTCPair alloc] initWithKey:@"OfferToReceiveAudio"
-                                                             value:@"true"],
-                                      [[RTCPair alloc] initWithKey:@"OfferToReceiveVideo"
-                                                             value:@"true"]
-                                      ];
-
-    return [[RTCMediaConstraints alloc] initWithMandatoryConstraints:mandatoryConstraints
-                                                 optionalConstraints:nil];
-}
-
-
-#pragma mark - CineSignalingClientDelegate
-
-- (void)signalingClientDidReceiveHangup:(CineSignalingConnection *)client
-{
-    NSLog(@"received hangup");
-}
-
-- (void)signalingClient:(CineSignalingConnection *)client didErrorWithMessage:(NSString *)message
-{
-    NSLog(@"ERROR: %@", message);
 }
 
 

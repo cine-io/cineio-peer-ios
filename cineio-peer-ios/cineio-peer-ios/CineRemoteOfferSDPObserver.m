@@ -58,7 +58,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         CineLocalAnswerSDPObserver *observer = [[CineLocalAnswerSDPObserver alloc] init];
         [observer rtcMember:self.rtcMember cinePeerClient:self.cinePeerClient];
-        [peerConnection createAnswerWithDelegate:(id)observer constraints:[self.cinePeerClient constraintsForMedia]];
+        [peerConnection createAnswerWithDelegate:(id)observer constraints:[self.cinePeerClient constraintsForPeer]];
     });
 }
 
