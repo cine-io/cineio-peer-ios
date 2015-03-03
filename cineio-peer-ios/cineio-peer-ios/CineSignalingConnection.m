@@ -90,7 +90,7 @@
     }];
 
     //    [self.signalingServer open];
-    NSLog(@"CONNECTED");
+    NSLog(@"end connect");
 
 }
 
@@ -102,6 +102,10 @@
     [dict setValue:@"cineio-peer-ios version-0.0.6" forKey:@"client"];
     [dict setValue:[self.config getPublicKey] forKey:@"publicKey"];
     [dict setValue:self.uuid forKey:@"uuid"];
+
+//    trickleIce does not work in iOS
+    [dict setValue:@{@"trickleIce": @false} forKey:@"support"];
+
     if (self.identity != nil) {
         [dict setValue:[self.identity getIdentity] forKey:@"identity"];
     }
