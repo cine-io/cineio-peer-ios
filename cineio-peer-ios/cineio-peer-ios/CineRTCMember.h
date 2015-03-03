@@ -19,6 +19,9 @@
 
 - (void)setSparkId:(NSString *)sparkId;
 
+- (void) markIceComplete;
+- (void)setRemoteAnswerAndSetIfIceIsComplete:(NSString *)remoteAnswer;
+
 - (NSString *)getSparkId;
 
 - (void)setSparkUUID:(NSString *)sparkUUID;

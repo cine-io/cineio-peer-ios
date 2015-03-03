@@ -14,7 +14,7 @@
 @class CineRTCMember;
 
 @interface CineRemoteAnswerSDPObserver : NSObject
-- (void)rtcMember:(CineRTCMember *)member cinePeerClient:(CinePeerClient *)cinePeerClient;
+- (void)rtcMember:(CineRTCMember *)member;
 @end
 
 #endif

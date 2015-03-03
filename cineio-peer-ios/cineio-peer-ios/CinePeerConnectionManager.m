@@ -58,6 +58,7 @@
 
 - (void)configureICEServers:(NSArray *)configDicts
 {
+    NSLog(@"setIceServers");
     self.iceServers = [NSMutableArray array];
     for (NSDictionary* dict in configDicts) {
         NSString* url = dict[@"url"];
@@ -96,45 +97,36 @@
 - (void)handleAnswer:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId answer:(NSDictionary *)answer
 {
     NSLog(@"HANDLE ANSWER");
-    NSString* sdpString = answer[@"sdp"];
-    RTCSessionDescription* sdp =
-    [[RTCSessionDescription alloc] initWithType:answer[@"type"]
-                                            sdp:[CineRTCHelper preferISAC:sdpString]];
 
     CineRTCMember *rtcMember = [self getPeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:false];
     NSLog(@"GOT member");
 
-    RTCPeerConnection* conn = [rtcMember getPeerConnection];
-    NSLog(@"got connection");
+    NSString* sdpString = answer[@"sdp"];
+    [rtcMember setRemoteAnswerAndSetIfIceIsComplete:sdpString];
 
-    CineRemoteAnswerSDPObserver *observer = [[CineRemoteAnswerSDPObserver alloc] init];
-
-    [observer rtcMember:rtcMember cinePeerClient:self.cinePeerClient];
-    NSLog(@"set observer");
-
-    [conn setRemoteDescriptionWithDelegate:(id)observer sessionDescription:sdp];
-    NSLog(@"set description");
 
 }
 
 - (void)handleIce:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId iceCandidate:(NSDictionary *)iceCandidate
 {
-    NSLog(@"HANDLE ICE");
+    NSLog(@"disregarding ice candidates, I do not support trickle ice");
 
-    NSDictionary *candidateDict = iceCandidate[@"candidate"][@"candidate"];
-    NSString* sdpMid = candidateDict[@"sdpMid"];
-    NSNumber* sdpLineIndex = candidateDict[@"sdpMLineIndex"];
-    NSString* sdp = candidateDict[@"candidate"];
-    RTCICECandidate* candidate = [[RTCICECandidate alloc] initWithMid:sdpMid index:sdpLineIndex.intValue sdp:sdp];
-
-    CineRTCMember *rtcMember = [self getPeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:false];
-    NSLog(@"GOT member");
-
-    RTCPeerConnection* conn = [rtcMember getPeerConnection];
-    NSLog(@"got connection");
-
-    [conn addICECandidate:candidate];
-    NSLog(@"added ice");
+//    NSDictionary *candidateDict = iceCandidate[@"candidate"][@"candidate"];
+//    NSString* sdpMid = candidateDict[@"sdpMid"];
+//    NSNumber* sdpLineIndex = candidateDict[@"sdpMLineIndex"];
+//    NSString* sdp = candidateDict[@"candidate"];
+//    RTCICECandidate* candidate = [[RTCICECandidate alloc] initWithMid:sdpMid index:sdpLineIndex.intValue sdp:sdp];
+//
+//    CineRTCMember *rtcMember = [self getPeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:false];
+//    NSLog(@"GOT member");
+//
+//    RTCPeerConnection* conn = [rtcMember getPeerConnection];
+//    NSLog(@"got connection");
+//
+//    NSLog(@"set add ice async");
+//    [conn addICECandidate:candidate];
+//    NSLog(@"added ice");
+//    NSLog(@"dispatched ice");
 
 }
 

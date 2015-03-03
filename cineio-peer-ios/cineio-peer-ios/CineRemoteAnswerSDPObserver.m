@@ -11,22 +11,19 @@
 #import "CineRemoteAnswerSDPObserver.h"
 #import "CineLocalAnswerSDPObserver.h"
 #import "RTCSessionDescriptionDelegate.h"
-#import "CinePeerClient.h"
 #import "CineRTCMember.h"
 #import "RTCPeerConnection.h"
 
 
 @interface CineRemoteAnswerSDPObserver () <RTCSessionDescriptionDelegate>
 @property (nonatomic, weak) CineRTCMember* rtcMember;
-@property (nonatomic, weak) CinePeerClient* cinePeerClient;
 @end
 
 @implementation CineRemoteAnswerSDPObserver
 
-- (void)rtcMember:(CineRTCMember *)member cinePeerClient:(CinePeerClient *)cinePeerClient
+- (void)rtcMember:(CineRTCMember *)member
 {
     self.rtcMember = member;
-    self.cinePeerClient = cinePeerClient;
 }
 
 #pragma mark - RTCSessionDescriptionDelegate

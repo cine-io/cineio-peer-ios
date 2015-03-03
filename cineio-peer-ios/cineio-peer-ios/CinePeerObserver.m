@@ -41,6 +41,26 @@
     signalingStateChanged:(RTCSignalingState)stateChanged
 {
     NSLog(@"signalingStateChanged: %u", stateChanged);
+    if (stateChanged == RTCSignalingStable){
+        NSLog(@"RTCSignalingStable");
+    }
+    else if (stateChanged == RTCSignalingHaveLocalOffer){
+        NSLog(@"RTCSignalingHaveLocalOffer");
+    }
+    else if (stateChanged == RTCSignalingHaveLocalPrAnswer){
+        NSLog(@"RTCSignalingHaveLocalPrAnswer");
+    }
+    else if (stateChanged == RTCSignalingHaveRemoteOffer){
+        NSLog(@"RTCSignalingHaveRemoteOffer");
+    }
+    else if (stateChanged == RTCSignalingHaveRemotePrAnswer){
+        NSLog(@"RTCSignalingHaveRemotePrAnswer");
+    }
+    else if (stateChanged == RTCSignalingClosed){
+        NSLog(@"RTCSignalingClosed");
+    } else{
+        NSLog(@"unknown state");
+    }
 }
 
 - (void)peerConnection:(RTCPeerConnection *)peerConnection
@@ -80,12 +100,41 @@
   iceConnectionChanged:(RTCICEConnectionState)newState
 {
     NSLog(@"iceConnectionChanged");
+
+    if (newState == RTCICEConnectionNew){
+        NSLog(@"RTCICEConnectionNew");
+    }
+    else if (newState == RTCICEConnectionChecking){
+        NSLog(@"RTCICEConnectionChecking");
+    }
+    else if (newState == RTCICEConnectionConnected){
+        NSLog(@"RTCICEConnectionConnected");
+    }
+    else if (newState == RTCICEConnectionCompleted){
+        NSLog(@"RTCICEConnectionCompleted");
+    }
+    else if (newState == RTCICEConnectionFailed){
+        NSLog(@"RTCICEConnectionFailed");
+    }
+    else if (newState == RTCICEConnectionDisconnected){
+        NSLog(@"RTCICEConnectionDisconnected");
+    }
+    else if (newState == RTCICEConnectionClosed){
+        NSLog(@"RTCICEConnectionClosed");
+    } else {
+        NSLog(@"Other");
+    }
+
 }
 
 - (void)peerConnection:(RTCPeerConnection *)peerConnection
    iceGatheringChanged:(RTCICEGatheringState)newState
 {
     NSLog(@"iceGatheringChanged");
+    if (newState == RTCICEGatheringComplete) {
+        NSLog(@"iceGatheringChanged complete");
+        [self.rtcMember markIceComplete];
+    }
 }
 
 - (void)peerConnection:(RTCPeerConnection *)peerConnection
