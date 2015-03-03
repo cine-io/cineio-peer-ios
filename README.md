@@ -129,6 +129,13 @@ CineIdentity *identity = [config generateIdentity:identityName];
 [self.cinePeerClient identify:identity];
 ```
 
+#### Calling an other identity
+
+```objective-c
+NSString *identityName = @"UNIQUE-IDENTITY-TO-CALL";
+[self.cinePeerClient call:identity];
+```
+
 ## Contributing
 
 1. Fork it
