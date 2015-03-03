@@ -68,7 +68,8 @@
     options.timeout = 35000;
     options.ping = pingInterval;
     NSLog(@"CONNECT");
-    NSURL *url = [NSURL URLWithString:@"http://192.168.1.139:8443/primus/websocket"];
+//    NSURL *url = [NSURL URLWithString:@"http://192.168.1.139:8443/primus/websocket"];
+    NSURL *url = [NSURL URLWithString:@"https://signaling.cine.io/primus/websocket"];
 
     self.signalingServer = [[Primus alloc] initWithURL:url options:options];
 
