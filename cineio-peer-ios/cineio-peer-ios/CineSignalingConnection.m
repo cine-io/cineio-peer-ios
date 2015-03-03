@@ -104,7 +104,7 @@
     [dict setValue:self.uuid forKey:@"uuid"];
 
 //    trickleIce does not work in iOS
-    [dict setValue:@{@"trickleIce": @false} forKey:@"support"];
+    [dict setValue:@{@"trickleIce": @NO} forKey:@"support"];
 
     if (self.identity != nil) {
         [dict setValue:[self.identity getIdentity] forKey:@"identity"];
