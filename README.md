@@ -19,7 +19,7 @@ following:
 
 ```ruby
 
-pod 'cineio-peer-ios', '0.0.8'
+pod 'cineio-peer-ios', '0.0.9'
 ```
 
 Then, install the Pod by running the `pod install` command:

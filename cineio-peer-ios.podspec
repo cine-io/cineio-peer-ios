@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                = "cineio-peer-ios"
-  s.version             = "0.0.8"
+  s.version             = "0.0.9"
   s.summary             = "cine.io Peer iOS SDK"
   s.description      = <<-DESC
                           iOS SDK for Peer to Peer using the cine.io API.
