@@ -14,14 +14,19 @@
 
 //Cine Peer SDK
 @class CinePeerObserver;
+@class CineSignalingConnection;
 
 @interface CineRTCMember : NSObject
 
+- (void)setSupport:(NSDictionary *)support;
 - (void)setSparkId:(NSString *)sparkId;
+- (void)setSignalingConnection:(CineSignalingConnection *)signalingConnection;
+
+- (BOOL)supportsTrickleIce;
 
 - (void) markIceComplete;
 - (void)setRemoteAnswerAndSetIfIceIsComplete:(NSString *)remoteAnswer;
-
+- (void)localDescriptionReady;
 - (NSString *)getSparkId;
 
 - (void)setSparkUUID:(NSString *)sparkUUID;

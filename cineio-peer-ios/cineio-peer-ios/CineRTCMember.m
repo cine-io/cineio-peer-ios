@@ -13,6 +13,7 @@
 #import "CineRemoteAnswerSDPObserver.h"
 #import "CineRTCHelper.h"
 #import "RTCSessionDescription.h"
+#import "CineSignalingConnection.h"
 
 // WebRTC includes
 #import "RTCPeerConnection.h"
@@ -25,8 +26,11 @@
 @property (nonatomic, strong) RTCPeerConnection* peerConnection;
 @property (nonatomic, strong) CinePeerObserver* peerObserver;
 @property (nonatomic, strong) NSString* remoteAnswer;
+@property (nonatomic, strong) NSDictionary* support;
+@property (nonatomic, strong) CineSignalingConnection* signalingConnection;
 
 @property BOOL iceGatheringComplete;
+@property BOOL waitingToSendLocalDescription;
 
 @end
 
@@ -37,13 +41,41 @@
 @synthesize sparkUUID;
 @synthesize peerConnection;
 @synthesize peerObserver;
+@synthesize support;
+@synthesize signalingConnection;
 
 - (void)markIceComplete
 {
     self.iceGatheringComplete = true;
     if (self.remoteAnswer){
+        NSLog(@"markIceComplete remoteAnswer");
         [self setAnswerOnPeerConnection];
     }
+    if (self.waitingToSendLocalDescription) {
+        NSLog(@"markIceComplete waitingToSendLocalDescription");
+        [self sendLocalDescription];
+    }
+}
+
+- (void)localDescriptionReady
+{
+    if ([self supportsTrickleIce]) {
+        NSLog(@"localDescriptionReady supports trickleIce");
+        [self sendLocalDescription];
+    } else if (self.iceGatheringComplete) {
+        NSLog(@"localDescriptionReady sending because iceGatheringComplete");
+        [self sendLocalDescription];
+    } else {
+        self.waitingToSendLocalDescription = true;
+        NSLog(@"localDescriptionReady waiting for iceGatheringComplete");
+    }
+
+}
+
+- (void)sendLocalDescription
+{
+    RTCSessionDescription* localDescription = [self.peerConnection localDescription];
+    [self.signalingConnection sendLocalDescription:self.sparkId description:localDescription];
 }
 
 - (void)setRemoteAnswerAndSetIfIceIsComplete:(NSString *)remoteAnswer
@@ -79,6 +111,11 @@
     NSLog(@"set description from markIceComplete");
     self.remoteAnswer = nil;
 
+}
+
+- (BOOL)supportsTrickleIce
+{
+    return self.support[@"trickleIce"] != NO;
 }
 
 - (NSString *)getSparkId

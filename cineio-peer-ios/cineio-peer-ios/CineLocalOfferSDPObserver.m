@@ -61,10 +61,11 @@
 {
     NSLog(@"sendLocalDescription");
 
-    [[self.cinePeerClient getSignalingConnection] sendLocalDescription:[self.rtcMember getSparkId] description:self.localSdp];
+    [self.rtcMember localDescriptionReady];
+
 }
 
-// Called when setting a local or remote description.
+// Called when setting a local description.
 - (void)               peerConnection:(RTCPeerConnection *)peerConnection
     didSetSessionDescriptionWithError:(NSError *)error
 {
@@ -75,10 +76,8 @@
         NSAssert(NO, error.description);
         return;
     }
-    dispatch_async(dispatch_get_main_queue(), ^{
         NSLog(@"didSetSessionDescriptionWithError no error");
         [self sendLocalDescription];
-    });
 }
 
 @end

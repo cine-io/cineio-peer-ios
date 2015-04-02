@@ -59,8 +59,7 @@
 - (void) sendLocalDescription
 {
     NSLog(@"sendLocalDescription");
-
-    [[self.cinePeerClient getSignalingConnection] sendLocalDescription:[self.rtcMember getSparkId] description:self.localSdp];
+    [self.rtcMember localDescriptionReady];
 }
 
 // Called when setting a local or remote description.

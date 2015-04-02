@@ -13,6 +13,7 @@
 #import "CineSignalingConnection.h"
 #import "RTCMediaStream.h"
 #import "RTCPeerConnectionDelegate.h"
+#import "RTCPeerConnection.h"
 
 @interface CinePeerObserver () <RTCPeerConnectionDelegate>
 @property (nonatomic, weak) CineRTCMember* rtcMember;
@@ -132,6 +133,7 @@
 {
     NSLog(@"iceGatheringChanged");
     if (newState == RTCICEGatheringComplete) {
+//        peerConnection.localDescription
         NSLog(@"iceGatheringChanged complete");
         [self.rtcMember markIceComplete];
     }
@@ -140,8 +142,14 @@
 - (void)peerConnection:(RTCPeerConnection *)peerConnection
        gotICECandidate:(RTCICECandidate *)candidate
 {
-    NSString* sparkId = [self.rtcMember getSparkId];
-    [[self.cinePeerClient getSignalingConnection] sendIceCandidate:sparkId candidate:candidate];
+    if ([self.rtcMember supportsTrickleIce]) {
+        NSLog(@"gotICECandidate and sending: %@", candidate);
+
+        NSString* sparkId = [self.rtcMember getSparkId];
+        [[self.cinePeerClient getSignalingConnection] sendIceCandidate:sparkId candidate:candidate];
+    }else {
+        NSLog(@"gotICECandidate but not sending: %@", candidate);
+    }
 
     //    //NSLog(@"gotICECandidate: %@", candidate);
     //    dispatch_async(dispatch_get_main_queue(), ^{

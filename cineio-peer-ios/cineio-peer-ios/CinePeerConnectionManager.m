@@ -73,7 +73,7 @@
     }
 }
 
-- (void)handleOffer:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId offer:(NSDictionary *)offer
+- (void)handleOffer:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId offer:(NSDictionary *)offer support:(NSDictionary *)support
 {
     NSLog(@"HANDLE OFFER");
 
@@ -82,7 +82,7 @@
     [[RTCSessionDescription alloc] initWithType:offer[@"type"]
                                             sdp:[CineRTCHelper preferISAC:sdpString]];
 
-    CineRTCMember *rtcMember = [self getPeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:false];
+    CineRTCMember *rtcMember = [self getPeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:false support:support];
     NSLog(@"GOT member");
 
     RTCPeerConnection* conn = [rtcMember getPeerConnection];
@@ -94,20 +94,18 @@
 
 }
 
-- (void)handleAnswer:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId answer:(NSDictionary *)answer
+- (void)handleAnswer:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId answer:(NSDictionary *)answer support:(NSDictionary *)support
 {
     NSLog(@"HANDLE ANSWER");
 
-    CineRTCMember *rtcMember = [self getPeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:false];
+    CineRTCMember *rtcMember = [self getPeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:false support:support];
     NSLog(@"GOT member");
 
     NSString* sdpString = answer[@"sdp"];
     [rtcMember setRemoteAnswerAndSetIfIceIsComplete:sdpString];
-
-
 }
 
-- (void)handleIce:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId iceCandidate:(NSDictionary *)iceCandidate
+- (void)handleIce:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId iceCandidate:(NSDictionary *)iceCandidate support:(NSDictionary *)support
 {
     NSLog(@"disregarding ice candidates, I do not support trickle ice");
 
@@ -132,22 +130,22 @@
 
 
 
-- (void)ensurePeerConnection:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId offer:(BOOL)offer
+- (void)ensurePeerConnection:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId offer:(BOOL)offer support:(NSDictionary *)support
 {
-    [self getPeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:offer];
+    [self getPeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:offer support:support];
 }
 
-- (CineRTCMember*)getPeerConnection:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId offer:(BOOL)offer
+- (CineRTCMember*)getPeerConnection:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId offer:(BOOL)offer support:(NSDictionary *)support
 {
     CineRTCMember *member = [self.rtcMembers objectForKey:otherClientSparkUUID];
     if (member != nil) {
         [member setSparkId:otherClientSparkId];
         return member;
     }
-    return [self createPeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:offer];
+    return [self createPeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:offer support:support];
 }
 
-- (CineRTCMember*)createPeerConnection:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId offer:(BOOL)offer
+- (CineRTCMember*)createPeerConnection:(NSString *)otherClientSparkUUID otherClientSparkId:(NSString *)otherClientSparkId offer:(BOOL)offer support:(NSDictionary *)support
 {
     NSLog(@"creating new peer connection: %@", otherClientSparkUUID);
     CineRTCMember *member = [[CineRTCMember alloc] init];
@@ -156,6 +154,12 @@
     NSLog(@"set spark id");
     [member setSparkUUID:otherClientSparkUUID];
     NSLog(@"set spark uuid");
+
+    [member setSupport:support];
+    NSLog(@"created set support");
+
+    [member setSignalingConnection:[self.cinePeerClient getSignalingConnection]];
+    NSLog(@"set signaling connection");
 
 
     CinePeerObserver *observer = [[CinePeerObserver alloc] init];

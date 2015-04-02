@@ -229,17 +229,17 @@
 // Signaling callbacks
 - (void)handleIce:(NSDictionary *)message
 {
-    [self.peerConnectionManager handleIce:message[@"sparkUUID"] otherClientSparkId:message[@"sparkId"] iceCandidate:message[@"offer"]];
+    [self.peerConnectionManager handleIce:message[@"sparkUUID"] otherClientSparkId:message[@"sparkId"] iceCandidate:message[@"offer"] support:message[@"support"]];
 }
 
 - (void)handleOffer:(NSDictionary *)message
 {
-    [self.peerConnectionManager handleOffer:message[@"sparkUUID"] otherClientSparkId:message[@"sparkId"] offer:message[@"offer"]];
+    [self.peerConnectionManager handleOffer:message[@"sparkUUID"] otherClientSparkId:message[@"sparkId"] offer:message[@"offer"] support:message[@"support"]];
 }
 
 - (void)handleAnswer:(NSDictionary *)message
 {
-    [self.peerConnectionManager handleAnswer:message[@"sparkUUID"] otherClientSparkId:message[@"sparkId"] answer:message[@"answer"]];
+    [self.peerConnectionManager handleAnswer:message[@"sparkUUID"] otherClientSparkId:message[@"sparkId"] answer:message[@"answer"] support:message[@"support"]];
 }
 
 - (void)handleError:(NSDictionary *)message
@@ -253,7 +253,7 @@
 {
     NSString* otherClientSparkId = message[@"sparkId"];
     NSString* otherClientSparkUUID = message[@"sparkUUID"];
-    [self.peerConnectionManager ensurePeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:true];
+    [self.peerConnectionManager ensurePeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:true support:message[@"support"]];
     [self sendToOtherSpark:otherClientSparkId data:@{@"action": @"room-announce", @"room": message[@"room"]}];
 
 }
@@ -271,7 +271,7 @@
 {
     NSString* otherClientSparkId = message[@"sparkId"];
     NSString* otherClientSparkUUID = message[@"sparkUUID"];
-    [self.peerConnectionManager ensurePeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:false];
+    [self.peerConnectionManager ensurePeerConnection:otherClientSparkUUID otherClientSparkId:otherClientSparkId offer:false support:message[@"support"]];
 }
 
 - (void)roomGoodbye:(NSDictionary *)message
