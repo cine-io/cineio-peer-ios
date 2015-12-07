@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
 
   s.dependency          'libjingle_peerconnection', '~> 10842.2.3'
   s.dependency          'Primus'#, '~> 0.2.1.2' # use our version till https://github.com/seegno/primus-objc/pull/12 is merged in
-  s.dependency          'SocketRocket', '~> 0.3.1-beta2'
+  s.dependency          'SocketRocket', '~> 0.4.2'
 
   s.ios.deployment_target = '8.1'
 end
