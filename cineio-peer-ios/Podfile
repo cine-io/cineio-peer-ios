@@ -1,10 +1,10 @@
-pod "libjingle_peerconnection", "8563.2.0"
+pod "libjingle_peerconnection", "10842.2.3"
 pod "Primus", :git => 'git@github.com:cine-io/primus-objc.git', :commit => '8f63ae63d7f974655a5b22a5ee967e2b54050ba5'
-pod "SocketRocket", "= 0.3.1-beta2"
+pod "SocketRocket", "= 0.4.2"
 
 # Add this to the bottom so it won't have issues with active architecture
 post_install do |installer_representation|
-    installer_representation.project.targets.each do |target|
+    installer_representation.pods_project.targets.each do |target|
         target.build_configurations.each do |config|
             config.build_settings['ONLY_ACTIVE_ARCH'] = 'NO'
             config.build_settings['VALID_ARCHS'] = ['armv7', 'armv7s']

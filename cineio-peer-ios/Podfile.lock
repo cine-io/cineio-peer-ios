@@ -6,19 +6,19 @@ PODS:
   - libextobjc/EXTScope (0.4.1):
     - libextobjc/RuntimeExtensions
   - libextobjc/RuntimeExtensions (0.4.1)
-  - libjingle_peerconnection (8563.2.0)
+  - libjingle_peerconnection (10842.2.3)
   - Primus (0.0.7):
     - Emitter
     - GCDTimer
     - libextobjc/EXTScope
     - Reachability
   - Reachability (3.2)
-  - SocketRocket (0.3.1-beta2)
+  - SocketRocket (0.4.2)
 
 DEPENDENCIES:
-  - libjingle_peerconnection (= 8563.2.0)
+  - libjingle_peerconnection (= 10842.2.3)
   - Primus (from `git@github.com:cine-io/primus-objc.git`, commit `8f63ae63d7f974655a5b22a5ee967e2b54050ba5`)
-  - SocketRocket (= 0.3.1-beta2)
+  - SocketRocket (= 0.4.2)
 
 EXTERNAL SOURCES:
   Primus:
@@ -31,13 +31,13 @@ CHECKOUT OPTIONS:
     :git: git@github.com:cine-io/primus-objc.git
 
 SPEC CHECKSUMS:
-  BlocksKit: 4439e7f30a9f90743462ca63545a15c1f4304cef
-  Emitter: c892463e3c64e43e4fac81fa829791d04512829c
-  GCDTimer: a5992055d0391db6ff1e068b0a4ca6befd1deade
-  libextobjc: d6146fce3ebea986b7f75fcb4c967639200b88b0
-  libjingle_peerconnection: eb8e59ca65b3153045e82ac4d7ad1eb27c5a8ad5
+  BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
+  Emitter: cf50bf44fc8817535018fbd6c4fd576b87803e78
+  GCDTimer: 5837a5d70a464f86cbc9c56d75efc68f7e7c2fb8
+  libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
+  libjingle_peerconnection: 25b82d1d8de852367c9fd15b9699e547451e71b1
   Primus: 72208c6434bbe96c7791b4218e34830cb1b2e058
-  Reachability: 1ef8adf5c4e3d362f96515d4278f68dad3c26930
-  SocketRocket: 79a68ae186063c65e1fe6f638b1ae2927aa5f304
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  SocketRocket: ffe08119b00ef982f6c37052a4705a057c8494ad
 
-COCOAPODS: 0.35.0
+COCOAPODS: 0.39.0
