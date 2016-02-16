@@ -14,7 +14,7 @@ It is fully compatable with with the [cine.io Peer Android SDK][cineio-peer-andr
 ## Installation
 
 The easiest way to use the SDK is via [CocoaPods][cocoapods]. Create a new
-XCode project with a file named `Podfile` that contains the
+Xcode project with a file named `Podfile` that contains the
 following:
 
 ```ruby
